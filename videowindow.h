@@ -2,7 +2,7 @@
 #define VIDEOWINDOW_H
 
 #include <QMainWindow>
-#include "ui_videowindow.h"
+#include "ui_VideoWindow.h"
 
 class VideoWindow : public QMainWindow,
                     private Ui::VideoWindow

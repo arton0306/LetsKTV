@@ -1,7 +1,7 @@
 #include <QtGui/QApplication>
-#include "ktvmainwindow.h"
-#include "videowindow.h"
-#include "songdatabasewindow.h"
+#include "KtvMainWindow.h"
+#include "VideoWindow.h"
+#include "SongDatabaseWindow.h"
 
 int main(int argc, char *argv[])
 {

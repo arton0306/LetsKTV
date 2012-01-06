@@ -1,4 +1,4 @@
-#include "ktvmainwindow.h"
+#include "KtvMainWindow.h"
 
 KtvMainWindow::KtvMainWindow(QWidget *parent) :
     QMainWindow(parent)

@@ -1,4 +1,4 @@
-#include "songdatabasewindow.h"
+#include "SongDatabaseWindow.h"
 
 SongDatabaseWindow::SongDatabaseWindow(QWidget *parent) :
     QMainWindow(parent)

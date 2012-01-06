@@ -2,7 +2,7 @@
 #define SONGDATABASEWINDOW_H
 
 #include <QMainWindow>
-#include "ui_songdatabasewindow.h"
+#include "ui_SongDatabaseWindow.h"
 
 class SongDatabaseWindow : public QMainWindow,
                            private Ui::SongDatabaseWindow

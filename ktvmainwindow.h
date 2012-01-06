@@ -2,7 +2,7 @@
 #define KTVMAINWINDOW_H
 
 #include <QMainWindow>
-#include "ui_ktvmainwindow.h"
+#include "ui_KtvMainWindow.h"
 
 class KtvMainWindow : public QMainWindow,
                       private Ui::KtvMainWindow
