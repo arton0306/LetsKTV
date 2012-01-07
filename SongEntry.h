@@ -12,13 +12,12 @@ public:
         QString mSongName = QString(),
         QString mGender = QString(),
         QString mLanguage = QString(),
-        int mTimeLength = 0,
-        QString mFilePath = QString(),
-        QString mNotes = QString()
+        QString mFilePath = QString()
         );
 
     void setId( int aId );
     int getId();
+    void setTimeLength( int a_scnds );
     QString getSinger();
     QString getGender();
     QString getLanguage();

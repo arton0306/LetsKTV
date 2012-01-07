@@ -6,23 +6,24 @@ SongEntry::SongEntry
     QString aSongName,
     QString aGender,
     QString aLanguage,
-    int aTimeLength,
-    QString aFilePath,
-    QString aNotes
+    QString aFilePath
     )
     : mSinger ( aSinger )
     , mSongName ( aSongName )
     , mGender ( aGender )
     , mLanguage ( aLanguage )
-    , mTimeLength ( aTimeLength )
     , mFilePath ( aFilePath )
-    , mNotes ( aNotes )
 {
 }
 
 void SongEntry::setId( int aId )
 {
     mId = aId;
+}
+
+void SongEntry::setTimeLength( int a_scnds )
+{
+    mTimeLength = a_scnds;
 }
 
 int SongEntry::getId()

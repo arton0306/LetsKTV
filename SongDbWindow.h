@@ -2,6 +2,7 @@
 #define SONGDBWINDOW_H
 
 #include <QMainWindow>
+#include <QString>
 #include "ui_SongDbWindow.h"
 
 class SongDbWindow : public QMainWindow,
@@ -13,6 +14,22 @@ public:
     explicit SongDbWindow(QWidget *parent = 0);
     ~SongDbWindow();
 
+private:
+    /*---------------------------------------------
+                       Functions
+    ---------------------------------------------*/
+    void setupActions();
+
+    /*---------------------------------------------
+                       Variables
+    ---------------------------------------------*/
+    QString mSongFolder;
+
+    /*---------------------------------------------
+                         Slot
+    ---------------------------------------------*/
+    private slots:
+        QString selectSongFolder();
 };
 
 #endif // SONGDBWINDOW_H
