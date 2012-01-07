@@ -1,7 +1,7 @@
 #include <QtGui/QApplication>
 #include "KtvMainWindow.h"
 #include "VideoWindow.h"
-#include "SongDatabaseWindow.h"
+#include "SongDbWindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,8 +12,8 @@ int main(int argc, char *argv[])
     VideoWindow videoWindow;
     videoWindow.show();
 
-    SongDatabaseWindow songDatabaseWindow;
-    songDatabaseWindow.show();
+    SongDbWindow songDbWindow;
+    songDbWindow.show();
 
     return letsKtv.exec();
 }
