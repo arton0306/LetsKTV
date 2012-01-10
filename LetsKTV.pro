@@ -15,19 +15,23 @@ SOURCES += main.cpp\
     KtvMainWindow.cpp \
     VideoWindow.cpp \
     SongDbWindow.cpp \
-    debug.cpp
+    debug.cpp \
+    SongTableModel.cpp
 
 HEADERS  += \
     SongEntry.h \
     KtvMainWindow.h \
     VideoWindow.h \
     SongDbWindow.h \
-    debug.h
+    debug.h \
+    SongTableModel.h
 
 FORMS    += \
     KtvMainWindow.ui \
     VideoWindow.ui \
     SongDbWindow.ui
+
+
 
 
 

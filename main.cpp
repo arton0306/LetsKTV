@@ -1,4 +1,5 @@
 #include <QtGui/QApplication>
+#include <QTextCodec>
 #include "debug.h"
 #include "KtvMainWindow.h"
 #include "VideoWindow.h"
@@ -10,6 +11,14 @@ int main(int argc, char *argv[])
     #ifdef Q_WS_WIN
         qInstallMsgHandler( debugWinMsgHandler );
     #endif
+
+    // set text codec
+    QTextCodec *textc=QTextCodec::codecForName("cp950");
+    QTextCodec::setCodecForCStrings(textc);
+    QTextCodec::setCodecForTr(textc);
+    QTextCodec::setCodecForLocale(textc);
+    qDebug() << "測試codec 程式開始…";
+
     KtvMainWindow ktvMainWindow;
     ktvMainWindow.show();
 
@@ -21,3 +30,4 @@ int main(int argc, char *argv[])
 
     return letsKtv.exec();
 }
+

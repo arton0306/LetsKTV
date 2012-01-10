@@ -6,24 +6,56 @@
 class SongEntry
 {
 public:
+    /*---------------------------------------------
+                       Constants
+    ---------------------------------------------*/
+    static const int TIME_UNKNOWN = -1;
+
+    /*---------------------------------------------
+                         Types
+    ---------------------------------------------*/
+    enum SongFileColumnType
+    {
+        // the order is according to the specail file name format
+        LANGUAGE,
+        GENDER,
+        SINGER,
+        SONGNAME
+    };
+
+    enum SongFileExtraInfo
+    {
+        FILEPATH,
+        NOTES
+    };
+
+    /*---------------------------------------------
+                       Functions
+    ---------------------------------------------*/
     SongEntry
         (
-        QString mSinger = QString(),
-        QString mSongName = QString(),
-        QString mGender = QString(),
-        QString mLanguage = QString(),
-        QString mFilePath = QString()
+        QString mSinger,
+        QString mSongName,
+        QString mGender,
+        QString mLanguage,
+        QString mFilePath
         );
 
+    SongEntry( QString aFileName );
+
     void setId( int aId );
-    int getId();
-    void setTimeLength( int a_scnds );
-    QString getSinger();
-    QString getGender();
-    QString getLanguage();
-    int getTimeLength();
-    QString getFilePath();
-    QString getNotes();
+    void setTimeLength( int aSeconds );
+    void setFilePath( QString aFilePath );
+    int getId() const;
+    QString getIdText() const;
+    QString getSongName() const;
+    QString getSinger() const;
+    QString getGender() const;
+    QString getLanguage() const;
+    int getTimeLength() const;
+    QString getTimeLengthText() const;
+    QString getFilePath() const;
+    QString getNotes() const;
 
 private:
     int mId;

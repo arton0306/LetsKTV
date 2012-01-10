@@ -19,11 +19,12 @@ private:
                        Functions
     ---------------------------------------------*/
     void setupActions();
+    void dumpSongFolder();
 
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
-    QString mSongFolder;
+    QString mSongFolderPath;
 
     /*---------------------------------------------
                          Slot
