@@ -27,7 +27,7 @@ QString SongDbWindow::selectSongFolder()
     qDebug() << mSongFolderPath;
     dumpSongFolder();
 
-    songTableView->setModel(new SongTableModel( mSongFolderPath ) );
+    songTableView->setModel(new SongTableModel( mSongFolderPath, this ) );
     songTableView->show();
 
     return folder;
