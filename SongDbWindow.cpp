@@ -28,6 +28,7 @@ QString SongDbWindow::selectSongFolder()
     dumpSongFolder();
 
     songTableView->setModel(new SongTableModel( mSongFolderPath, this ) );
+    songTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     songTableView->show();
 
     return folder;
