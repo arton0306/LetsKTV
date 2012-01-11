@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QString>
 #include "ui_SongDbWindow.h"
+#include "SongModel.h"
 
 class SongDbWindow : public QMainWindow,
                      private Ui::SongDbWindow
@@ -25,6 +26,7 @@ private:
                        Variables
     ---------------------------------------------*/
     QString mSongFolderPath;
+    SongModel * mSongModel;
 
     /*---------------------------------------------
                          Slot

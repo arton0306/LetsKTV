@@ -13,10 +13,10 @@ int main(int argc, char *argv[])
     #endif
 
     // set text codec
-    QTextCodec *textc=QTextCodec::codecForName("cp950");
-    QTextCodec::setCodecForCStrings(textc);
-    QTextCodec::setCodecForTr(textc);
-    QTextCodec::setCodecForLocale(textc);
+    QTextCodec *textc = QTextCodec::codecForName("cp950");
+    QTextCodec::setCodecForCStrings( textc );
+    QTextCodec::setCodecForTr( textc );
+    QTextCodec::setCodecForLocale( textc );
     qDebug() << "測試codec 程式開始…";
 
     KtvMainWindow ktvMainWindow;

@@ -10,8 +10,17 @@ class KtvMainWindow : public QMainWindow,
     Q_OBJECT
 
 public:
+    /*---------------------------------------------
+                       Functions
+    ---------------------------------------------*/
     explicit KtvMainWindow(QWidget *parent = 0);
     ~KtvMainWindow();
+
+private:
+    /*---------------------------------------------
+                       Variables
+    ---------------------------------------------*/
+
 };
 
 #endif // KTVMAINWINDOW_H

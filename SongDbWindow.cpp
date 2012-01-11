@@ -27,8 +27,13 @@ QString SongDbWindow::selectSongFolder()
     qDebug() << mSongFolderPath;
     dumpSongFolder();
 
-    songTableView->setModel(new SongTableModel( mSongFolderPath, this ) );
-    songTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    // TODO: haven't handle the deletion of the SongModel
+    mSongModel = new SongModel( mSongFolderPath );
+
+    // TODO: haven't handle the deletion of the SongTableModel
+    songTableView->setModel( new SongTableModel( mSongModel ) );
+    songTableView->setSelectionBehavior( QAbstractItemView::SelectRows );
+    songTableView->setSelectionMode( QAbstractItemView::SingleSelection );
     songTableView->show();
 
     return folder;
