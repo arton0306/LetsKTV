@@ -1,4 +1,6 @@
+#include "debug.h"
 #include "KtvMainWindow.h"
+#include "SongModel.h"
 
 KtvMainWindow::KtvMainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -8,4 +10,10 @@ KtvMainWindow::KtvMainWindow(QWidget *parent) :
 
 KtvMainWindow::~KtvMainWindow()
 {
+}
+
+void KtvMainWindow::setSongModel( SongModel * aSongModel )
+{
+    mSongModel = aSongModel;
+    qDebug() << "KtvMainWindow set mSongModel";
 }

@@ -36,6 +36,7 @@ QString SongDbWindow::selectSongFolder()
     songTableView->setSelectionMode( QAbstractItemView::SingleSelection );
     songTableView->show();
 
+    emit sgnlSongModelChanged( mSongModel  );
     return folder;
 }
 

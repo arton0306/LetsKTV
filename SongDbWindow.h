@@ -15,6 +15,14 @@ public:
     explicit SongDbWindow(QWidget *parent = 0);
     ~SongDbWindow();
 
+public slots:
+
+private slots:
+    QString selectSongFolder();
+
+signals:
+    void sgnlSongModelChanged( SongModel * mSongModel );
+
 private:
     /*---------------------------------------------
                        Functions
@@ -28,11 +36,6 @@ private:
     QString mSongFolderPath;
     SongModel * mSongModel;
 
-    /*---------------------------------------------
-                         Slot
-    ---------------------------------------------*/
-    private slots:
-        QString selectSongFolder();
 };
 
 #endif // SONGDBWINDOW_H

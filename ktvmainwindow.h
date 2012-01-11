@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "ui_KtvMainWindow.h"
 
+class SongModel;
+
 class KtvMainWindow : public QMainWindow,
                       private Ui::KtvMainWindow
 {
@@ -16,10 +18,14 @@ public:
     explicit KtvMainWindow(QWidget *parent = 0);
     ~KtvMainWindow();
 
+public slots:
+    void setSongModel( SongModel * aSongModel );
+
 private:
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
+    SongModel * mSongModel;
 
 };
 
