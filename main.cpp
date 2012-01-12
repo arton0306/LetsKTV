@@ -7,6 +7,8 @@
 
 int main(int argc, char *argv[])
 {
+    debug::setProgramTimer();
+
     QApplication letsKtv(argc, argv);
     #ifdef Q_WS_WIN
         qInstallMsgHandler( debug::debugWinMsgHandler );

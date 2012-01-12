@@ -7,6 +7,8 @@
 
 namespace debug
 {
+    void setProgramTimer();
+    QString getElapseTime();
     void debugWinMsgHandler(QtMsgType type, const char *msg);
     void dumpSongFolder( QString aSongFolderPath );
 };
