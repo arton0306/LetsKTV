@@ -23,12 +23,11 @@ QString SongDbWindow::selectSongFolder()
         tr("Please pick the folder containing the songs."),
         QDir::homePath() // TODO: use preference folder
         );
-    mSongFolderPath = folder;
-    qDebug() << mSongFolderPath;
-    dumpSongFolder();
+    qDebug() << folder;
+    debug::dumpSongFolder( folder );
 
     // TODO: haven't handle the deletion of the SongModel
-    mSongModel = new SongModel( mSongFolderPath );
+    mSongModel = new SongModel( folder );
 
     // TODO: haven't handle the deletion of the SongTableModel
     songTableView->setModel( new SongTableModel( mSongModel ) );
@@ -36,7 +35,7 @@ QString SongDbWindow::selectSongFolder()
     songTableView->setSelectionMode( QAbstractItemView::SingleSelection );
     songTableView->show();
 
-    emit sgnlSongModelChanged( mSongModel  );
+    emit sgnlSongModelChanged( mSongModel );
     return folder;
 }
 
@@ -45,16 +44,3 @@ void SongDbWindow::setupActions()
     connect( actionSelectFolder, SIGNAL(triggered( bool )), this, SLOT(selectSongFolder()) );
 }
 
-void SongDbWindow::dumpSongFolder()
-{
-    QDir dir;
-    dir.setPath( mSongFolderPath );
-    dir.setFilter( QDir::Files | QDir::NoSymLinks );
-    dir.setSorting( QDir::Name );
-
-    const QFileInfoList fileList = dir.entryInfoList();
-    for ( int i = 0; i < fileList.size(); ++i )
-    {
-        qDebug() << fileList.at( i ).absoluteFilePath();
-    }
-}

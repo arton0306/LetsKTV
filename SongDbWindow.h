@@ -21,7 +21,8 @@ private slots:
     QString selectSongFolder();
 
 signals:
-    void sgnlSongModelChanged( SongModel * mSongModel );
+    void sgnlSongModelChanged( SongModel * aSongModel );
+    void sgnlDoubleClickOneSong( SongEntry * aSongEntry );
 
 private:
     /*---------------------------------------------
@@ -33,7 +34,6 @@ private:
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
-    QString mSongFolderPath;
     SongModel * mSongModel;
 
 };

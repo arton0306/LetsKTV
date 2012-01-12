@@ -80,7 +80,7 @@ QString const & SongTableModel::getTableHeaderText( int aSection )
 
 void SongTableModel::dumpSongs()
 {
-    for ( size_t i = 0; i < mSongModel->getSongCount(); ++i )
+    for ( int i = 0; i < mSongModel->getSongCount(); ++i )
     {
         qDebug() << mSongModel->getSong( i ).getSinger() << mSongModel->getSong( i ).getSongName();
     }

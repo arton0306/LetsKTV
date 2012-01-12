@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
     QApplication letsKtv(argc, argv);
     #ifdef Q_WS_WIN
-        qInstallMsgHandler( debugWinMsgHandler );
+        qInstallMsgHandler( debug::debugWinMsgHandler );
     #endif
 
     // set text codec
