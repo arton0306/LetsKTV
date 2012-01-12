@@ -19,16 +19,18 @@ public slots:
 
 private slots:
     QString selectSongFolder();
+    void toSongEntry( const QModelIndex & aQModelIndexInSongTable );
 
 signals:
     void sgnlSongModelChanged( SongModel * aSongModel );
-    void sgnlDoubleClickOneSong( SongEntry * aSongEntry );
+    void sgnlAddOneSong( SongEntry const & aSongEntry );
 
 private:
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
     void setupActions();
+    void setupConnections();
     void dumpSongFolder();
 
     /*---------------------------------------------

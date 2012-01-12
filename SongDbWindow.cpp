@@ -9,6 +9,7 @@ SongDbWindow::SongDbWindow(QWidget *parent) :
 {
     setupUi(this);
     setupActions();
+    setupConnections();
 }
 
 SongDbWindow::~SongDbWindow()
@@ -44,3 +45,13 @@ void SongDbWindow::setupActions()
     connect( actionSelectFolder, SIGNAL(triggered( bool )), this, SLOT(selectSongFolder()) );
 }
 
+void SongDbWindow::setupConnections()
+{
+    connect( songTableView, SIGNAL(doubleClicked( const QModelIndex & )), this, SLOT( toSongEntry( const QModelIndex & )) );
+}
+
+void SongDbWindow::toSongEntry( const QModelIndex & aQModelIndexInSongTable )
+{
+    qDebug() << "double clicked on table model at row: " << aQModelIndexInSongTable.row();
+    emit sgnlAddOneSong( mSongModel->getSong( aQModelIndexInSongTable.row() ) );
+}
