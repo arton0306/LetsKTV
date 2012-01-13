@@ -47,7 +47,7 @@ void VideoWindow::playSong( QString aSongFilePath )
         timer.setSingleShot(true);
         timer.setInterval(3 * ONE_SECOND);
         connect( &timer, SIGNAL(timeout()), &eventLoop, SLOT(quit()));
-        //connect( mMediaObject, SIGNAL(hasVideoChanged(bool)), eventLoop, SLOT(quit()));
+        connect( mMediaObject, SIGNAL(hasVideoChanged(bool)), &eventLoop, SLOT(quit()));
         timer.start();
         eventLoop.exec();
     }
