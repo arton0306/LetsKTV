@@ -1,17 +1,17 @@
-#ifndef SONGMODEL_H
-#define SONGMODEL_H
+#ifndef SONGDATABASE_H
+#define SONGDATABASE_H
 
 #include <QString>
 #include <vector>
 #include "SongEntry.h"
 
-class SongModel
+class SongDatabase
 {
 public:
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
-    SongModel( QString aSongFolderPath );
+    SongDatabase( QString aSongFolderPath );
     int getSongCount() const;
     SongEntry const & getSong( int aNthSong ) const;
 
@@ -22,4 +22,4 @@ private:
     std::vector<SongEntry> mSongs;
 };
 
-#endif // SONGMODEL_H
+#endif // SONGDATABASE_H

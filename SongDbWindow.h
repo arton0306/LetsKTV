@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QString>
 #include "ui_SongDbWindow.h"
-#include "SongModel.h"
+#include "SongDatabase.h"
 
 class SongDbWindow : public QMainWindow,
                      private Ui::SongDbWindow
@@ -22,7 +22,7 @@ private slots:
     void toSongEntry( const QModelIndex & aQModelIndexInSongTable );
 
 signals:
-    void sgnlSongModelChanged( SongModel * aSongModel );
+    void sgnlSongDatabaseChanged( SongDatabase * aSongDatabase );
     void sgnlAddOneSong( SongEntry const & aSongEntry );
 
 private:
@@ -36,7 +36,7 @@ private:
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
-    SongModel * mSongModel;
+    SongDatabase * mSongDatabase;
 
 };
 

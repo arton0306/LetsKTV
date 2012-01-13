@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "ui_KtvMainWindow.h"
 
-class SongModel;
+class SongDatabase;
 
 class KtvMainWindow : public QMainWindow,
                       private Ui::KtvMainWindow
@@ -19,13 +19,13 @@ public:
     ~KtvMainWindow();
 
 public slots:
-    void setSongModel( SongModel * aSongModel );
+    void setSongDatabase( SongDatabase * aSongDatabase );
 
 private:
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
-    SongModel * mSongModel;
+    SongDatabase * mSongDatabase;
 
 };
 

@@ -27,16 +27,16 @@ QString SongDbWindow::selectSongFolder()
     qDebug() << folder;
     debug::dumpSongFolder( folder );
 
-    // TODO: haven't handle the deletion of the SongModel
-    mSongModel = new SongModel( folder );
+    // TODO: haven't handle the deletion of the SongDatabase
+    mSongDatabase = new SongDatabase( folder );
 
     // TODO: haven't handle the deletion of the SongTableModel
-    songTableView->setModel( new SongTableModel( mSongModel ) );
+    songTableView->setModel( new SongTableModel( mSongDatabase ) );
     songTableView->setSelectionBehavior( QAbstractItemView::SelectRows );
     songTableView->setSelectionMode( QAbstractItemView::SingleSelection );
     songTableView->show();
 
-    emit sgnlSongModelChanged( mSongModel );
+    emit sgnlSongDatabaseChanged( mSongDatabase );
     return folder;
 }
 
@@ -53,5 +53,5 @@ void SongDbWindow::setupConnections()
 void SongDbWindow::toSongEntry( const QModelIndex & aQModelIndexInSongTable )
 {
     qDebug() << "double clicked on table model at row: " << aQModelIndexInSongTable.row();
-    emit sgnlAddOneSong( mSongModel->getSong( aQModelIndexInSongTable.row() ) );
+    emit sgnlAddOneSong( mSongDatabase->getSong( aQModelIndexInSongTable.row() ) );
 }

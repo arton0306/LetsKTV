@@ -4,7 +4,7 @@
 #include <vector>
 #include <QAbstractTableModel>
 #include <QString>
-#include "SongModel.h"
+#include "SongDatabase.h"
 
 class SongTableModel : public QAbstractTableModel
 {
@@ -32,7 +32,7 @@ public:
     /*---------------------------------------------
                         Functions
     ---------------------------------------------*/
-    explicit SongTableModel( SongModel * aSongModel, QObject *parent = 0 );
+    explicit SongTableModel( SongDatabase * aSongDatabase, QObject *parent = 0 );
     int rowCount( const QModelIndex &aParent ) const;
     int columnCount( const QModelIndex &aParent ) const;
     QVariant headerData( int aSection, Qt::Orientation aOrientation, int aRole ) const;
@@ -52,7 +52,7 @@ private:
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
-    SongModel * mSongModel;
+    SongDatabase * mSongDatabase;
 
 };
 

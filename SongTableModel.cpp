@@ -5,16 +5,16 @@
 #include "debug.h"
 #include "SongTableModel.h"
 
-SongTableModel::SongTableModel( SongModel * aSongModel, QObject *parent ) 
+SongTableModel::SongTableModel( SongDatabase * aSongDatabase, QObject *parent ) 
     : QAbstractTableModel( parent )
-    , mSongModel( aSongModel )
+    , mSongDatabase( aSongDatabase )
 {
 }
 
 int SongTableModel::rowCount( const QModelIndex &aParent ) const
 {
     Q_UNUSED( aParent );
-    return mSongModel->getSongCount();
+    return mSongDatabase->getSongCount();
 }
 
 int SongTableModel::columnCount( const QModelIndex &aParent ) const
@@ -42,14 +42,14 @@ QVariant SongTableModel::data( const QModelIndex & aIndex, int aRole ) const
     {
         switch ( aIndex.column() )
         {
-            case FILEPATH:   return mSongModel->getSong( aIndex.row() ).getFilePath();
-            case GENDER:     return mSongModel->getSong( aIndex.row() ).getGender();
-            case ID:         return mSongModel->getSong( aIndex.row() ).getIdText();
-            case LANGUAGE:   return mSongModel->getSong( aIndex.row() ).getLanguage();
-            case NOTES:      return mSongModel->getSong( aIndex.row() ).getNotes();
-            case SINGER:     return mSongModel->getSong( aIndex.row() ).getSinger();
-            case TIMELENGTH: return mSongModel->getSong( aIndex.row() ).getTimeLengthText();
-            case SONGNAME:   return mSongModel->getSong( aIndex.row() ).getSongName();
+            case FILEPATH:   return mSongDatabase->getSong( aIndex.row() ).getFilePath();
+            case GENDER:     return mSongDatabase->getSong( aIndex.row() ).getGender();
+            case ID:         return mSongDatabase->getSong( aIndex.row() ).getIdText();
+            case LANGUAGE:   return mSongDatabase->getSong( aIndex.row() ).getLanguage();
+            case NOTES:      return mSongDatabase->getSong( aIndex.row() ).getNotes();
+            case SINGER:     return mSongDatabase->getSong( aIndex.row() ).getSinger();
+            case TIMELENGTH: return mSongDatabase->getSong( aIndex.row() ).getTimeLengthText();
+            case SONGNAME:   return mSongDatabase->getSong( aIndex.row() ).getSongName();
             default:
             qDebug() << "getdata column error";
                 return QVariant();
@@ -80,8 +80,8 @@ QString const & SongTableModel::getTableHeaderText( int aSection )
 
 void SongTableModel::dumpSongs()
 {
-    for ( int i = 0; i < mSongModel->getSongCount(); ++i )
+    for ( int i = 0; i < mSongDatabase->getSongCount(); ++i )
     {
-        qDebug() << mSongModel->getSong( i ).getSinger() << mSongModel->getSong( i ).getSongName();
+        qDebug() << mSongDatabase->getSong( i ).getSinger() << mSongDatabase->getSong( i ).getSongName();
     }
 }

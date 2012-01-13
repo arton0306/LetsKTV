@@ -1,7 +1,7 @@
 #include <QDir>
-#include "SongModel.h"
+#include "SongDatabase.h"
 
-SongModel::SongModel( QString aSongFolderPath )
+SongDatabase::SongDatabase( QString aSongFolderPath )
 {
     QDir dir;
     dir.setPath( aSongFolderPath );
@@ -19,12 +19,12 @@ SongModel::SongModel( QString aSongFolderPath )
     }
 }
 
-int SongModel::getSongCount() const
+int SongDatabase::getSongCount() const
 {
     return mSongs.size();
 }
 
-SongEntry const & SongModel::getSong( int aNthSong ) const
+SongEntry const & SongDatabase::getSong( int aNthSong ) const
 {
     return mSongs[aNthSong];
 }

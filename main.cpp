@@ -30,8 +30,8 @@ int main(int argc, char *argv[])
     SongDbWindow songDbWindow;
     songDbWindow.show();
 
-    QObject::connect( &songDbWindow, SIGNAL(sgnlSongModelChanged( SongModel * )),
-             &ktvMainWindow, SLOT(setSongModel( SongModel * )) );
+    QObject::connect( &songDbWindow, SIGNAL(sgnlSongDatabaseChanged( SongDatabase * )),
+             &ktvMainWindow, SLOT(setSongDatabase( SongDatabase * )) );
 
     return letsKtv.exec();
 }
