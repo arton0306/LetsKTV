@@ -22,7 +22,7 @@ void PlayList::pop_front()
 
 Song const * PlayList::front()
 {
-    mPlayList.front();
+    return mPlayList.front();
 }
 
 void PlayList::remove( int aIndex )
