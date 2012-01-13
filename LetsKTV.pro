@@ -11,29 +11,33 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    SongEntry.cpp \
     KtvMainWindow.cpp \
     VideoWindow.cpp \
     SongDbWindow.cpp \
     debug.cpp \
     SongTableModel.cpp \
     PlayList.cpp \
-    SongDatabase.cpp
+    SongDatabase.cpp \
+    Song.cpp
 
 HEADERS  += \
-    SongEntry.h \
     KtvMainWindow.h \
     VideoWindow.h \
     SongDbWindow.h \
     debug.h \
     SongTableModel.h \
     PlayList.h \
-    SongDatabase.h
+    SongDatabase.h \
+    Song.h
 
 FORMS    += \
     KtvMainWindow.ui \
     VideoWindow.ui \
     SongDbWindow.ui
+
+
+
+
 
 
 

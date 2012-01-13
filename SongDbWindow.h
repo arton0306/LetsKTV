@@ -19,11 +19,11 @@ public slots:
 
 private slots:
     QString selectSongFolder();
-    void toSongEntry( const QModelIndex & aQModelIndexInSongTable );
+    void toSong( const QModelIndex & aQModelIndexInSongTable );
 
 signals:
     void sgnlSongDatabaseChanged( SongDatabase * aSongDatabase );
-    void sgnlAddOneSong( SongEntry const & aSongEntry );
+    void sgnlAddOneSong( Song const & aSong );
 
 private:
     /*---------------------------------------------

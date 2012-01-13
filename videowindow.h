@@ -6,7 +6,7 @@
 #include <phonon>
 #include "ui_VideoWindow.h"
 
-class SongEntry;
+class Song;
 
 class VideoWindow : public QMainWindow,
                     private Ui::VideoWindow
@@ -18,7 +18,7 @@ public:
     ~VideoWindow();
 
 public slots:
-    void playSong( SongEntry const & aSongEntry );
+    void playSong( Song const & aSong );
     void playSong( QString aSongFilePath );
 
 signals:

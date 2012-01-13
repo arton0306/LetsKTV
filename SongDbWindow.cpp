@@ -47,10 +47,10 @@ void SongDbWindow::setupActions()
 
 void SongDbWindow::setupConnections()
 {
-    connect( songTableView, SIGNAL(doubleClicked( const QModelIndex & )), this, SLOT( toSongEntry( const QModelIndex & )) );
+    connect( songTableView, SIGNAL(doubleClicked( const QModelIndex & )), this, SLOT( toSong( const QModelIndex & )) );
 }
 
-void SongDbWindow::toSongEntry( const QModelIndex & aQModelIndexInSongTable )
+void SongDbWindow::toSong( const QModelIndex & aQModelIndexInSongTable )
 {
     qDebug() << "double clicked on table model at row: " << aQModelIndexInSongTable.row();
     emit sgnlAddOneSong( mSongDatabase->getSong( aQModelIndexInSongTable.row() ) );

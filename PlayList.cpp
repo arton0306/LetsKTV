@@ -5,14 +5,14 @@ PlayList::PlayList()
 {
 }
 
-void PlayList::push_back( SongEntry const * aSongEntry )
+void PlayList::push_back( Song const * aSong )
 {
-    mPlayList.push_back( aSongEntry );
+    mPlayList.push_back( aSong );
 }
 
-void PlayList::push_front( SongEntry const * aSongEntry )
+void PlayList::push_front( Song const * aSong )
 {
-    mPlayList.push_front( aSongEntry );
+    mPlayList.push_front( aSong );
 }
 
 void PlayList::pop_front()
@@ -20,7 +20,7 @@ void PlayList::pop_front()
     mPlayList.pop_front();
 }
 
-SongEntry const * PlayList::front()
+Song const * PlayList::front()
 {
     mPlayList.front();
 }

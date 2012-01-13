@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <vector>
-#include "SongEntry.h"
+#include "Song.h"
 
 class SongDatabase
 {
@@ -13,13 +13,13 @@ public:
     ---------------------------------------------*/
     SongDatabase( QString aSongFolderPath );
     int getSongCount() const;
-    SongEntry const & getSong( int aNthSong ) const;
+    Song const & getSong( int aNthSong ) const;
 
 private:
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
-    std::vector<SongEntry> mSongs;
+    std::vector<Song> mSongs;
 };
 
 #endif // SONGDATABASE_H

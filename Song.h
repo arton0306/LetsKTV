@@ -1,9 +1,9 @@
-#ifndef SONGENTRY_H
-#define SONGENTRY_H
+#ifndef SONG_H
+#define SONG_H
 
 #include <QString>
 
-class SongEntry
+class Song
 {
 public:
     /*---------------------------------------------
@@ -32,7 +32,7 @@ public:
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
-    SongEntry
+    Song
         (
         QString mSinger,
         QString mSongName,
@@ -41,7 +41,7 @@ public:
         QString mFilePath
         );
 
-    SongEntry( QString aFileName );
+    Song( QString aFileName );
 
     void setId( int aId );
     void setTimeLength( int aSeconds );
@@ -68,4 +68,4 @@ private:
     QString mNotes;
 };
 
-#endif // SONGENTRY_H
+#endif // SONG_H

@@ -1,7 +1,7 @@
 #include <QStringList>
-#include "SongEntry.h"
+#include "Song.h"
 
-SongEntry::SongEntry
+Song::Song
     (
     QString aSinger,
     QString aSongName,
@@ -18,7 +18,7 @@ SongEntry::SongEntry
     mTimeLength = TIME_UNKNOWN;
 }
 
-SongEntry::SongEntry( QString aFileName )
+Song::Song( QString aFileName )
 {
     QStringList fileNameCols = aFileName.split( QChar( '-' ) );
     mSinger = fileNameCols[ SINGER ];
@@ -28,57 +28,57 @@ SongEntry::SongEntry( QString aFileName )
     mTimeLength = TIME_UNKNOWN;
 }
 
-void SongEntry::setId( int aId )
+void Song::setId( int aId )
 {
     mId = aId;
 }
 
-void SongEntry::setTimeLength( int aSeconds )
+void Song::setTimeLength( int aSeconds )
 {
     mTimeLength = aSeconds;
 }
 
-void SongEntry::setFilePath( QString aFilePath )
+void Song::setFilePath( QString aFilePath )
 {
     mFilePath = aFilePath;
 }
 
-int SongEntry::getId() const
+int Song::getId() const
 {
     return mId;
 }
 
-QString SongEntry::getIdText() const
+QString Song::getIdText() const
 {
     return QString::number( mId );
 }
 
-QString SongEntry::getSongName() const
+QString Song::getSongName() const
 {
     return mSongName;
 }
 
-QString SongEntry::getSinger() const
+QString Song::getSinger() const
 {
     return mSinger;
 }
 
-QString SongEntry::getGender() const
+QString Song::getGender() const
 {
     return mGender;
 }
 
-QString SongEntry::getLanguage() const
+QString Song::getLanguage() const
 {
     return mLanguage;
 }
 
-int SongEntry::getTimeLength() const
+int Song::getTimeLength() const
 {
     return mTimeLength;
 }
 
-QString SongEntry::getTimeLengthText() const
+QString Song::getTimeLengthText() const
 {
     if ( TIME_UNKNOWN == mTimeLength )
     {
@@ -90,12 +90,12 @@ QString SongEntry::getTimeLengthText() const
     }
 }
 
-QString SongEntry::getFilePath() const
+QString Song::getFilePath() const
 {
     return mFilePath;
 }
 
-QString SongEntry::getNotes() const
+QString Song::getNotes() const
 {
     return mNotes;
 }

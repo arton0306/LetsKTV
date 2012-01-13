@@ -2,21 +2,21 @@
 #define PLAYLIST_H
 
 #include <deque>
-#include "SongEntry.h"
+#include "Song.h"
 
 class PlayList
 {
 public:
     PlayList();
-    void push_back( SongEntry const * aSongEntry );
-    void push_front( SongEntry const * aSongEntry );
+    void push_back( Song const * aSong );
+    void push_front( Song const * aSong );
     void pop_front();
-    SongEntry const * front();
+    Song const * front();
     void remove( int aIndex );
     void shuffle();
 
 private:
-    std::deque<SongEntry const *> mPlayList;
+    std::deque<Song const *> mPlayList;
 };
 
 #endif // PLAYLIST_H

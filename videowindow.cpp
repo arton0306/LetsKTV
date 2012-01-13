@@ -1,5 +1,5 @@
 #include "VideoWindow.h"
-#include "SongEntry.h"
+#include "Song.h"
 #include <Qtimer>
 
 const int ONE_SECOND = 1000;
@@ -31,7 +31,7 @@ void VideoWindow::setupConnections()
     
 }
 
-void VideoWindow::playSong( SongEntry const & aSongEntry )
+void VideoWindow::playSong( Song const & aSong )
 {
     
 }
