@@ -45,7 +45,7 @@ void VideoWindow::playSong( QString aSongFilePath )
         QEventLoop eventLoop;
         QTimer timer;
         timer.setSingleShot(true);
-        timer.setInterval(3 * ONE_SECOND);
+        timer.setInterval(3 * ONE_SECOND); // at most waiting for 3 seconds
         connect( &timer, SIGNAL(timeout()), &eventLoop, SLOT(quit()));
         connect( mMediaObject, SIGNAL(hasVideoChanged(bool)), &eventLoop, SLOT(quit()));
         timer.start();

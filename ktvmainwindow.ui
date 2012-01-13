@@ -25,35 +25,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QTableWidget" name="playList">
-        <property name="selectionMode">
-         <enum>QAbstractItemView::NoSelection</enum>
-        </property>
-        <property name="selectionBehavior">
-         <enum>QAbstractItemView::SelectRows</enum>
-        </property>
-        <property name="showGrid">
-         <bool>true</bool>
-        </property>
-        <property name="cornerButtonEnabled">
-         <bool>true</bool>
-        </property>
-        <column>
-         <property name="text">
-          <string>順序</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>歌手</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>歌名</string>
-         </property>
-        </column>
-       </widget>
+       <widget class="QTableView" name="mPlayListView"/>
       </item>
       <item>
        <widget class="QTabWidget" name="tabWidget">
