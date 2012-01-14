@@ -45,7 +45,7 @@ QVariant PlayListTableModel::data( const QModelIndex & aIndex, int aRole ) const
             case SINGER:     return mPlayList[aIndex.row()]->getSinger();
             case SONGNAME:   return mPlayList[aIndex.row()]->getSongName();
             default:
-                qDebug() << "getdata column error";
+                DEBUG() << "getdata column error";
                 return QVariant();
         }
     }
@@ -82,7 +82,7 @@ void PlayListTableModel::removeFrontSong()
 
 Song const & PlayListTableModel::front() const
 {
-    qDebug() << "Now PlayList size: " << mPlayList.size() << " get front";
+    DEBUG() << "Now PlayList size: " << mPlayList.size() << " get front";
     return *mPlayList[0];
 }
 
@@ -97,7 +97,7 @@ bool PlayListTableModel::setData( const QModelIndex & aIndex, const QVariant & a
             case SINGER:     return mPlayList[aIndex.row()]->getSinger();
             case SONGNAME:   return mPlayList[aIndex.row()]->getSongName();
             default:
-                qDebug() << "getdata column error";
+                DEBUG() << "getdata column error";
                 return QVariant();
         }
         mPlayList[aIndex.row()]

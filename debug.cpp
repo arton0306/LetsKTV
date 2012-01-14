@@ -56,7 +56,7 @@ namespace debug
         const QFileInfoList fileList = dir.entryInfoList();
         for ( int i = 0; i < fileList.size(); ++i )
         {
-            qDebug() << fileList.at( i ).absoluteFilePath();
+            DEBUG() << fileList.at( i ).absoluteFilePath();
         }
     }
 }

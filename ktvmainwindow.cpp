@@ -27,7 +27,7 @@ KtvMainWindow::~KtvMainWindow()
 void KtvMainWindow::setSongDatabase( SongDatabase * aSongDatabase )
 {
     mSongDatabase = aSongDatabase;
-    qDebug() << "KtvMainWindow set mSongDatabase";
+    DEBUG() << "KtvMainWindow set mSongDatabase";
 }
 
 void KtvMainWindow::addSongToPlayList( Song const & aSong )
@@ -37,7 +37,7 @@ void KtvMainWindow::addSongToPlayList( Song const & aSong )
 
 void KtvMainWindow::songEnded()
 {
-    qDebug() << "song ended()";
+    DEBUG() << "song ended()";
     mPlayListTableModel->removeFrontSong();
     if ( !mPlayListTableModel->isEmpty() )
     {
@@ -47,7 +47,7 @@ void KtvMainWindow::songEnded()
 
 void KtvMainWindow::songAlmostEnded()
 {
-    qDebug() << "song almost ended()";
+    DEBUG() << "song almost ended()";
 }
 
 void KtvMainWindow::setupConnections()

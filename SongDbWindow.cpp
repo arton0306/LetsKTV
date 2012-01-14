@@ -24,7 +24,7 @@ QString SongDbWindow::selectSongFolder()
         tr("Please pick the folder containing the songs."),
         QDir::homePath() // TODO: use preference folder
         );
-    qDebug() << folder;
+    DEBUG() << folder;
     debug::dumpSongFolder( folder );
 
     // TODO: haven't handle the deletion of the SongDatabase
@@ -52,6 +52,6 @@ void SongDbWindow::setupConnections()
 
 void SongDbWindow::toSong( const QModelIndex & aQModelIndexInSongTable )
 {
-    qDebug() << "double clicked on table model at row: " << aQModelIndexInSongTable.row();
+    DEBUG() << "double clicked on table model at row: " << aQModelIndexInSongTable.row();
     emit sgnlDoubleClickOneSong( mSongDatabase->getSong( aQModelIndexInSongTable.row() ) );
 }

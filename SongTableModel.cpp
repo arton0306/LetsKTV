@@ -51,7 +51,7 @@ QVariant SongTableModel::data( const QModelIndex & aIndex, int aRole ) const
             case TIMELENGTH: return mSongDatabase->getSong( aIndex.row() ).getTimeLengthText();
             case SONGNAME:   return mSongDatabase->getSong( aIndex.row() ).getSongName();
             default:
-            qDebug() << "getdata column error";
+            DEBUG() << "getdata column error";
                 return QVariant();
         }
     }
@@ -82,6 +82,6 @@ void SongTableModel::dumpSongs()
 {
     for ( int i = 0; i < mSongDatabase->getSongCount(); ++i )
     {
-        qDebug() << mSongDatabase->getSong( i ).getSinger() << mSongDatabase->getSong( i ).getSongName();
+        DEBUG() << mSongDatabase->getSong( i ).getSinger() << mSongDatabase->getSong( i ).getSongName();
     }
 }
