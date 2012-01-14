@@ -21,7 +21,6 @@ VideoWindow::VideoWindow(QWidget *parent) :
     Phonon::createPath( mMediaObject, mAudioOutput );
 
     setupConnections();
-    playSong( "abc.mpg" );
 }
 
 VideoWindow::~VideoWindow()

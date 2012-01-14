@@ -32,7 +32,15 @@ void KtvMainWindow::setSongDatabase( SongDatabase * aSongDatabase )
 
 void KtvMainWindow::addSongToPlayList( Song const & aSong )
 {
-    mPlayListTableModel->addSong( aSong );
+    if ( mPlayListTableModel->isEmpty() )
+    {
+        mPlayListTableModel->addSong( aSong );
+        mVideoWindow->playSong( mPlayListTableModel->front() );
+    }
+    else
+    {
+        mPlayListTableModel->addSong( aSong );
+    }
 }
 
 void KtvMainWindow::songEnded()
