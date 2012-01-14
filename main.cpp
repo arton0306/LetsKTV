@@ -32,6 +32,8 @@ int main(int argc, char *argv[])
 
     QObject::connect( &songDbWindow, SIGNAL(sgnlSongDatabaseChanged( SongDatabase * )),
              &ktvMainWindow, SLOT(setSongDatabase( SongDatabase * )) );
+    QObject::connect( &songDbWindow, SIGNAL(sgnlDoubleClickOneSong( Song const & )),
+             &ktvMainWindow, SLOT(addSongToPlayList( Song const & )) );
 
     return letsKtv.exec();
 }

@@ -23,7 +23,7 @@ private slots:
 
 signals:
     void sgnlSongDatabaseChanged( SongDatabase * aSongDatabase );
-    void sgnlAddOneSong( Song const & aSong );
+    void sgnlDoubleClickOneSong( Song const & aSong );
 
 private:
     /*---------------------------------------------

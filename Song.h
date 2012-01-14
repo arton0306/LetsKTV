@@ -1,6 +1,7 @@
 #ifndef SONG_H
 #define SONG_H
 
+// #include <QMetaType>
 #include <QString>
 
 class Song
@@ -67,5 +68,7 @@ private:
     QString mFilePath;
     QString mNotes;
 };
+
+// Q_DECLARE_METATYPE(Song)
 
 #endif // SONG_H
