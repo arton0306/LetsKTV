@@ -1,8 +1,10 @@
 #include "VideoWindow.h"
 #include "Song.h"
+#include <QtGlobal>
 #include <Qtimer>
 
 const int ONE_SECOND = 1000;
+const int PREFINISH_HINT_MSEC = ONE_SECOND * 30;
 
 VideoWindow::VideoWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -10,7 +12,6 @@ VideoWindow::VideoWindow(QWidget *parent) :
     setupUi(this);
     mVideoWidget = new Phonon::VideoWidget( this );
     mGridLayout->addWidget( mVideoWidget );
-    setupConnections();
 
     mMediaObject = new Phonon::MediaObject( this );
     mMediaObject->setTickInterval( ONE_SECOND );
@@ -19,6 +20,7 @@ VideoWindow::VideoWindow(QWidget *parent) :
     mAudioOutput = new Phonon::AudioOutput( Phonon::VideoCategory, this );
     Phonon::createPath( mMediaObject, mAudioOutput );
 
+    setupConnections();
     playSong( "abc.mpg" );
 }
 
@@ -28,7 +30,9 @@ VideoWindow::~VideoWindow()
 
 void VideoWindow::setupConnections()
 {
-    
+    mMediaObject->setPrefinishMark( PREFINISH_HINT_MSEC );
+    connect( mMediaObject, SIGNAL(prefinishMarkReached(qint32)), this, SIGNAL(sgnlSongAlmostEnded()) );
+    connect( mMediaObject, SIGNAL(finished()), this, SIGNAL(sgnlSongEnded()) );
 }
 
 void VideoWindow::playSong( Song const & aSong )

@@ -21,11 +21,11 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale( textc );
     qDebug() << "測試codec 程式開始…";
 
-    KtvMainWindow ktvMainWindow;
-    ktvMainWindow.show();
-
     VideoWindow videoWindow;
     videoWindow.show();
+
+    KtvMainWindow ktvMainWindow( &videoWindow );
+    ktvMainWindow.show();
 
     SongDbWindow songDbWindow;
     songDbWindow.show();

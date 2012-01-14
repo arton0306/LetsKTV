@@ -3,11 +3,14 @@
 #include "SongDatabase.h"
 #include "PlayListTableModel.h"
 #include "Song.h"
+#include "VideoWindow.h"
 
-KtvMainWindow::KtvMainWindow(QWidget *parent) :
-    QMainWindow(parent)
+KtvMainWindow::KtvMainWindow( VideoWindow * aVideoWindow, QWidget *parent )
+    : QMainWindow( parent )
+    , mVideoWindow( aVideoWindow )
 {
-    setupUi(this);
+    setupUi( this );
+    setupConnections();
 
     // TODO: haven't handle the deletion of the PlayListTableModel
     mPlayListTableModel = new PlayListTableModel();
@@ -30,4 +33,20 @@ void KtvMainWindow::setSongDatabase( SongDatabase * aSongDatabase )
 void KtvMainWindow::addSongToPlayList( Song const & aSong )
 {
     mPlayListTableModel->addSong( aSong );
+}
+
+void KtvMainWindow::songEnded()
+{
+    qDebug() << "song ended()";
+}
+
+void KtvMainWindow::songAlmostEnded()
+{
+    qDebug() << "song almost ended()";
+}
+
+void KtvMainWindow::setupConnections()
+{
+    connect( mVideoWindow, SIGNAL(sgnlSongAlmostEnded()), this, SLOT(songAlmostEnded()) );
+    connect( mVideoWindow, SIGNAL(sgnlSongEnded()), this, SLOT(songEnded()) );
 }

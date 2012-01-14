@@ -23,6 +23,7 @@ public slots:
 
 signals:
     void sgnlSongEnded();
+    void sgnlSongAlmostEnded();
 
 private:
     /*---------------------------------------------

@@ -7,6 +7,7 @@
 class PlayListTableModel;
 class SongDatabase;
 class Song;
+class VideoWindow;
 
 class KtvMainWindow : public QMainWindow,
                       private Ui::KtvMainWindow
@@ -17,20 +18,27 @@ public:
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
-    explicit KtvMainWindow(QWidget *parent = 0);
+    explicit KtvMainWindow( VideoWindow * aVideoWindow, QWidget *parent = 0 );
     ~KtvMainWindow();
 
 public slots:
     void setSongDatabase( SongDatabase * aSongDatabase );
     void addSongToPlayList( Song const & aSong );
+    void songEnded();
+    void songAlmostEnded();
 
 private:
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
     SongDatabase * mSongDatabase;
+    VideoWindow * mVideoWindow;
     PlayListTableModel * mPlayListTableModel;
 
+    /*---------------------------------------------
+                       Functions
+    ---------------------------------------------*/
+    void setupConnections();
 };
 
 #endif // KTVMAINWINDOW_H
