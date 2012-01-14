@@ -21,6 +21,7 @@ namespace debug
         QTime elpasedTime = zeroTime.addMSecs( elapsedMSec );
         return elpasedTime.toString( "hh:mm:ss.zzz" );
     }
+
     void debugWinMsgHandler(QtMsgType type, const char *msg)
     {
         static QTime zeroTime = QTime( 0, 0, 0 );
@@ -44,6 +45,7 @@ namespace debug
                 abort();
         }
     }
+
     void dumpSongFolder( QString aSongFolderPath )
     {
         QDir dir;
@@ -57,4 +59,4 @@ namespace debug
             qDebug() << fileList.at( i ).absoluteFilePath();
         }
     }
-};
+}
