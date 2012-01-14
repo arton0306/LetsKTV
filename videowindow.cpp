@@ -92,8 +92,8 @@ The channel switch ref:
 ********************************************************************************/
 void VideoWindow::rotateChannel()
 {
-    static int channel = BOTH_CHANNEL + 1;
-    switchToChannel( (ChannelType)( channel % 3 ) );
+    static int channel = STEREO_CHANNEL + 1; // start from the next channel of stereo
+    switchToChannel( (ChannelType)( channel % CHANNEL_COUNT ) );
     ++channel;
 }
 
@@ -104,20 +104,19 @@ void VideoWindow::switchToChannel( ChannelType aChannel )
     {
         switch ( aChannel )
         {
-            case RIGHT_CHANNEL:
-                waveOutSetVolume( NULL, 0x0000FFFF );
-                DEBUG() << "switch to right channel";
-                break;
             case LEFT_CHANNEL:
                 waveOutSetVolume( NULL, 0xFFFF0000 );
                 DEBUG() << "switch to left channel";
                 break;
-            case BOTH_CHANNEL:
+            case RIGHT_CHANNEL:
+                waveOutSetVolume( NULL, 0x0000FFFF );
+                DEBUG() << "switch to right channel";
+                break;
+            case STEREO_CHANNEL:
                 waveOutSetVolume( NULL, 0xFFFFFFFF );
                 DEBUG() << "switch to stereo";
                 break;
             default:
-                // shouldn't be here
                 DEBUG() << "shouldn't be here";
                 break;
         }

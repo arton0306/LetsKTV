@@ -18,10 +18,12 @@ public:
     explicit VideoWindow(QWidget *parent = 0);
     ~VideoWindow();
 
+private slots:
+    void rotateChannel();
+
 public slots:
     void playSong( Song const & aSong );
     void playSong( QString aSongFilePath );
-    void rotateChannel();
 
 signals:
     void sgnlSongEnded();
@@ -35,7 +37,9 @@ private:
     {
         LEFT_CHANNEL,
         RIGHT_CHANNEL,
-        BOTH_CHANNEL
+        STEREO_CHANNEL,
+
+        CHANNEL_COUNT
     };
 
     /*---------------------------------------------
