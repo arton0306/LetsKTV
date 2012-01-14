@@ -25,11 +25,14 @@ public:
                         Functions
     ---------------------------------------------*/
     explicit PlayListTableModel(QObject *parent = 0);
+    bool isEmpty() const;
     int rowCount( const QModelIndex &aParent ) const;
     int columnCount( const QModelIndex &aParent ) const;
     QVariant headerData( int aSection, Qt::Orientation aOrientation, int aRole ) const;
     QVariant data( const QModelIndex & aIndex, int aRole ) const;
     void addSong( Song const & aSong );
+    void removeFrontSong();
+    Song const & front() const;
 
 signals:
 

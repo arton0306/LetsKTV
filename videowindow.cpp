@@ -37,7 +37,7 @@ void VideoWindow::setupConnections()
 
 void VideoWindow::playSong( Song const & aSong )
 {
-    
+    playSong( aSong.getFilePath() );
 }
 
 void VideoWindow::playSong( QString aSongFilePath )

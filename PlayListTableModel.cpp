@@ -6,6 +6,11 @@ PlayListTableModel::PlayListTableModel(QObject *parent) :
 {
 }
 
+bool PlayListTableModel::isEmpty() const
+{
+    return 0 == rowCount( QModelIndex() );
+}
+
 int PlayListTableModel::rowCount( const QModelIndex &aParent ) const
 {
     Q_UNUSED( aParent );
@@ -63,9 +68,22 @@ QString const & PlayListTableModel::getTableHeaderText( int aSection )
 
 void PlayListTableModel::addSong( Song const & aSong )
 {
-    beginInsertRows( QModelIndex(), 0, 0 );
+    beginInsertRows( QModelIndex(), mPlayList.size(), mPlayList.size() );
     mPlayList.push_back( &aSong );
     endInsertRows();
+}
+
+void PlayListTableModel::removeFrontSong()
+{
+    beginRemoveRows( QModelIndex(), 0, 0 );
+    mPlayList.pop_front();
+    endRemoveRows();
+}
+
+Song const & PlayListTableModel::front() const
+{
+    qDebug() << "Now PlayList size: " << mPlayList.size() << " get front";
+    return *mPlayList[0];
 }
 
 /*
