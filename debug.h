@@ -23,19 +23,19 @@
 /*----- Get Names -----*/
 // FileNames
 # if defined( DEBUG_PRINT_FILEPATH )
-    # define DEBUG_FILENAME ( QString( "%1").arg( __FILE__, -DEBUG_FILENAME_LENGTH, QLatin1Char(' ')) )
+    # define DEBUG_FILENAME ( QString( "%1").arg( __FILE__, -DEBUG_FILENAME_LENGTH ) )
 # else
     # define DEBUG_FILENAME
 # endif
 // Function Names
 # if defined ( DEBUG_PRINT_SHORT_FN_NAME )
-    # define DEBUG_FUNCTION_NAME QString( " %1").arg( __FUNCTION__, -DEBUG_FUNCTION_LENGTH, QLatin1Char(' '))
+    # define DEBUG_FUNCTION_NAME QString( " %1").arg( __FUNCTION__, -DEBUG_FUNCTION_LENGTH )
 # else
     # define DEBUG_FUNCTION_NAME
 # endif
 // Line numbers
 # if defined ( DEBUG_PRINT_LINENUMBER )
-    # define DEBUG_LINENUMBER ( QString("%1").arg( QString::number(__LINE__), DEBUG_LINENUMBER_LENGTH, QLatin1Char(' ')) )
+    # define DEBUG_LINENUMBER ( QString("%1").arg( QString::number(__LINE__), DEBUG_LINENUMBER_LENGTH ) )
 # else
     # define DEBUG_LINENUMBER
 # endif
