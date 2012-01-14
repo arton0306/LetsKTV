@@ -105,11 +105,11 @@ void VideoWindow::switchToChannel( ChannelType aChannel )
         switch ( aChannel )
         {
             case LEFT_CHANNEL:
-                waveOutSetVolume( NULL, 0xFFFF0000 );
+                waveOutSetVolume( NULL, 0x0000FFFF );
                 DEBUG() << "switch to left channel";
                 break;
             case RIGHT_CHANNEL:
-                waveOutSetVolume( NULL, 0x0000FFFF );
+                waveOutSetVolume( NULL, 0xFFFF0000 );
                 DEBUG() << "switch to right channel";
                 break;
             case STEREO_CHANNEL:
