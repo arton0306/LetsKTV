@@ -24,19 +24,27 @@ QString SongDbWindow::selectSongFolder()
         tr("Please pick the folder containing the songs."),
         QDir::homePath() // TODO: use preference folder
         );
-    DEBUG() << folder;
-    debug::dumpSongFolder( folder );
 
-    // TODO: haven't handle the deletion of the SongDatabase
-    mSongDatabase = new SongDatabase( folder );
+    if ( !folder.isEmpty() )
+    {
+        DEBUG() << folder;
+        debug::dumpSongFolder( folder );
 
-    // TODO: haven't handle the deletion of the SongTableModel
-    songTableView->setModel( new SongTableModel( mSongDatabase ) );
-    songTableView->setSelectionBehavior( QAbstractItemView::SelectRows );
-    songTableView->setSelectionMode( QAbstractItemView::SingleSelection );
-    songTableView->show();
+        // TODO: haven't handle the deletion of the SongDatabase
+        mSongDatabase = new SongDatabase( folder );
 
-    emit sgnlSongDatabaseChanged( mSongDatabase );
+        // TODO: haven't handle the deletion of the SongTableModel
+        songTableView->setModel( new SongTableModel( mSongDatabase ) );
+        songTableView->setSelectionBehavior( QAbstractItemView::SelectRows );
+        songTableView->setSelectionMode( QAbstractItemView::SingleSelection );
+        songTableView->show();
+
+        emit sgnlSongDatabaseChanged( mSongDatabase );
+    }
+    else
+    {
+        DEBUG() << "cancel folder selection";
+    }
     return folder;
 }
 
