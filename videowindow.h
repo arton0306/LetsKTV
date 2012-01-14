@@ -6,6 +6,7 @@
 #include <phonon>
 #include "ui_VideoWindow.h"
 
+class QShortcut;
 class Song;
 
 class VideoWindow : public QMainWindow,
@@ -20,6 +21,7 @@ public:
 public slots:
     void playSong( Song const & aSong );
     void playSong( QString aSongFilePath );
+    void rotateChannel();
 
 signals:
     void sgnlSongEnded();
@@ -27,17 +29,29 @@ signals:
 
 private:
     /*---------------------------------------------
+                        Types
+    ---------------------------------------------*/
+    enum ChannelType
+    {
+        LEFT_CHANNEL,
+        RIGHT_CHANNEL,
+        BOTH_CHANNEL
+    };
+
+    /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
     Phonon::MediaObject * mMediaObject;
     Phonon::VideoWidget * mVideoWidget;
     Phonon::AudioOutput * mAudioOutput;
+    QShortcut * mSwitchChannelShortcut;
 
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
     void setupConnections();
     bool eventFilter(QObject *target, QEvent *event);
+    void switchToChannel( ChannelType aChannel );
 };
 
 #endif // VIDEOWINDOW_H

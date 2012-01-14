@@ -1,8 +1,12 @@
+#include "Windows.h"
+#include "Mmsystem.h"
 #include "debug.h"
 #include "VideoWindow.h"
 #include "Song.h"
 #include <QtGlobal>
 #include <Qtimer>
+#include <QShortcut>
+
 
 const int ONE_SECOND = 1000;
 const int PREFINISH_HINT_MSEC = ONE_SECOND * 30;
@@ -13,6 +17,7 @@ VideoWindow::VideoWindow(QWidget *parent) :
     setupUi(this);
     mVideoWidget = new Phonon::VideoWidget( this );
     mVideoWidget->installEventFilter( this );
+    mSwitchChannelShortcut = new QShortcut(QKeySequence("*"), mVideoWidget );
     mGridLayout->addWidget( mVideoWidget );
 
     mMediaObject = new Phonon::MediaObject( this );
@@ -34,6 +39,7 @@ void VideoWindow::setupConnections()
     mMediaObject->setPrefinishMark( PREFINISH_HINT_MSEC );
     connect( mMediaObject, SIGNAL(prefinishMarkReached(qint32)), this, SIGNAL(sgnlSongAlmostEnded()) );
     connect( mMediaObject, SIGNAL(finished()), this, SIGNAL(sgnlSongEnded()) );
+    connect( mSwitchChannelShortcut, SIGNAL(activated()), this, SLOT(rotateChannel()) );
 }
 
 bool VideoWindow::eventFilter(QObject *target, QEvent *event)
@@ -52,6 +58,7 @@ bool VideoWindow::eventFilter(QObject *target, QEvent *event)
             DEBUG() << "not full screen => full screen";
         }
     }
+
     return QMainWindow::eventFilter(target, event);
 }
 
@@ -77,4 +84,42 @@ void VideoWindow::playSong( QString aSongFilePath )
     }
 
     mMediaObject->play();
+}
+
+/********************************************************************************
+The channel switch ref:
+   http://msdn.microsoft.com/en-us/library/windows/desktop/dd743874(v=vs.85).aspx
+********************************************************************************/
+void VideoWindow::rotateChannel()
+{
+    static int channel = BOTH_CHANNEL + 1;
+    switchToChannel( (ChannelType)( channel % 3 ) );
+    ++channel;
+}
+
+void VideoWindow::switchToChannel( ChannelType aChannel )
+{
+    DWORD dwVolume;
+    if (waveOutGetVolume(NULL, &dwVolume) == MMSYSERR_NOERROR)
+    {
+        switch ( aChannel )
+        {
+            case RIGHT_CHANNEL:
+                waveOutSetVolume( NULL, 0x0000FFFF );
+                DEBUG() << "switch to right channel";
+                break;
+            case LEFT_CHANNEL:
+                waveOutSetVolume( NULL, 0xFFFF0000 );
+                DEBUG() << "switch to left channel";
+                break;
+            case BOTH_CHANNEL:
+                waveOutSetVolume( NULL, 0xFFFFFFFF );
+                DEBUG() << "switch to stereo";
+                break;
+            default:
+                // shouldn't be here
+                DEBUG() << "shouldn't be here";
+                break;
+        }
+    }
 }

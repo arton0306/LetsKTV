@@ -90,3 +90,5 @@ FORMS    += \
 
 
 
+
+win32: LIBS += -lWinMM
