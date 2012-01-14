@@ -37,6 +37,7 @@ private:
                        Functions
     ---------------------------------------------*/
     void setupConnections();
+    bool eventFilter(QObject *target, QEvent *event);
 };
 
 #endif // VIDEOWINDOW_H

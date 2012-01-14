@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "VideoWindow.h"
 #include "Song.h"
 #include <QtGlobal>
@@ -11,6 +12,7 @@ VideoWindow::VideoWindow(QWidget *parent) :
 {
     setupUi(this);
     mVideoWidget = new Phonon::VideoWidget( this );
+    mVideoWidget->installEventFilter( this );
     mGridLayout->addWidget( mVideoWidget );
 
     mMediaObject = new Phonon::MediaObject( this );
@@ -32,6 +34,25 @@ void VideoWindow::setupConnections()
     mMediaObject->setPrefinishMark( PREFINISH_HINT_MSEC );
     connect( mMediaObject, SIGNAL(prefinishMarkReached(qint32)), this, SIGNAL(sgnlSongAlmostEnded()) );
     connect( mMediaObject, SIGNAL(finished()), this, SIGNAL(sgnlSongEnded()) );
+}
+
+bool VideoWindow::eventFilter(QObject *target, QEvent *event)
+{
+    if (target == mVideoWidget && event->type() == QEvent::MouseButtonPress )
+    {
+        DEBUG() << "click on video widget";
+        if ( mVideoWidget->isFullScreen() )
+        {
+            mVideoWidget->exitFullScreen();
+            DEBUG() << "full screen => exit fullscreen";
+        }
+        else
+        {
+            mVideoWidget->setFullScreen( true );
+            DEBUG() << "not full screen => full screen";
+        }
+    }
+    return QMainWindow::eventFilter(target, event);
 }
 
 void VideoWindow::playSong( Song const & aSong )
