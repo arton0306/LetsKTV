@@ -4,6 +4,7 @@
 #include "KtvMainWindow.h"
 #include "VideoWindow.h"
 #include "SongDbWindow.h"
+#include "PaintWidget.h"
 
 int main(int argc, char *argv[])
 {
@@ -31,6 +32,9 @@ int main(int argc, char *argv[])
     SongDbWindow songDbWindow;
     songDbWindow.show();
 
+    PaintWidget test;
+    test.show();
+
     QObject::connect( &songDbWindow, SIGNAL(sgnlSongDatabaseChanged( SongDatabase * )),
              &ktvMainWindow, SLOT(setSongDatabase( SongDatabase * )) );
     QObject::connect( &songDbWindow, SIGNAL(sgnlDoubleClickOneSong( Song const & )),
@@ -38,4 +42,3 @@ int main(int argc, char *argv[])
 
     return letsKtv.exec();
 }
-

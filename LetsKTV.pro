@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     PlayList.cpp \
     SongDatabase.cpp \
     Song.cpp \
-    PlayListTableModel.cpp
+    PlayListTableModel.cpp \
+    PaintWidget.cpp
 
 HEADERS  += \
     KtvMainWindow.h \
@@ -30,7 +31,8 @@ HEADERS  += \
     PlayList.h \
     SongDatabase.h \
     Song.h \
-    PlayListTableModel.h
+    PlayListTableModel.h \
+    PaintWidget.h
 
 FORMS    += \
     KtvMainWindow.ui \
@@ -92,3 +94,5 @@ FORMS    += \
 
 
 win32: LIBS += -lWinMM
+
+
