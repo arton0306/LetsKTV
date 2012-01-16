@@ -10,7 +10,7 @@ class PaintWidget : public QWidget
     PaintWidget(QWidget* parent = 0);
     ~PaintWidget(){}
     virtual void paintEvent(QPaintEvent*);
-    //virtual QSize sizeHint() const {return QSize(200,200);}
+    virtual QSize sizeHint() const {return QSize(200,200);}
 };
 
 #endif // PAINTWIDGET_H

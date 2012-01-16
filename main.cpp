@@ -5,6 +5,7 @@
 #include "VideoWindow.h"
 #include "SongDbWindow.h"
 #include "PaintWidget.h"
+#include "SonglistPainter.h"
 
 int main(int argc, char *argv[])
 {
@@ -23,6 +24,7 @@ int main(int argc, char *argv[])
     DEBUG() << "測試codec 程式開始…";
     DEBUG() << "測試codec 程式開始…";
 
+    /*
     VideoWindow videoWindow;
     videoWindow.show();
 
@@ -39,6 +41,9 @@ int main(int argc, char *argv[])
              &ktvMainWindow, SLOT(setSongDatabase( SongDatabase * )) );
     QObject::connect( &songDbWindow, SIGNAL(sgnlDoubleClickOneSong( Song const & )),
              &ktvMainWindow, SLOT(addSongToPlayList( Song const & )) );
+    */
+
+    SonglistPainter test;
 
     return letsKtv.exec();
 }
