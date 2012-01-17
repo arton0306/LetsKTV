@@ -31,6 +31,9 @@ private:
     int getTableSubTitleBeginY( QRect const & aPrinter ) const;
     int getTableBeginY( QRect const & aPrinter ) const;
 
+    int getHlineBeginY( QPrinter & aPrinter, int aRowIndex ) const;
+    int getRowHeight( QPrinter & aPrinter ) const;
+    double getColWidth( QPrinter & aPrinter, int aColIndex ) const;
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/

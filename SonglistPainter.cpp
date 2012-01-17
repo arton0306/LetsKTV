@@ -39,12 +39,12 @@ int SonglistPainter::getTableTitleBeginY( QRect const & aRect ) const
 
 int SonglistPainter::getTableSubTitleBeginY( QRect const & aRect ) const
 {
-    return PAGE_PADDING + ( aRect.height() - 2 * PAGE_PADDING ) * TABLE_TITLE_RATIO_TO_HEIGHT;
+    return PAGE_PADDING + ( aRect.height() - LR_PAGE_PADDING ) * TABLE_TITLE_RATIO_TO_HEIGHT;
 }
 
 int SonglistPainter::getTableBeginY( QRect const & aRect ) const
 {
-    return getTableTitleBeginY( aRect ) + ( aRect.height() - 2 * PAGE_PADDING ) * TABLE_SUBTITLE_RATIO_TO_HEIGHT;
+    return getTableTitleBeginY( aRect ) + ( aRect.height() - LR_PAGE_PADDING ) * TABLE_SUBTITLE_RATIO_TO_HEIGHT;
 }
 
 void SonglistPainter::makePdf( QString aFileName )
@@ -70,15 +70,15 @@ void SonglistPainter::makePdf( QString aFileName )
     // draw table
     QPen pen( Qt::black, TABLE_BORDER );
     pixmapPainter.setPen( pen );
-    const int TABLE_BEGIN_Y = getTableBeginY( printer.pageRect() );
     for ( int rowIndex = 0; rowIndex < TABLE_ROW_COUNT + 1; ++rowIndex ) // the horizontal line is 1 more than the row count
     {
+        // draw horizontal line
         pixmapPainter.drawLine
             (
             PAGE_PADDING,
-            TABLE_BEGIN_Y + ( printer.pageRect().height() - PAGE_PADDING - TABLE_BEGIN_Y - TABLE_BORDER ) / TABLE_ROW_COUNT * rowIndex,
+            getHlineBeginY( printer, rowIndex ),
             printer.pageRect().width() - PAGE_PADDING - TABLE_BORDER,
-            TABLE_BEGIN_Y + ( printer.pageRect().height() - PAGE_PADDING - TABLE_BEGIN_Y - TABLE_BORDER ) / TABLE_ROW_COUNT * rowIndex
+            getHlineBeginY( printer, rowIndex )
             );
 
         if ( rowIndex == TABLE_ROW_COUNT )
@@ -87,24 +87,54 @@ void SonglistPainter::makePdf( QString aFileName )
         double xPos = PAGE_PADDING; // do not use int to avoid the error accumulation
         for ( int colIndex = 0; colIndex < TABLE_COL_COUNT; ++colIndex )
         {
-            pixmapPainter.drawLine
+            // draw vertical line
+            pixmapPainter.drawLine( xPos, getHlineBeginY( printer, rowIndex ),
+                                    xPos, getHlineBeginY( printer, rowIndex + 1 ) );
+            // write the text of song info
+            QRect textRect
                 (
-                xPos,
-                TABLE_BEGIN_Y + ( printer.pageRect().height() - PAGE_PADDING - TABLE_BEGIN_Y - TABLE_BORDER ) / TABLE_ROW_COUNT * rowIndex,
-                xPos,
-                TABLE_BEGIN_Y + ( printer.pageRect().height() - PAGE_PADDING - TABLE_BEGIN_Y - TABLE_BORDER ) / TABLE_ROW_COUNT * ( rowIndex + 1 )
+                xPos + TABLE_BORDER,
+                getHlineBeginY( printer, rowIndex ) + TABLE_BORDER,
+                getColWidth( printer, colIndex ),
+                getRowHeight( printer )
                 );
-            xPos += TABLE_BORDER + ( TABLE_EACH_COL_WIDTH_RATIO[colIndex % COLUMN_TYPE_COUNT] * ( printer.pageRect().width() - LR_PAGE_PADDING - ( TABLE_COL_COUNT + 1 ) * TABLE_BORDER ) / N_SONG_PER_ROW );
-        }
-        pixmapPainter.drawLine
-            (
-            xPos,
-            TABLE_BEGIN_Y + ( printer.pageRect().height() - PAGE_PADDING - TABLE_BEGIN_Y - TABLE_BORDER ) / TABLE_ROW_COUNT * rowIndex,
-            xPos,
-            TABLE_BEGIN_Y + ( printer.pageRect().height() - PAGE_PADDING - TABLE_BEGIN_Y - TABLE_BORDER ) / TABLE_ROW_COUNT * ( rowIndex + 1 )
-            );
-    }
+            QFont textFont( QString( "微軟正黑體" ) );
+            textFont.setPixelSize( 30 );
+            pixmapPainter.setFont( textFont );
+            pixmapPainter.drawText( textRect, QString("一二三四五ABCDE") );
+            // drawSongText( pixmapPainter, textRect, QString("TEST") );
 
+            // increase horizontal delta
+            xPos += TABLE_BORDER + getColWidth( printer, colIndex );
+        }
+        // draw last vertical line
+        pixmapPainter.drawLine( xPos, getHlineBeginY( printer, rowIndex ),
+                                xPos, getHlineBeginY( printer, rowIndex + 1 ) );
+    }
 
     printerPainter.drawPixmap( 0, 0, paperPixmap );
 }
+
+int SonglistPainter::getHlineBeginY( QPrinter & aPrinter, int aRowIndex ) const
+{
+    return getTableBeginY( aPrinter.pageRect() ) + ( aPrinter.pageRect().height() - PAGE_PADDING - getTableBeginY( aPrinter.pageRect() ) - TABLE_BORDER ) / TABLE_ROW_COUNT * aRowIndex;
+}
+
+int SonglistPainter::getRowHeight( QPrinter & aPrinter ) const // just the height of blanket area, ignore border
+{
+    return ( aPrinter.pageRect().height() - getTableBeginY( aPrinter.pageRect() ) - PAGE_PADDING - TABLE_BORDER * ( 1 + TABLE_ROW_COUNT ) ) / TABLE_ROW_COUNT;
+}
+
+// return double to avoid error accumulation
+double SonglistPainter::getColWidth( QPrinter & aPrinter, int aColIndex ) const
+{
+    return TABLE_EACH_COL_WIDTH_RATIO[aColIndex % COLUMN_TYPE_COUNT] * ( aPrinter.pageRect().width() - LR_PAGE_PADDING - ( TABLE_COL_COUNT + 1 ) * TABLE_BORDER ) / N_SONG_PER_ROW;
+}
+
+/*
+void SonglistPainter::drawSongText( QPixmap aPixmap, QRect aRect, QString aString )
+{
+    
+}
+*/
+
