@@ -14,6 +14,7 @@ public:
     SongDatabase( QString aSongFolderPath );
     int getSongCount() const;
     Song const & getSong( int aNthSong ) const;
+    bool isEmpty() const;
 
 private:
     /*---------------------------------------------

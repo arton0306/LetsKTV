@@ -1,5 +1,6 @@
 #include <QStringList>
 #include "Song.h"
+#include "debug.h"
 
 Song::Song
     (
@@ -100,3 +101,19 @@ QString Song::getNotes() const
     return mNotes;
 }
 
+QString Song::getInfo( SongInfoType aInfoType ) const
+{
+    switch ( aInfoType )
+    {
+        case LANGUAGE: return getLanguage();
+        case GENDER:   return getGender();
+        case SINGER:   return getSinger();
+        case SONGNAME: return getSongName();
+        case FILEPATH: return getFilePath();
+        case NOTES:    return getNotes();
+        case SONGID:   return getIdText();
+        default:
+            DEBUG() << "getInfo error";
+            return QString();
+    }
+}

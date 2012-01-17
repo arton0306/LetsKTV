@@ -70,21 +70,24 @@ void SongDbWindow::toSong( const QModelIndex & aQModelIndexInSongTable )
 
 void SongDbWindow::writePdfFile()
 {
-    QString fileName = QFileDialog::getSaveFileName
-        (
-        this,
-        tr("Please enter the file name."),
-        QDir::homePath(), // TODO: use preference folder
-        tr("Pdf (*.pdf)")
-        );
+    if ( mSongDatabase != NULL && !mSongDatabase->isEmpty() )
+    {
+        QString fileName = QFileDialog::getSaveFileName
+            (
+            this,
+            tr("Please enter the file name."),
+            QDir::homePath(), // TODO: use preference folder
+            tr("Pdf (*.pdf)")
+            );
 
-    if ( !fileName.isEmpty() )
-    {
-        DEBUG() << "ready to write " << fileName;
-        mSonglistPainter->makePdf( fileName );
-    }
-    else
-    {
-        DEBUG() << "filename invalid";
+        if ( !fileName.isEmpty() )
+        {
+            DEBUG() << "ready to write " << fileName;
+            mSonglistPainter->makePdf( fileName );
+        }
+        else
+        {
+            DEBUG() << "filename invalid";
+        }
     }
 }

@@ -24,6 +24,11 @@ int SongDatabase::getSongCount() const
     return mSongs.size();
 }
 
+bool SongDatabase::isEmpty() const
+{
+    return getSongCount() == 0;
+}
+
 Song const & SongDatabase::getSong( int aNthSong ) const
 {
     return mSongs[aNthSong];

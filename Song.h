@@ -1,7 +1,6 @@
 #ifndef SONG_H
 #define SONG_H
 
-// #include <QMetaType>
 #include <QString>
 
 class Song
@@ -15,18 +14,17 @@ public:
     /*---------------------------------------------
                          Types
     ---------------------------------------------*/
-    enum SongFileColumnType
+    enum SongInfoType
     {
         // the order is according to the specail file name format
         LANGUAGE,
         GENDER,
         SINGER,
-        SONGNAME
-    };
+        SONGNAME,
 
-    enum SongFileExtraInfo
-    {
+        // ExtraInfo
         FILEPATH,
+        SONGID,
         NOTES
     };
 
@@ -57,6 +55,7 @@ public:
     QString getTimeLengthText() const;
     QString getFilePath() const;
     QString getNotes() const;
+    QString getInfo( SongInfoType aInfoType ) const;
 
 private:
     int mId;
@@ -68,7 +67,5 @@ private:
     QString mFilePath;
     QString mNotes;
 };
-
-// Q_DECLARE_METATYPE(Song)
 
 #endif // SONG_H

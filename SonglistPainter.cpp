@@ -1,7 +1,9 @@
 #include <QPrinter>
 #include <QPainter>
 #include <QPixmap>
+#include "Song.h"
 #include "SonglistPainter.h"
+#include "debug.h"
 
 // page padding
 const int PAGE_PADDING = 18; // pixel count ( 4 border )
@@ -12,8 +14,11 @@ const double TABLE_TITLE_RATIO_TO_HEIGHT    =  3.5 / 20.0;
 const double TABLE_SUBTITLE_RATIO_TO_HEIGHT =  1.9 / 20.0;
 const double TABLE_RATIO_TO_HEIGHT          = 14.6 / 20.0;
 
-// column width ratio
+// column type
 const int COLUMN_TYPE_COUNT = 3;
+const Song::SongInfoType COLUMN_INFO[] = { Song::SONGID, Song::SONGNAME, Song::SINGER };
+
+// column width ratio
 const double SONGID_RATIO     = 2.0 / 10.0;
 const double SONGTITLE_RATIO  = 5.5 / 10.0;
 const double SINGERNAME_RATIO = 2.5 / 10.0;
@@ -97,7 +102,18 @@ void SonglistPainter::makePdf( QString aFileName )
                 getColWidth( printer, colIndex ),
                 getRowHeight( printer )
                 );
-            drawSongText( pixmapPainter, textRect, QString("一二三四五TEST"), SONGID );
+            int songIndex = rowIndex * N_SONG_PER_ROW + colIndex / COLUMN_TYPE_COUNT;
+            if ( songIndex < mSongDatabase->getSongCount() )
+            {
+                DEBUG() << songIndex << mSongDatabase->getSong( songIndex ).getInfo( COLUMN_INFO[colIndex % COLUMN_TYPE_COUNT ] );
+                drawSongText
+                    (
+                    pixmapPainter,
+                    textRect,
+                    mSongDatabase->getSong( songIndex ).getInfo( COLUMN_INFO[colIndex % COLUMN_TYPE_COUNT ] ),
+                    static_cast<ColumnType>( colIndex % COLUMN_TYPE_COUNT )
+                    );
+            }
 
             // increase horizontal delta
             xPos += TABLE_BORDER + getColWidth( printer, colIndex );
