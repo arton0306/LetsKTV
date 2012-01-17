@@ -3,6 +3,7 @@
 #include "debug.h"
 #include "SongDbWindow.h"
 #include "SongTableModel.h"
+#include "SonglistPainter.h"
 
 SongDbWindow::SongDbWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -14,6 +15,7 @@ SongDbWindow::SongDbWindow(QWidget *parent) :
 
 SongDbWindow::~SongDbWindow()
 {
+    delete mSonglistPainter;
 }
 
 QString SongDbWindow::selectSongFolder()
@@ -32,6 +34,7 @@ QString SongDbWindow::selectSongFolder()
 
         // TODO: haven't handle the deletion of the SongDatabase
         mSongDatabase = new SongDatabase( folder );
+        mSonglistPainter = new SonglistPainter( mSongDatabase );
 
         // TODO: haven't handle the deletion of the SongTableModel
         songTableView->setModel( new SongTableModel( mSongDatabase ) );
@@ -51,6 +54,7 @@ QString SongDbWindow::selectSongFolder()
 void SongDbWindow::setupActions()
 {
     connect( actionSelectFolder, SIGNAL(triggered( bool )), this, SLOT(selectSongFolder()) );
+    connect( actionPrintSongList, SIGNAL(triggered( bool )), this, SLOT(writePdfFile()) );
 }
 
 void SongDbWindow::setupConnections()
@@ -62,4 +66,25 @@ void SongDbWindow::toSong( const QModelIndex & aQModelIndexInSongTable )
 {
     DEBUG() << "double clicked on table model at row: " << aQModelIndexInSongTable.row();
     emit sgnlDoubleClickOneSong( mSongDatabase->getSong( aQModelIndexInSongTable.row() ) );
+}
+
+void SongDbWindow::writePdfFile()
+{
+    QString fileName = QFileDialog::getSaveFileName
+        (
+        this,
+        tr("Please enter the file name."),
+        QDir::homePath(), // TODO: use preference folder
+        tr("Pdf (*.pdf)")
+        );
+
+    if ( !fileName.isEmpty() )
+    {
+        DEBUG() << "ready to write " << fileName;
+        mSonglistPainter->makePdf( fileName );
+    }
+    else
+    {
+        DEBUG() << "filename invalid";
+    }
 }

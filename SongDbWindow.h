@@ -4,7 +4,10 @@
 #include <QMainWindow>
 #include <QString>
 #include "ui_SongDbWindow.h"
-#include "SongDatabase.h"
+#include "Song.h"
+
+class SongDatabase;
+class SonglistPainter;
 
 class SongDbWindow : public QMainWindow,
                      private Ui::SongDbWindow
@@ -20,6 +23,7 @@ public slots:
 private slots:
     QString selectSongFolder();
     void toSong( const QModelIndex & aQModelIndexInSongTable );
+    void writePdfFile();
 
 signals:
     void sgnlSongDatabaseChanged( SongDatabase * aSongDatabase );
@@ -37,7 +41,7 @@ private:
                        Variables
     ---------------------------------------------*/
     SongDatabase * mSongDatabase;
-
+    SonglistPainter * mSonglistPainter;
 };
 
 #endif // SONGDBWINDOW_H

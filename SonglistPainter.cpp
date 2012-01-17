@@ -29,7 +29,6 @@ const int TABLE_GRID_PADDING = 3;
 SonglistPainter::SonglistPainter( SongDatabase const * aSongDatabase )
     : mSongDatabase( aSongDatabase )
 {
-    makePdf( QString() );
 }
 
 int SonglistPainter::getTableTitleBeginY( QRect const & aRect ) const
@@ -51,7 +50,7 @@ void SonglistPainter::makePdf( QString aFileName )
 {
     QPrinter printer;
     printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setOutputFileName("out.pdf");
+    printer.setOutputFileName( aFileName );
     printer.newPage();
 
     QPainter printerPainter(&printer);
@@ -98,11 +97,7 @@ void SonglistPainter::makePdf( QString aFileName )
                 getColWidth( printer, colIndex ),
                 getRowHeight( printer )
                 );
-            QFont textFont( QString( "微軟正黑體" ) );
-            textFont.setPixelSize( 30 );
-            pixmapPainter.setFont( textFont );
-            pixmapPainter.drawText( textRect, QString("一二三四五ABCDE") );
-            // drawSongText( pixmapPainter, textRect, QString("TEST") );
+            drawSongText( pixmapPainter, textRect, QString("一二三四五TEST"), SONGID );
 
             // increase horizontal delta
             xPos += TABLE_BORDER + getColWidth( printer, colIndex );
@@ -131,10 +126,11 @@ double SonglistPainter::getColWidth( QPrinter & aPrinter, int aColIndex ) const
     return TABLE_EACH_COL_WIDTH_RATIO[aColIndex % COLUMN_TYPE_COUNT] * ( aPrinter.pageRect().width() - LR_PAGE_PADDING - ( TABLE_COL_COUNT + 1 ) * TABLE_BORDER ) / N_SONG_PER_ROW;
 }
 
-/*
-void SonglistPainter::drawSongText( QPixmap aPixmap, QRect aRect, QString aString )
+void SonglistPainter::drawSongText( QPainter & aPainter, QRect const & aRect, QString const & aString, ColumnType aColType )
 {
-    
+    QFont textFont( QString( "微軟正黑體" ) );
+    textFont.setPixelSize( 20 );
+    aPainter.setFont( textFont );
+    aPainter.drawText( aRect, aString );
 }
-*/
 
