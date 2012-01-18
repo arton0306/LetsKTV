@@ -31,6 +31,7 @@ const int TABLE_ROW_COUNT = 18;
 const int N_SONG_PER_ROW = 2;
 const int TABLE_COL_COUNT = COLUMN_TYPE_COUNT * N_SONG_PER_ROW;
 const int TABLE_GRID_PADDING = 3;
+const int SONG_COUNT_PER_PAGE = N_SONG_PER_ROW * TABLE_ROW_COUNT;
 
 SonglistPainter::SonglistPainter( SongDatabase const * aSongDatabase )
     : mSongDatabase( aSongDatabase )
@@ -57,69 +58,21 @@ void SonglistPainter::makePdf( QString aFileName )
     QPrinter printer;
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setOutputFileName( aFileName );
-    printer.newPage();
 
-    QPainter painter;
-            painter.begin( &printer );
+    QPainter painter( &printer );
     painter.setRenderHint( QPainter::Antialiasing, true );
     painter.setRenderHint( QPainter::TextAntialiasing, true );
     painter.setRenderHint( QPainter::HighQualityAntialiasing, true );
 
-    // draw title
-    const int TABLE_TITLE_BEGIN_Y = getTableTitleBeginY( printer.pageRect() );
-
-    // draw subtitle
-    const int TABLE_SUBTITLE_BEGIN_Y = getTableSubTitleBeginY( printer.pageRect() );
-
-    // draw table
-    QPen pen( Qt::black, TABLE_BORDER );
-    painter.setPen( pen );
-    for ( int rowIndex = 0; rowIndex < TABLE_ROW_COUNT + 1; ++rowIndex ) // the horizontal line is 1 more than the row count
+    for ( int songBeginIndex = 0; songBeginIndex < mSongDatabase->getSongCount(); songBeginIndex += SONG_COUNT_PER_PAGE )
     {
-        // draw horizontal line
-        painter.drawLine
-            (
-            PAGE_PADDING,
-            getHlineBeginY( printer, rowIndex ),
-            printer.pageRect().width() - PAGE_PADDING - TABLE_BORDER,
-            getHlineBeginY( printer, rowIndex )
-            );
+        drawOnePage( printer, painter, songBeginIndex );
 
-        if ( rowIndex == TABLE_ROW_COUNT )
-            break;
-
-        double xPos = PAGE_PADDING; // do not use int to avoid the error accumulation
-        for ( int colIndex = 0; colIndex < TABLE_COL_COUNT; ++colIndex )
+        // qt automacially produce a new page first, so do not need to put this before drawOnePage
+        if ( songBeginIndex + SONG_COUNT_PER_PAGE < mSongDatabase->getSongCount() )
         {
-            // draw vertical line
-            painter.drawLine( xPos, getHlineBeginY( printer, rowIndex ),
-                                    xPos, getHlineBeginY( printer, rowIndex + 1 ) );
-            // write the text of song info
-            QRect textRect
-                (
-                xPos + TABLE_BORDER,
-                getHlineBeginY( printer, rowIndex ) + TABLE_BORDER,
-                getColWidth( printer, colIndex ),
-                getRowHeight( printer )
-                );
-            const int songIndex = rowIndex * N_SONG_PER_ROW + colIndex / COLUMN_TYPE_COUNT;
-            if ( songIndex < mSongDatabase->getSongCount() )
-            {
-                drawSongText
-                    (
-                    painter,
-                    textRect,
-                    mSongDatabase->getSong( songIndex ).getInfo( COLUMN_INFO[colIndex % COLUMN_TYPE_COUNT ] ),
-                    static_cast<ColumnType>( colIndex % COLUMN_TYPE_COUNT )
-                    );
-            }
-
-            // increase horizontal delta
-            xPos += TABLE_BORDER + getColWidth( printer, colIndex );
+            printer.newPage();
         }
-        // draw last vertical line
-        painter.drawLine( xPos, getHlineBeginY( printer, rowIndex ),
-                                xPos, getHlineBeginY( printer, rowIndex + 1 ) );
     }
 }
 
@@ -147,3 +100,62 @@ void SonglistPainter::drawSongText( QPainter & aPainter, QRect const & aRect, QS
     aPainter.drawText( aRect.adjusted( TABLE_GRID_PADDING, TABLE_GRID_PADDING, -TABLE_GRID_PADDING, -TABLE_GRID_PADDING ), aString );
 }
 
+void SonglistPainter::drawOnePage( QPrinter & aPrinter, QPainter & aPainter, int aSongBeginIndex )
+{
+    // draw title
+    const int TABLE_TITLE_BEGIN_Y = getTableTitleBeginY( aPrinter.pageRect() );
+
+    // draw subtitle
+    const int TABLE_SUBTITLE_BEGIN_Y = getTableSubTitleBeginY( aPrinter.pageRect() );
+
+    // draw table
+    QPen pen( Qt::black, TABLE_BORDER );
+    aPainter.setPen( pen );
+    for ( int rowIndex = 0; rowIndex < TABLE_ROW_COUNT + 1; ++rowIndex ) // the horizontal line is 1 more than the row count
+    {
+        // draw horizontal line
+        aPainter.drawLine
+            (
+            PAGE_PADDING,
+            getHlineBeginY( aPrinter, rowIndex ),
+            aPrinter.pageRect().width() - PAGE_PADDING - TABLE_BORDER,
+            getHlineBeginY( aPrinter, rowIndex )
+            );
+
+        if ( rowIndex == TABLE_ROW_COUNT )
+            break;
+
+        double xPos = PAGE_PADDING; // do not use int to avoid the error accumulation
+        for ( int colIndex = 0; colIndex < TABLE_COL_COUNT; ++colIndex )
+        {
+            // draw vertical line
+            aPainter.drawLine( xPos, getHlineBeginY( aPrinter, rowIndex ),
+                                    xPos, getHlineBeginY( aPrinter, rowIndex + 1 ) );
+            // write the text of song info
+            QRect textRect
+                (
+                xPos + TABLE_BORDER,
+                getHlineBeginY( aPrinter, rowIndex ) + TABLE_BORDER,
+                getColWidth( aPrinter, colIndex ),
+                getRowHeight( aPrinter )
+                );
+            const int songIndex = aSongBeginIndex + rowIndex * N_SONG_PER_ROW + colIndex / COLUMN_TYPE_COUNT;
+            if ( songIndex < mSongDatabase->getSongCount() )
+            {
+                drawSongText
+                    (
+                    aPainter,
+                    textRect,
+                    mSongDatabase->getSong( songIndex ).getInfo( COLUMN_INFO[colIndex % COLUMN_TYPE_COUNT ] ),
+                    static_cast<ColumnType>( colIndex % COLUMN_TYPE_COUNT )
+                    );
+            }
+
+            // increase horizontal delta
+            xPos += TABLE_BORDER + getColWidth( aPrinter, colIndex );
+        }
+        // draw last vertical line
+        aPainter.drawLine( xPos, getHlineBeginY( aPrinter, rowIndex ),
+                                xPos, getHlineBeginY( aPrinter, rowIndex + 1 ) );
+    }
+}
