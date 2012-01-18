@@ -4,7 +4,8 @@
 #include "Song.h"
 #include "SonglistPainter.h"
 #include "debug.h"
-
+#include <QDate>
+#include <QString>
 // page padding
 const int PAGE_PADDING = 18; // pixel count ( 4 border )
 const int LR_PAGE_PADDING = PAGE_PADDING * 2; // sum of left and right page padding
@@ -58,12 +59,11 @@ void SonglistPainter::makePdf( QString aFileName )
     printer.setOutputFileName( aFileName );
     printer.newPage();
 
-    QPainter printerPainter(&printer);
-
-    QPixmap paperPixmap( printer.pageRect().size() );
-    paperPixmap.fill(); // default with White
-    QPainter pixmapPainter( &paperPixmap );
-    pixmapPainter.setRenderHint( QPainter::Antialiasing, true );
+    QPainter painter;
+            painter.begin( &printer );
+    painter.setRenderHint( QPainter::Antialiasing, true );
+    painter.setRenderHint( QPainter::TextAntialiasing, true );
+    painter.setRenderHint( QPainter::HighQualityAntialiasing, true );
 
     // draw title
     const int TABLE_TITLE_BEGIN_Y = getTableTitleBeginY( printer.pageRect() );
@@ -73,11 +73,11 @@ void SonglistPainter::makePdf( QString aFileName )
 
     // draw table
     QPen pen( Qt::black, TABLE_BORDER );
-    pixmapPainter.setPen( pen );
+    painter.setPen( pen );
     for ( int rowIndex = 0; rowIndex < TABLE_ROW_COUNT + 1; ++rowIndex ) // the horizontal line is 1 more than the row count
     {
         // draw horizontal line
-        pixmapPainter.drawLine
+        painter.drawLine
             (
             PAGE_PADDING,
             getHlineBeginY( printer, rowIndex ),
@@ -92,7 +92,7 @@ void SonglistPainter::makePdf( QString aFileName )
         for ( int colIndex = 0; colIndex < TABLE_COL_COUNT; ++colIndex )
         {
             // draw vertical line
-            pixmapPainter.drawLine( xPos, getHlineBeginY( printer, rowIndex ),
+            painter.drawLine( xPos, getHlineBeginY( printer, rowIndex ),
                                     xPos, getHlineBeginY( printer, rowIndex + 1 ) );
             // write the text of song info
             QRect textRect
@@ -102,13 +102,12 @@ void SonglistPainter::makePdf( QString aFileName )
                 getColWidth( printer, colIndex ),
                 getRowHeight( printer )
                 );
-            int songIndex = rowIndex * N_SONG_PER_ROW + colIndex / COLUMN_TYPE_COUNT;
+            const int songIndex = rowIndex * N_SONG_PER_ROW + colIndex / COLUMN_TYPE_COUNT;
             if ( songIndex < mSongDatabase->getSongCount() )
             {
-                DEBUG() << songIndex << mSongDatabase->getSong( songIndex ).getInfo( COLUMN_INFO[colIndex % COLUMN_TYPE_COUNT ] );
                 drawSongText
                     (
-                    pixmapPainter,
+                    painter,
                     textRect,
                     mSongDatabase->getSong( songIndex ).getInfo( COLUMN_INFO[colIndex % COLUMN_TYPE_COUNT ] ),
                     static_cast<ColumnType>( colIndex % COLUMN_TYPE_COUNT )
@@ -119,11 +118,9 @@ void SonglistPainter::makePdf( QString aFileName )
             xPos += TABLE_BORDER + getColWidth( printer, colIndex );
         }
         // draw last vertical line
-        pixmapPainter.drawLine( xPos, getHlineBeginY( printer, rowIndex ),
+        painter.drawLine( xPos, getHlineBeginY( printer, rowIndex ),
                                 xPos, getHlineBeginY( printer, rowIndex + 1 ) );
     }
-
-    printerPainter.drawPixmap( 0, 0, paperPixmap );
 }
 
 int SonglistPainter::getHlineBeginY( QPrinter & aPrinter, int aRowIndex ) const
@@ -145,8 +142,8 @@ double SonglistPainter::getColWidth( QPrinter & aPrinter, int aColIndex ) const
 void SonglistPainter::drawSongText( QPainter & aPainter, QRect const & aRect, QString const & aString, ColumnType aColType )
 {
     QFont textFont( QString( "·L³n¥¿¶ÂÅé" ) );
-    textFont.setPixelSize( 20 );
+    // textFont.setPixelSize( 20 );
     aPainter.setFont( textFont );
-    aPainter.drawText( aRect, aString );
+    aPainter.drawText( aRect.adjusted( TABLE_GRID_PADDING, TABLE_GRID_PADDING, -TABLE_GRID_PADDING, -TABLE_GRID_PADDING ), aString );
 }
 
