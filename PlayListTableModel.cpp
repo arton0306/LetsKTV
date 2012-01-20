@@ -85,28 +85,3 @@ Song const & PlayListTableModel::front() const
     DEBUG() << "Now PlayList size: " << mPlayList.size() << " get front";
     return *mPlayList[0];
 }
-
-/*
-bool PlayListTableModel::setData( const QModelIndex & aIndex, const QVariant & aValue, int aRole )
-{
-    if ( aIndex.isValid() && aRole == Qt::DisplayRole )
-    {
-        Song const * song = aValue.value<Song const *>();
-        switch ( aIndex.column() )
-        {
-            case SINGER:     return mPlayList[aIndex.row()]->getSinger();
-            case SONGNAME:   return mPlayList[aIndex.row()]->getSongName();
-            default:
-                DEBUG() << "getdata column error";
-                return QVariant();
-        }
-        mPlayList[aIndex.row()]
-    }
-}
-
-bool PlayListTableModel::insertRows( int aRow, int aCount, QModelIndex const & aModelIndex )
-{
-    Song const * aSong = static_cast<Song const *>( aModelIndex.internalPointer() );
-    beginInsertRows( QModelIndex(), row, 
-}
-*/

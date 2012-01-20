@@ -15,7 +15,6 @@ SongDbWindow::SongDbWindow(QWidget *parent) :
 
 SongDbWindow::~SongDbWindow()
 {
-    delete mSonglistPainter;
 }
 
 QString SongDbWindow::selectSongFolder()
@@ -34,7 +33,6 @@ QString SongDbWindow::selectSongFolder()
 
         // TODO: haven't handle the deletion of the SongDatabase
         mSongDatabase = new SongDatabase( folder );
-        mSonglistPainter = new SonglistPainter( mSongDatabase );
 
         // TODO: haven't handle the deletion of the SongTableModel
         songTableView->setModel( new SongTableModel( mSongDatabase ) );
@@ -83,7 +81,7 @@ void SongDbWindow::writePdfFile()
         if ( !fileName.isEmpty() )
         {
             DEBUG() << "ready to write " << fileName;
-            mSonglistPainter->makePdf( fileName );
+            SonglistPainter( mSongDatabase ).makePdf( fileName );
         }
         else
         {

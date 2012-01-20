@@ -41,7 +41,6 @@ private:
                        Variables
     ---------------------------------------------*/
     SongDatabase * mSongDatabase;
-    SonglistPainter * mSonglistPainter;
 };
 
 #endif // SONGDBWINDOW_H
