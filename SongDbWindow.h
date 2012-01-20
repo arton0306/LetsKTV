@@ -37,6 +37,7 @@ private:
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
+    void reset();
     void setupActions();
     void setupConnections();
     void dumpSongFolder();

@@ -11,8 +11,12 @@
 const int ONE_SECOND = 1000;
 const int PREFINISH_HINT_MSEC = ONE_SECOND * 30;
 
-VideoWindow::VideoWindow(QWidget *parent) :
-    QMainWindow(parent)
+VideoWindow::VideoWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , mMediaObject( NULL )
+    , mVideoWidget( NULL )
+    , mAudioOutput( NULL )
+    , mSwitchChannelShortcut( NULL )
 {
     setupUi(this);
     mVideoWidget = new Phonon::VideoWidget( this );

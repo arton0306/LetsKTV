@@ -7,6 +7,7 @@
 
 SongDbWindow::SongDbWindow(QWidget *parent)
     : QMainWindow(parent)
+    , mSongDatabase( NULL )
     , mPreference( QSettings::IniFormat, QSettings::UserScope, "Arton Soft", "Lets KTV")
 {
     setupUi(this);
@@ -16,6 +17,12 @@ SongDbWindow::SongDbWindow(QWidget *parent)
 
 SongDbWindow::~SongDbWindow()
 {
+}
+
+void SongDbWindow::reset()
+{
+    delete songTableView->selectionModel();
+    delete mSongDatabase;
 }
 
 QString SongDbWindow::getDefaultFolder( QString aSettingKey ) const
@@ -37,13 +44,10 @@ QString SongDbWindow::selectSongFolder()
     if ( !folder.isEmpty() )
     {
         DEBUG() << folder;
-        debug::dumpSongFolder( folder );
         mPreference.setValue( "SongDefaultFolder", folder );
 
-        // TODO: haven't handle the deletion of the SongDatabase
+        reset();
         mSongDatabase = new SongDatabase( folder );
-
-        // TODO: haven't handle the deletion of the SongTableModel
         songTableView->setModel( new SongTableModel( mSongDatabase ) );
         songTableView->setSelectionBehavior( QAbstractItemView::SelectRows );
         songTableView->setSelectionMode( QAbstractItemView::SingleSelection );
