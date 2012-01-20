@@ -22,9 +22,7 @@ QString SongDbWindow::getDefaultFolder( QString aSettingKey ) const
 {
     QString prefValue = mPreference.value( aSettingKey ).toString();
     DEBUG() << "pref " << aSettingKey << prefValue;
-    if ( prefValue.isEmpty() ) return QString();
-    if ( !QFileInfo( prefValue ).isDir() ) return QDir::homePath();
-    return prefValue;
+    return QFileInfo( prefValue ).isDir() ? prefValue : QDir::homePath();
 }
 
 QString SongDbWindow::selectSongFolder()
