@@ -5,8 +5,9 @@
 #include "SongTableModel.h"
 #include "SonglistPainter.h"
 
-SongDbWindow::SongDbWindow(QWidget *parent) :
-    QMainWindow(parent)
+SongDbWindow::SongDbWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , mPreference( QSettings::IniFormat, QSettings::UserScope, "Arton Soft", "Lets KTV")
 {
     setupUi(this);
     setupActions();
@@ -17,14 +18,24 @@ SongDbWindow::~SongDbWindow()
 {
 }
 
+QString SongDbWindow::getSongDefaultFolder() const
+{
+    QString prefValue = mPreference.value( "SongDefaultFolder" ).toString();
+    DEBUG() << "pref song default folder: " << prefValue;
+    if ( prefValue.isEmpty() ) return QString();
+    if ( !QFileInfo( prefValue ).isDir() ) return QDir::homePath();
+    return prefValue;
+}
+
 QString SongDbWindow::selectSongFolder()
 {
     QString folder = QFileDialog::getExistingDirectory
         (
         this,
         tr("Please pick the folder containing the songs."),
-        QDir::homePath() // TODO: use preference folder
+        getSongDefaultFolder()
         );
+    mPreference.setValue( "SongDefaultFolder", folder.isEmpty() ? getSongDefaultFolder() : folder );
 
     if ( !folder.isEmpty() )
     {

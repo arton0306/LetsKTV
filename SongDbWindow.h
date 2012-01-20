@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QString>
+#include <QSettings>
 #include "ui_SongDbWindow.h"
 #include "Song.h"
 
@@ -15,6 +16,9 @@ class SongDbWindow : public QMainWindow,
     Q_OBJECT
 
 public:
+    /*---------------------------------------------
+                       Functions
+    ---------------------------------------------*/
     explicit SongDbWindow(QWidget *parent = 0);
     ~SongDbWindow();
 
@@ -36,11 +40,13 @@ private:
     void setupActions();
     void setupConnections();
     void dumpSongFolder();
+    QString getSongDefaultFolder() const;
 
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
     SongDatabase * mSongDatabase;
+    QSettings mPreference;
 };
 
 #endif // SONGDBWINDOW_H
