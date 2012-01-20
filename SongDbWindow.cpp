@@ -18,10 +18,10 @@ SongDbWindow::~SongDbWindow()
 {
 }
 
-QString SongDbWindow::getSongDefaultFolder() const
+QString SongDbWindow::getDefaultFolder( QString aSettingKey ) const
 {
-    QString prefValue = mPreference.value( "SongDefaultFolder" ).toString();
-    DEBUG() << "pref song default folder: " << prefValue;
+    QString prefValue = mPreference.value( aSettingKey ).toString();
+    DEBUG() << "pref " << aSettingKey << prefValue;
     if ( prefValue.isEmpty() ) return QString();
     if ( !QFileInfo( prefValue ).isDir() ) return QDir::homePath();
     return prefValue;
@@ -33,14 +33,14 @@ QString SongDbWindow::selectSongFolder()
         (
         this,
         tr("Please pick the folder containing the songs."),
-        getSongDefaultFolder()
+        getDefaultFolder( "SongDefaultFolder" )
         );
-    mPreference.setValue( "SongDefaultFolder", folder.isEmpty() ? getSongDefaultFolder() : folder );
 
     if ( !folder.isEmpty() )
     {
         DEBUG() << folder;
         debug::dumpSongFolder( folder );
+        mPreference.setValue( "SongDefaultFolder", folder );
 
         // TODO: haven't handle the deletion of the SongDatabase
         mSongDatabase = new SongDatabase( folder );
@@ -85,7 +85,7 @@ void SongDbWindow::writePdfFile()
             (
             this,
             tr("Please enter the file name."),
-            QDir::homePath(), // TODO: use preference folder
+            getDefaultFolder( "WritePdfDefaultFolder" ),
             tr("Pdf (*.pdf)")
             );
 
@@ -93,6 +93,7 @@ void SongDbWindow::writePdfFile()
         {
             DEBUG() << "ready to write " << fileName;
             SonglistPainter( mSongDatabase ).makePdf( fileName );
+            mPreference.setValue( "WritePdfDefaultFolder", QFileInfo( fileName ).canonicalPath() );
         }
         else
         {

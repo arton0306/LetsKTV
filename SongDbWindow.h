@@ -40,7 +40,7 @@ private:
     void setupActions();
     void setupConnections();
     void dumpSongFolder();
-    QString getSongDefaultFolder() const;
+    QString getDefaultFolder( QString aSettingKey ) const;
 
     /*---------------------------------------------
                        Variables
