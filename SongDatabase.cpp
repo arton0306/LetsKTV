@@ -1,5 +1,7 @@
 #include <QDir>
 #include "SongDatabase.h"
+#include "debug.h"
+#include "WordManager.h"
 
 SongDatabase::SongDatabase( QString aSongFolderPath )
 {
@@ -16,6 +18,8 @@ SongDatabase::SongDatabase( QString aSongFolderPath )
         song.setTimeLength( Song::TIME_UNKNOWN );
         song.setId( i + 1 ); // so that the id of song begining from 1
         mSongs.push_back( song );
+
+        DEBUG() << song.getSinger() << WordManager::compare( WordManager::STROKE_ORDER, song.getSinger(), QString() );
     }
 }
 

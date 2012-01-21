@@ -6,6 +6,7 @@
 #include "SongDbWindow.h"
 #include "PaintWidget.h"
 #include "SonglistPainter.h"
+#include "WordManager.h"
 
 int main(int argc, char *argv[])
 {
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
 
     // PaintWidget test;
     // test.show();
+    WordManager::test();
 
     QObject::connect( &songDbWindow, SIGNAL(sgnlSongDatabaseChanged( SongDatabase * )),
              &ktvMainWindow, SLOT(setSongDatabase( SongDatabase * )) );
