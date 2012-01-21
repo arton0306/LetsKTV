@@ -4,9 +4,7 @@
 #include "WordManager.h"
 #include "debug.h"
 
-bool WordManager::isInit = false;
-QMap<QString, int> * WordManager::strokeTable = NULL;
-QMap<QString, int> * WordManager::zuinTable = NULL;
+WordManager * WordManager::wordManager = NULL;
 
 WordManager::WordManager()
 {
@@ -14,26 +12,20 @@ WordManager::WordManager()
 
 /* static */ int WordManager::compare( CompareOrderType aOrder, QString const & aX, QString const & aY )
 {
-    DEBUG() << (*strokeTable)[aX[0]];
-    //DEBUG() << strokeTable[aY[0]];
-}
-
-/* static */ void WordManager::test()
-{
     checkInit();
+    DEBUG() << wordManager->mStrokeTable[aX[0]];
 }
 
 /* static */ void WordManager::checkInit()
 {
-    if ( isInit == false )
+    if ( wordManager == NULL )
     {
-        strokeTable = new QMap<QString, int>();
-        readStrokeOrderFile();
+        wordManager = new WordManager;
+        wordManager->readStrokeOrderFile();
     }
-    isInit = true;
 }
 
-/* static */ void WordManager::readStrokeOrderFile()
+void WordManager::readStrokeOrderFile()
 {
     QFile file("stroke_order.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -47,7 +39,7 @@ WordManager::WordManager()
         QStringList line = in.readLine().split(" ");
 
         // in the file, col 0 is the word, col 1 is #stroke
-        (*strokeTable)[line.at(0)] = line.at(1).toInt();
+        mStrokeTable[line.at(0)] = line.at(1).toInt();
     }
     file.close();
 }
