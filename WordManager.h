@@ -13,14 +13,15 @@ public:
     ---------------------------------------------*/
     enum CompareOrderType
     {
-        LENG_1ST_STROKE_2ND,
+        MEANING_LENGTH_ORDER,
+        STROKE_ORDER,
         ZUIN_ORDER
     };
 
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
-    static bool compare( CompareOrderType aOrder, QString const & aX, QString const & aY );
+    static int compare( CompareOrderType aOrder, QString const & aX, QString const & aY );
     static int getWordLength( QString const & aStr );
     static bool isInit();
 
