@@ -56,6 +56,7 @@ public:
     QString getFilePath() const;
     QString getNotes() const;
     QString getInfo( SongInfoType aInfoType ) const;
+    bool compareSongName( Song const & ) const;
 
 private:
     int mId;
@@ -67,5 +68,7 @@ private:
     QString mFilePath;
     QString mNotes;
 };
+
+bool compareSongName( Song const & aX, Song const & aY );
 
 #endif // SONG_H

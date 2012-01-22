@@ -1,7 +1,6 @@
+#include <algorithm>
 #include <QDir>
 #include "SongDatabase.h"
-#include "debug.h"
-#include "WordManager.h"
 
 SongDatabase::SongDatabase( QString aSongFolderPath )
 {
@@ -18,9 +17,12 @@ SongDatabase::SongDatabase( QString aSongFolderPath )
         song.setTimeLength( Song::TIME_UNKNOWN );
         song.setId( i + 1 ); // so that the id of song begining from 1
         mSongs.push_back( song );
-
-        DEBUG() << song.getSinger() << WordManager::compare( WordManager::STROKE_ORDER, song.getSinger(), QString() );
     }
+}
+
+SongDatabase::SongDatabase( std::vector<Song> aSongList )
+    : mSongs( aSongList )
+{
 }
 
 int SongDatabase::getSongCount() const
@@ -36,4 +38,11 @@ bool SongDatabase::isEmpty() const
 Song const & SongDatabase::getSong( int aNthSong ) const
 {
     return mSongs[aNthSong];
+}
+
+std::vector<Song> SongDatabase::getSongNameOrderList() const
+{
+    std::vector<Song> result = mSongs;
+    std::sort( result.begin(), result.end(), compareSongName );
+    return result;
 }

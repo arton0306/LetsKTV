@@ -1,6 +1,7 @@
 #include <QStringList>
 #include "Song.h"
 #include "debug.h"
+#include "WordManager.h"
 
 Song::Song
     (
@@ -117,3 +118,14 @@ QString Song::getInfo( SongInfoType aInfoType ) const
             return QString();
     }
 }
+
+bool Song::compareSongName( Song const & aSong ) const
+{
+    return WordManager::compare( WordManager::LENG_1ST_STROKE_2ND, mSongName, aSong.mSongName );
+}
+
+bool compareSongName( Song const & aX, Song const & aY )
+{
+    return aX.compareSongName( aY );
+}
+

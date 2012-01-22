@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QMap>
+#include <QChar>
 
 class WordManager
 {
@@ -12,14 +13,16 @@ public:
     ---------------------------------------------*/
     enum CompareOrderType
     {
-        STROKE_ORDER,
+        LENG_1ST_STROKE_2ND,
         ZUIN_ORDER
     };
 
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
-    static int compare( CompareOrderType aOrder, QString const & aX, QString const & aY );
+    static bool compare( CompareOrderType aOrder, QString const & aX, QString const & aY );
+    static int getWordLength( QString const & aStr );
+    static bool isInit();
 
 private:
     /*---------------------------------------------
@@ -28,6 +31,7 @@ private:
     WordManager();
     static void checkInit();
     void readStrokeOrderFile();
+
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/

@@ -36,6 +36,9 @@ const int SONG_COUNT_PER_PAGE = N_SONG_PER_ROW * TABLE_ROW_COUNT;
 SonglistPainter::SonglistPainter( SongDatabase const * aSongDatabase )
     : mSongDatabase( aSongDatabase )
 {
+    // fucking code, just for test
+    SongDatabase * songDatabase = new SongDatabase( mSongDatabase->getSongNameOrderList() );
+    mSongDatabase = songDatabase;
 }
 
 int SonglistPainter::getTableTitleBeginY( QRect const & aRect ) const
