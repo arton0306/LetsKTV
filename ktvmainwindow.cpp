@@ -46,6 +46,8 @@ void KtvMainWindow::addSongToPlayList( Song const & aSong )
 void KtvMainWindow::songEnded()
 {
     DEBUG() << "song ended()";
+
+    // in case that user cut song when playlist is empty
     if ( !mPlayListTableModel->isEmpty() )
     {
         mPlayListTableModel->removeFrontSong();

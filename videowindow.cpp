@@ -30,13 +30,15 @@ VideoWindow::VideoWindow(QWidget *parent)
 
     setupConnections();
 
-    /********************************************************************************
-    I don't know why I cannot just install this videoWindow.
-    If I just use installEventfilter(this), when the mVideoWidget is in full screen,
-    the event can not be got. If I just use mVideoWidget->ins..., I can not got event
-    when mVideoWidget is not in full screen. I don't know why.
-    ********************************************************************************/
+    /* mVideoWidget fullscreen way
+    // I don't know why I cannot just install this videoWindow.
+    // If I just use installEventfilter(this), when the mVideoWidget is in full screen,
+    // the event can not be got. If I just use mVideoWidget->ins..., I can not got event
+    // when mVideoWidget is not in full screen. I don't know why.
     mVideoWidget->installEventFilter( this );
+    installEventFilter( this );
+    */
+
     installEventFilter( this );
 }
 
@@ -53,11 +55,9 @@ void VideoWindow::setupConnections()
 
 bool VideoWindow::eventFilter(QObject *target, QEvent *event)
 {
-    /******************************************************************************
-    When a key pressed, KeyPress and ShortcutOverride will be triggered
-    in a very short time in some unknown condition. I don't know why this happened.
+    // When a key pressed, KeyPress and ShortcutOverride will be triggered
+    // in a very short time in some unknown condition. I don't know why this happened.
     // if ( event->type() == QEvent::KeyPress || event->type() == QEvent::ShortcutOverride )
-    *******************************************************************************/
     if ( event->type() == QEvent::ShortcutOverride )
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
@@ -75,6 +75,7 @@ bool VideoWindow::eventFilter(QObject *target, QEvent *event)
         }
         return true;
     }
+    /*
     else if ( target == mVideoWidget && event->type() == QEvent::MouseButtonPress )
     {
         DEBUG() << "click on video widget";
@@ -86,6 +87,21 @@ bool VideoWindow::eventFilter(QObject *target, QEvent *event)
         else
         {
             mVideoWidget->setFullScreen( true );
+            DEBUG() << "not full screen => full screen";
+        }
+    }
+    */
+    else if ( target == this && event->type() == QEvent::MouseButtonPress )
+    {
+        DEBUG() << "click on video widget";
+        if ( !isFullScreen() )
+        {
+            showFullScreen();
+            DEBUG() << "full screen => exit fullscreen";
+        }
+        else
+        {
+            showNormal();
             DEBUG() << "not full screen => full screen";
         }
     }

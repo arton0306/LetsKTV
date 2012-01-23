@@ -15,12 +15,70 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
+    <property name="margin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <item row="0" column="0">
-     <layout class="QGridLayout" name="mGridLayout"/>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMinimumSize</enum>
+        </property>
+        <item>
+         <widget class="LabelWto" name="widget" native="true">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>14</height>
+           </size>
+          </property>
+          <zorder>gridLayoutWidget_2</zorder>
+          <zorder>widget_3</zorder>
+         </widget>
+        </item>
+        <item>
+         <widget class="LabelWto" name="widget_3" native="true">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>14</height>
+           </size>
+          </property>
+          <zorder>gridLayoutWidget_2</zorder>
+         </widget>
+        </item>
+        <item>
+         <widget class="LabelWto" name="widget_4" native="true">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>14</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="mGridLayout"/>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LabelWto</class>
+   <extends>QWidget</extends>
+   <header>LabelWto.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
