@@ -46,7 +46,10 @@ void KtvMainWindow::addSongToPlayList( Song const & aSong )
 void KtvMainWindow::songEnded()
 {
     DEBUG() << "song ended()";
-    mPlayListTableModel->removeFrontSong();
+    if ( !mPlayListTableModel->isEmpty() )
+    {
+        mPlayListTableModel->removeFrontSong();
+    }
     if ( !mPlayListTableModel->isEmpty() )
     {
         mVideoWindow->playSong( mPlayListTableModel->front() );

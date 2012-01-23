@@ -6,7 +6,7 @@
 #include <QtGlobal>
 #include <Qtimer>
 #include <QShortcut>
-
+#include <QKeyEvent>
 
 const int ONE_SECOND = 1000;
 const int PREFINISH_HINT_MSEC = ONE_SECOND * 30;
@@ -16,13 +16,10 @@ VideoWindow::VideoWindow(QWidget *parent)
     , mMediaObject( NULL )
     , mVideoWidget( NULL )
     , mAudioOutput( NULL )
-    , mSwitchChannelShortcut( NULL )
 {
     setupUi(this);
     mVideoWidget = new Phonon::VideoWidget( this );
     mVideoWidget->installEventFilter( this );
-    mSwitchChannelShortcut = new QShortcut(QKeySequence("*"), mVideoWidget );
-    mCutPlayShortCut = new QShortcut( QKeySequence("/"), mVideoWidget );
     mGridLayout->addWidget( mVideoWidget );
 
     mMediaObject = new Phonon::MediaObject( this );
@@ -33,6 +30,7 @@ VideoWindow::VideoWindow(QWidget *parent)
     Phonon::createPath( mMediaObject, mAudioOutput );
 
     setupConnections();
+    installEventFilter( this );
 }
 
 VideoWindow::~VideoWindow()
@@ -44,13 +42,27 @@ void VideoWindow::setupConnections()
     mMediaObject->setPrefinishMark( PREFINISH_HINT_MSEC );
     connect( mMediaObject, SIGNAL(prefinishMarkReached(qint32)), this, SIGNAL(sgnlSongAlmostEnded()) );
     connect( mMediaObject, SIGNAL(finished()), this, SIGNAL(sgnlSongEnded()) );
-    connect( mSwitchChannelShortcut, SIGNAL(activated()), this, SLOT(rotateChannel()) );
-    connect( mCutPlayShortCut, SIGNAL(activated()), this, SLOT(cutPlay()) );
 }
 
 bool VideoWindow::eventFilter(QObject *target, QEvent *event)
 {
-    if (target == mVideoWidget && event->type() == QEvent::MouseButtonPress )
+    if ( event->type() == QEvent::KeyPress )
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        switch ( keyEvent->key() )
+        {
+            case Qt::Key_Asterisk:
+                rotateChannel();
+                break;
+            case Qt::Key_Slash:
+                cutPlay();
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+    else if ( target == mVideoWidget && event->type() == QEvent::MouseButtonPress )
     {
         DEBUG() << "click on video widget";
         if ( mVideoWidget->isFullScreen() )

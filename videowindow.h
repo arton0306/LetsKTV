@@ -49,8 +49,6 @@ private:
     Phonon::MediaObject * mMediaObject;
     Phonon::VideoWidget * mVideoWidget;
     Phonon::AudioOutput * mAudioOutput;
-    QShortcut * mSwitchChannelShortcut;
-    QShortcut * mCutPlayShortCut;
 
     /*---------------------------------------------
                        Functions
