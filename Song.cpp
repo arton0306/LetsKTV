@@ -3,6 +3,11 @@
 #include "debug.h"
 #include "WordManager.h"
 
+/*
+QMap<QString, Song::GenderType> Song::sGenderOrder = QMap<QString, GenderType>();
+QMap<QString, Song::LanguageType> Song::sLanguageOrder = QMap<QString, LanguageType>();
+*/
+
 Song::Song
     (
     QString aSinger,
@@ -131,6 +136,12 @@ bool Song::compareSinger( Song const & aSong ) const
 {
     return WordManager::compare( WordManager::ZUIN_ORDER, mSinger, aSong.mSinger ) <= 0;
 }
+
+/*
+int Song::getSingerOrderNumber() const
+{
+}
+*/
 
 bool compareSongName( Song const & aX, Song const & aY )
 {

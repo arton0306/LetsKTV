@@ -2,6 +2,7 @@
 #define SONG_H
 
 #include <QString>
+#include <QMap>
 
 class Song
 {
@@ -28,6 +29,25 @@ public:
         NOTES
     };
 
+    enum GenderType
+    {
+        // the order will be used to sort
+        GENDER_MALE,
+        GENDER_FEMALE,
+        GENDER_GROUP,
+        GENDER_CHORUS,
+        GENDER_OTHERS
+    };
+
+    enum LanguageType
+    {
+        // the order will be used to sort
+        LANGUAGE_MANDARIN,
+        LANGUAGE_MINNAN,
+        LANGUAGE_ENGLISH,
+        LANGUAGE_JAPANESE,
+        LANGUAGE_OTHERS
+    };
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
@@ -60,6 +80,8 @@ public:
     bool compareSinger( Song const & aSong ) const;
 
 private:
+    // static QMap<QString, GenderType> sGenderOrder;
+    // static QMap<QString, LanguageType> sLanguageOrder;
     int mId;
     QString mSinger;
     QString mSongName;

@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale( textc );
     DEBUG() << "測試codec 程式開始…";
 
-    /*
     VideoWindow videoWindow;
     videoWindow.show();
 
@@ -41,11 +40,6 @@ int main(int argc, char *argv[])
              &ktvMainWindow, SLOT(setSongDatabase( SongDatabase * )) );
     QObject::connect( &songDbWindow, SIGNAL(sgnlDoubleClickOneSong( Song const & )),
              &ktvMainWindow, SLOT(addSongToPlayList( Song const & )) );
-    */
-
-    LabelWto t;
-    t.setTextAndTimer( QString("abcde"), 2000 );
-    t.show();
 
     return letsKtv.exec();
 }
