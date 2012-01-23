@@ -17,6 +17,7 @@ public:
     Song const & getSong( int aNthSong ) const;
     bool isEmpty() const;
     std::vector<Song> getSongNameOrderList() const;
+    std::vector<Song> getSongSingerOrderList() const;
 
 private:
     /*---------------------------------------------

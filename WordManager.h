@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QMap>
+#include <QList>
 #include <QChar>
 
 class WordManager
@@ -32,13 +33,15 @@ private:
     WordManager();
     static void checkInit();
     void readStrokeOrderFile();
+    void readZuinOrderFile();
 
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
     static WordManager * wordManager;
     QMap<QString, int> mStrokeTable;
-    QMap<QString, int> zuinTable;
+    QMap<QString, int> mZuinOrderTable;
+    QMap<QString, QString> mZuinTokenTable; // just save the header token for the time being
 };
 
 #endif // WORDMANAGER_H

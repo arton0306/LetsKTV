@@ -25,34 +25,34 @@ WordManager::WordManager()
 /* static */ int WordManager::compare( CompareOrderType aOrder, QString const & aX, QString const & aY )
 {
     checkInit();
-    if ( MEANING_LENGTH_ORDER == aOrder )
+    switch ( aOrder )
     {
-        if ( getWordLength( aX ) < getWordLength( aY ) ) return -1;
-        if ( getWordLength( aX ) > getWordLength( aY ) ) return 1;
-        return 0;
-    }
-    else if ( STROKE_ORDER == aOrder )
-    {
-        QMap<QString, int> const & stroke = wordManager->mStrokeTable;
-        for ( int i = 0; i < std::min( getWordLength( aX ), getWordLength( aY ) ); ++i )
-        {
-            if ( stroke.contains( aX[i] ) && stroke.contains( aY[i] ) )
+        case MEANING_LENGTH_ORDER:
+            if ( getWordLength( aX ) < getWordLength( aY ) ) return -1;
+            if ( getWordLength( aX ) > getWordLength( aY ) ) return 1;
+            return 0;
+        case STROKE_ORDER: // purposely no break;
+        case ZUIN_ORDER:
+            for ( int i = 0; i < std::min( getWordLength( aX ), getWordLength( aY ) ); ++i )
             {
-                if ( stroke[aX[i]] < stroke[aY[i]] ) return -1;
-                if ( stroke[aX[i]] > stroke[aY[i]] ) return 1;
+                QMap<QString, int> const & orderTable = 
+                    ( aOrder == STROKE_ORDER ? wordManager->mStrokeTable : wordManager->mZuinOrderTable );
+                if ( orderTable.contains( aX[i] ) && orderTable.contains( aY[i] ) )
+                {
+                    if ( orderTable[aX[i]] < orderTable[aY[i]] ) return -1;
+                    if ( orderTable[aX[i]] > orderTable[aY[i]] ) return 1;
+                    continue;
+                }
+                if ( orderTable.contains( aX[i] ) ) return -1;
+                if ( orderTable.contains( aY[i] ) ) return 1;
+                if ( aX[i] < aY[i] ) return -1;
+                if ( aX[i] > aY[i] ) return 1;
                 continue;
             }
-            if ( stroke.contains( aX[i] ) ) return -1;
-            if ( stroke.contains( aY[i] ) ) return 1;
-            if ( aX[i] < aY[i] ) return -1;
-            if ( aX[i] > aY[i] ) return 1;
-            continue;
-        }
-        return 0;
-    }
-    else
-    {
-        return true;
+            return 0;
+        default:
+            qCritical() << "CompareOrderType not exists";
+            return 0;
     }
 }
 
@@ -109,6 +109,7 @@ WordManager::WordManager()
     {
         wordManager = new WordManager;
         wordManager->readStrokeOrderFile();
+        wordManager->readZuinOrderFile();
     }
 }
 
@@ -127,6 +128,32 @@ void WordManager::readStrokeOrderFile()
 
         // in the file, col 0 is the word, col 1 is #stroke
         mStrokeTable[line.at(0)] = line.at(1).toInt();
+    }
+    file.close();
+}
+
+void WordManager::readZuinOrderFile()
+{
+    QFile file("zuin_order.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qCritical() << "read zuin_order.txt failed";
+        return;
+    }
+    QTextStream in(&file);
+    in.setCodec( "UTF-8" );
+    int order = 0;
+    while (!in.atEnd())
+    {
+        QString line = in.readLine();
+
+        // each line begin from a ZuinToken then its Chinese Word
+        for ( int i = 0; i < line.count(); ++i )
+        {
+            mZuinOrderTable[QString(line[i])] = order;
+            mZuinTokenTable[QString(line[i])] = line[0]; // just save the header token for the time being
+            ++order;
+        }
     }
     file.close();
 }

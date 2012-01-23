@@ -57,6 +57,7 @@ public:
     QString getNotes() const;
     QString getInfo( SongInfoType aInfoType ) const;
     bool compareSongName( Song const & ) const;
+    bool compareSinger( Song const & aSong ) const;
 
 private:
     int mId;
@@ -70,5 +71,6 @@ private:
 };
 
 bool compareSongName( Song const & aX, Song const & aY );
+bool compareSinger( Song const & aX, Song const & aY );
 
 #endif // SONG_H

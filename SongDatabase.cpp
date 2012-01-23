@@ -46,3 +46,10 @@ std::vector<Song> SongDatabase::getSongNameOrderList() const
     std::sort( result.begin(), result.end(), compareSongName );
     return result;
 }
+
+std::vector<Song> SongDatabase::getSongSingerOrderList() const
+{
+    std::vector<Song> result = mSongs;
+    std::sort( result.begin(), result.end(), compareSinger );
+    return result;
+}

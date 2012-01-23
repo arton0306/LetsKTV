@@ -124,12 +124,12 @@ bool Song::compareSongName( Song const & aSong ) const
     int lengthCompare = WordManager::compare( WordManager::MEANING_LENGTH_ORDER, mSongName, aSong.mSongName );
     if ( lengthCompare < 0 ) return true;
     if ( lengthCompare > 0 ) return false;
-    else
-    {
-        int strokeCompare = WordManager::compare( WordManager::STROKE_ORDER, mSongName, aSong.mSongName );
-        if ( strokeCompare <= 0 ) return true;
-        return false;
-    }
+    return WordManager::compare( WordManager::STROKE_ORDER, mSongName, aSong.mSongName ) <= 0;
+}
+
+bool Song::compareSinger( Song const & aSong ) const
+{
+    return WordManager::compare( WordManager::ZUIN_ORDER, mSinger, aSong.mSinger ) <= 0;
 }
 
 bool compareSongName( Song const & aX, Song const & aY )
@@ -137,3 +137,7 @@ bool compareSongName( Song const & aX, Song const & aY )
     return aX.compareSongName( aY );
 }
 
+bool compareSinger( Song const & aX, Song const & aY )
+{
+    return aX.compareSinger( aY );
+}

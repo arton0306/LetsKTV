@@ -37,7 +37,7 @@ SonglistPainter::SonglistPainter( SongDatabase const * aSongDatabase )
     : mSongDatabase( aSongDatabase )
 {
     // fucking code, just for test
-    SongDatabase * songDatabase = new SongDatabase( mSongDatabase->getSongNameOrderList() );
+    SongDatabase * songDatabase = new SongDatabase( mSongDatabase->getSongSingerOrderList() );
     mSongDatabase = songDatabase;
 }
 
