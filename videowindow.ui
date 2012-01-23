@@ -25,38 +25,38 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <property name="sizeConstraint">
          <enum>QLayout::SetMinimumSize</enum>
         </property>
         <item>
-         <widget class="LabelWto" name="widget" native="true">
+         <widget class="LabelWto" name="mLabelWtoLeft" native="true">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>14</height>
+            <height>32</height>
            </size>
           </property>
-          <zorder>gridLayoutWidget_2</zorder>
-          <zorder>widget_3</zorder>
          </widget>
         </item>
         <item>
-         <widget class="LabelWto" name="widget_3" native="true">
+         <widget class="LabelWto" name="mLabelWtoCenter" native="true">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>14</height>
+            <height>32</height>
            </size>
           </property>
-          <zorder>gridLayoutWidget_2</zorder>
          </widget>
         </item>
         <item>
-         <widget class="LabelWto" name="widget_4" native="true">
+         <widget class="LabelWto" name="mLabelWtoRight" native="true">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>14</height>
+            <height>32</height>
            </size>
           </property>
          </widget>
@@ -64,7 +64,11 @@
        </layout>
       </item>
       <item>
-       <layout class="QGridLayout" name="mGridLayout"/>
+       <layout class="QGridLayout" name="mGridLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+       </layout>
       </item>
      </layout>
     </item>

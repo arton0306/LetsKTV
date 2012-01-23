@@ -8,6 +8,7 @@ LabelWto::LabelWto(QWidget *parent, int aFixedMsec )
     , mFixedMsec( aFixedMsec )
 {
     setupUi(this);
+    setStyleSheet("background-color: black;");
     mTimer->setSingleShot( true );
     setupConnections();
 }
