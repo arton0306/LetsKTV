@@ -20,6 +20,7 @@ public:
 
 private slots:
     void rotateChannel();
+    void cutPlay();
 
 public slots:
     void playSong( Song const & aSong );
@@ -49,6 +50,7 @@ private:
     Phonon::VideoWidget * mVideoWidget;
     Phonon::AudioOutput * mAudioOutput;
     QShortcut * mSwitchChannelShortcut;
+    QShortcut * mCutPlayShortCut;
 
     /*---------------------------------------------
                        Functions

@@ -22,6 +22,7 @@ VideoWindow::VideoWindow(QWidget *parent)
     mVideoWidget = new Phonon::VideoWidget( this );
     mVideoWidget->installEventFilter( this );
     mSwitchChannelShortcut = new QShortcut(QKeySequence("*"), mVideoWidget );
+    mCutPlayShortCut = new QShortcut( QKeySequence("/"), mVideoWidget );
     mGridLayout->addWidget( mVideoWidget );
 
     mMediaObject = new Phonon::MediaObject( this );
@@ -44,6 +45,7 @@ void VideoWindow::setupConnections()
     connect( mMediaObject, SIGNAL(prefinishMarkReached(qint32)), this, SIGNAL(sgnlSongAlmostEnded()) );
     connect( mMediaObject, SIGNAL(finished()), this, SIGNAL(sgnlSongEnded()) );
     connect( mSwitchChannelShortcut, SIGNAL(activated()), this, SLOT(rotateChannel()) );
+    connect( mCutPlayShortCut, SIGNAL(activated()), this, SLOT(cutPlay()) );
 }
 
 bool VideoWindow::eventFilter(QObject *target, QEvent *event)
@@ -125,4 +127,11 @@ void VideoWindow::switchToChannel( ChannelType aChannel )
                 break;
         }
     }
+}
+
+void VideoWindow::cutPlay()
+{
+    DEBUG() << "cut play!";
+    mMediaObject->stop();
+    sgnlSongEnded();
 }
