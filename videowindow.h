@@ -18,11 +18,9 @@ public:
     explicit VideoWindow(QWidget *parent = 0);
     ~VideoWindow();
 
-private slots:
+public slots:
     void rotateChannel();
     void cutPlay();
-
-public slots:
     void playSong( Song const & aSong );
     void playSong( QString aSongFilePath );
 

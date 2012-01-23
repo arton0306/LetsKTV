@@ -41,5 +41,8 @@ int main(int argc, char *argv[])
     QObject::connect( &songDbWindow, SIGNAL(sgnlDoubleClickOneSong( Song const & )),
              &ktvMainWindow, SLOT(addSongToPlayList( Song const & )) );
 
+    ktvMainWindow.installEventFilter( &videoWindow );
+    songDbWindow.installEventFilter( &videoWindow );
+
     return letsKtv.exec();
 }
