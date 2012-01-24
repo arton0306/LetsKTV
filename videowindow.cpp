@@ -19,8 +19,11 @@ VideoWindow::VideoWindow(QWidget *parent)
 {
     setupUi(this);
     mLabelWtoLeft->setAlignment(Qt::AlignLeft);
+    mLabelWtoLeft->setText( QString() );
     mLabelWtoCenter->setAlignment(Qt::AlignCenter);
+    mLabelWtoCenter->setText( QString() );
     mLabelWtoRight->setAlignment(Qt::AlignRight);
+    mLabelWtoRight->setText( QString() );
 
     mVideoWidget = new Phonon::VideoWidget( this );
     mGridLayout->addWidget( mVideoWidget );
@@ -65,7 +68,7 @@ bool VideoWindow::eventFilter(QObject *target, QEvent *event)
     if ( event->type() == QEvent::ShortcutOverride )
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        DEBUG() << ("Ate key press %d", keyEvent->key());
+        DEBUG() << "Ate key press " << keyEvent->key();
         switch ( keyEvent->key() )
         {
             case Qt::Key_Asterisk:
@@ -73,6 +76,21 @@ bool VideoWindow::eventFilter(QObject *target, QEvent *event)
                 break;
             case Qt::Key_Slash:
                 cutPlay();
+                break;
+            case Qt::Key_0: /* 0x30 */
+            case Qt::Key_1: /* 0x31 */
+            case Qt::Key_2: /* 0x32 */
+            case Qt::Key_3: /* 0x33 */
+            case Qt::Key_4: /* 0x34 */
+            case Qt::Key_5: /* 0x35 */
+            case Qt::Key_6: /* 0x36 */
+            case Qt::Key_7: /* 0x37 */
+            case Qt::Key_8: /* 0x38 */
+            case Qt::Key_9: /* 0x39 */
+                mLabelWtoLeft->appendText( getStrFromNumKey( Qt::Key( keyEvent->key() ) ) );
+                break;
+            case Qt::Key_Enter:
+                selectSong();
                 break;
             default:
                 break;
@@ -163,4 +181,32 @@ void VideoWindow::cutPlay()
     DEBUG() << "cut play!";
     mMediaObject->stop();
     sgnlSongEnded();
+}
+
+QString VideoWindow::getStrFromNumKey( Qt::Key aKey )
+{
+    if ( aKey >= Qt::Key_0 && aKey <= Qt::Key_9 )
+    {
+        // Qt::Key_0 is 0x30 ~ Qt::Key_9 is 0x39
+        return QString::number( aKey - Qt::Key_0 );
+    }
+    else
+    {
+        return QString();
+    }
+}
+
+void VideoWindow::selectSong()
+{
+    if ( !mLabelWtoLeft->getText().isEmpty() )
+    {
+        mLabelWtoLeft->setText( QString() );
+        emit sgnlSongSelected( mLabelWtoLeft->getText().toInt() );
+        DEBUG() << "select song id: " << mLabelWtoLeft->getText().toInt();
+    }
+}
+
+void VideoWindow::showTextHint( QString aString )
+{
+    mLabelWtoCenter->setText( aString );
 }

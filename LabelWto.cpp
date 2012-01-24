@@ -1,7 +1,5 @@
 #include "LabelWto.h"
 
-const int DEFAULT_FIXED_MSEC = 1000;
-
 LabelWto::LabelWto(QWidget *parent, int aFixedMsec )
     : QWidget(parent)
     , mTimer( new QTimer( this ) )
@@ -34,18 +32,18 @@ void LabelWto::setTextAndTimer( QString aText, int aMsec )
     mTimer->start( aMsec );
 }
 
-void LabelWto::setTextAndTimer( QString aText )
+void LabelWto::setText( QString aText )
 {
     mLabel->setText( aText );
     // mLabel->show();
-    mTimer->start( mFixedMsec > 0 ? mFixedMsec : DEFAULT_FIXED_MSEC );
+    mTimer->start( mFixedMsec );
 }
 
 void LabelWto::appendText( QString aText )
 {
     // mLabel->show();
     mLabel->setText( mLabel->text() + aText );
-    mTimer->start( mTimer->interval() );
+    mTimer->start( mFixedMsec );
 }
 
 QString LabelWto::getText()

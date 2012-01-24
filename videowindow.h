@@ -23,10 +23,12 @@ public slots:
     void cutPlay();
     void playSong( Song const & aSong );
     void playSong( QString aSongFilePath );
+    void showTextHint( QString aString );
 
 signals:
     void sgnlSongEnded();
     void sgnlSongAlmostEnded();
+    void sgnlSongSelected( int aSongId );
 
 private:
     /*---------------------------------------------
@@ -54,6 +56,8 @@ private:
     void setupConnections();
     bool eventFilter(QObject *target, QEvent *event);
     void switchToChannel( ChannelType aChannel );
+    QString getStrFromNumKey( Qt::Key aKey );
+    void selectSong();
 };
 
 #endif // VIDEOWINDOW_H
