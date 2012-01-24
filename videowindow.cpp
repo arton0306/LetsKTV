@@ -89,6 +89,8 @@ bool VideoWindow::eventFilter(QObject *target, QEvent *event)
             case Qt::Key_9: /* 0x39 */
                 mSongIdInput->appendText( getStrFromNumKey( Qt::Key( keyEvent->key() ) ) );
                 break;
+            case Qt::Key_Period:
+                break;
             case Qt::Key_Enter:
                 requestAddSong();
                 break;
@@ -159,14 +161,17 @@ void VideoWindow::switchToChannel( ChannelType aChannel )
         {
             case LEFT_CHANNEL:
                 waveOutSetVolume( NULL, 0x0000FFFF );
+                mCornerHint->setText( QString("•™¡nπD") );
                 DEBUG() << "switch to left channel";
                 break;
             case RIGHT_CHANNEL:
                 waveOutSetVolume( NULL, 0xFFFF0000 );
+                mCornerHint->setText( QString("•k¡nπD") );
                 DEBUG() << "switch to right channel";
                 break;
             case STEREO_CHANNEL:
                 waveOutSetVolume( NULL, 0xFFFFFFFF );
+                mCornerHint->setText( QString("•ﬂ≈È¡n") );
                 DEBUG() << "switch to stereo";
                 break;
             default:
@@ -179,6 +184,7 @@ void VideoWindow::switchToChannel( ChannelType aChannel )
 void VideoWindow::cutPlay()
 {
     DEBUG() << "cut play!";
+    mCornerHint->setText( QString("§¡∫q") );
     mMediaObject->stop();
     sgnlSongEnded();
 }
@@ -208,11 +214,11 @@ void VideoWindow::requestAddSong()
 
 void VideoWindow::showAddSongSuccess( Song const & aSong )
 {
-    QString str = QString("Âä†ÂÖ•") + aSong.getSinger() + aSong.getSongName();
+    QString str = QString("•[§J°G") + aSong.getSinger() + QString("°@") + aSong.getSongName();
     mCenterHint->setText( str );
 }
 
 void VideoWindow::showAddSongFailed()
 {
-    mCenterHint->setText( QString("Âä†ÂÖ•Ê≠åÊõ≤Â§±Êïó") );
+    mCenterHint->setText( QString("•[§J∫q¶±•¢±—") );
 }
