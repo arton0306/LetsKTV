@@ -2,6 +2,7 @@
 #define LABELWTO_H
 
 #include "ui_LabelWto.h"
+#include <Qt>
 #include <QWidget>
 #include <QTimer>
 
@@ -17,6 +18,7 @@ public:
     void setTextAndTimer( QString aText, int aMsec );
     void setTextAndTimer( QString aText );
     void appendText( QString aText );
+    void setAlignment( Qt::Alignment aAlignment );
     QString getText();
 
 private slots:

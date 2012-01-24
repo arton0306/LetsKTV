@@ -30,20 +30,20 @@ void LabelWto::setFixedMsec( int aMsec )
 void LabelWto::setTextAndTimer( QString aText, int aMsec )
 {
     mLabel->setText( aText );
-    mLabel->show();
+    // mLabel->show();
     mTimer->start( aMsec );
 }
 
 void LabelWto::setTextAndTimer( QString aText )
 {
     mLabel->setText( aText );
-    mLabel->show();
+    // mLabel->show();
     mTimer->start( mFixedMsec > 0 ? mFixedMsec : DEFAULT_FIXED_MSEC );
 }
 
 void LabelWto::appendText( QString aText )
 {
-    mLabel->show();
+    // mLabel->show();
     mLabel->setText( mLabel->text() + aText );
     mTimer->start( mTimer->interval() );
 }
@@ -56,5 +56,10 @@ QString LabelWto::getText()
 void LabelWto::hideLabel()
 {
     mLabel->setText( QString() );
-    mLabel->hide();
+    // mLabel->hide();
+}
+
+void LabelWto::setAlignment( Qt::Alignment aAlignment )
+{
+    mLabel->setAlignment( aAlignment );
 }

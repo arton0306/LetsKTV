@@ -18,6 +18,10 @@ VideoWindow::VideoWindow(QWidget *parent)
     , mAudioOutput( NULL )
 {
     setupUi(this);
+    mLabelWtoLeft->setAlignment(Qt::AlignLeft);
+    mLabelWtoCenter->setAlignment(Qt::AlignCenter);
+    mLabelWtoRight->setAlignment(Qt::AlignRight);
+
     mVideoWidget = new Phonon::VideoWidget( this );
     mGridLayout->addWidget( mVideoWidget );
 
@@ -30,7 +34,7 @@ VideoWindow::VideoWindow(QWidget *parent)
 
     setupConnections();
 
-    /* mVideoWidget fullscreen way
+    /* mVideoWidget fullscreen way - below is a note for a another way of implement
     // I don't know why I cannot just install this videoWindow.
     // If I just use installEventfilter(this), when the mVideoWidget is in full screen,
     // the event can not be got. If I just use mVideoWidget->ins..., I can not got event
@@ -75,22 +79,6 @@ bool VideoWindow::eventFilter(QObject *target, QEvent *event)
         }
         return true;
     }
-    /*
-    else if ( target == mVideoWidget && event->type() == QEvent::MouseButtonPress )
-    {
-        DEBUG() << "click on video widget";
-        if ( mVideoWidget->isFullScreen() )
-        {
-            mVideoWidget->exitFullScreen();
-            DEBUG() << "full screen => exit fullscreen";
-        }
-        else
-        {
-            mVideoWidget->setFullScreen( true );
-            DEBUG() << "not full screen => full screen";
-        }
-    }
-    */
     else if ( target == this && event->type() == QEvent::MouseButtonPress )
     {
         DEBUG() << "click on video widget";
