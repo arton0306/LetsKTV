@@ -81,20 +81,20 @@ void SonglistPainter::makePdf( QString aFileName )
     }
 }
 
-int SonglistPainter::getHlineBeginY( QPrinter & aPrinter, int aRowIndex ) const
+double SonglistPainter::getHlineBeginY( QPrinter & aPrinter, int aRowIndex ) const
 {
-    return getTableBeginY( aPrinter.pageRect() ) + ( aPrinter.pageRect().height() - PAGE_PADDING - getTableBeginY( aPrinter.pageRect() ) - TABLE_BORDER ) / TABLE_ROW_COUNT * aRowIndex;
+    return getTableBeginY( aPrinter.pageRect() ) + ( aPrinter.pageRect().height() - PAGE_PADDING - getTableBeginY( aPrinter.pageRect() ) - TABLE_BORDER ) / static_cast<double>(TABLE_ROW_COUNT) * aRowIndex;
 }
 
-int SonglistPainter::getRowHeight( QPrinter & aPrinter ) const // just the height of blanket area, ignore border
+double SonglistPainter::getRowHeight( QPrinter & aPrinter ) const // just the height of blanket area, ignore border
 {
-    return ( aPrinter.pageRect().height() - getTableBeginY( aPrinter.pageRect() ) - PAGE_PADDING - TABLE_BORDER * ( 1 + TABLE_ROW_COUNT ) ) / TABLE_ROW_COUNT;
+    return ( aPrinter.pageRect().height() - getTableBeginY( aPrinter.pageRect() ) - PAGE_PADDING - TABLE_BORDER * ( 1 + TABLE_ROW_COUNT ) ) / static_cast<double>(TABLE_ROW_COUNT);
 }
 
 // return double to avoid error accumulation
 double SonglistPainter::getColWidth( QPrinter & aPrinter, int aColIndex ) const
 {
-    return TABLE_EACH_COL_WIDTH_RATIO[aColIndex % COLUMN_TYPE_COUNT] * ( aPrinter.pageRect().width() - LR_PAGE_PADDING - ( TABLE_COL_COUNT + 1 ) * TABLE_BORDER ) / N_SONG_PER_ROW;
+    return TABLE_EACH_COL_WIDTH_RATIO[aColIndex % COLUMN_TYPE_COUNT] * ( aPrinter.pageRect().width() - LR_PAGE_PADDING - ( TABLE_COL_COUNT + 1 ) * TABLE_BORDER ) / static_cast<double>(N_SONG_PER_ROW);
 }
 
 void SonglistPainter::drawSinger( QPainter & aPainter, QRect const & aRect, QString const & aString ) const
