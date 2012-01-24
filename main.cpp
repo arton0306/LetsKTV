@@ -50,6 +50,9 @@ int main(int argc, char *argv[])
                       &videoWindow, SLOT( showAddSongSuccess( Song const & )) );
     QObject::connect( &ktvMainWindow, SIGNAL(sgnlAddSongFailed()),
                       &videoWindow, SLOT( showAddSongFailed()) );
+    QObject::connect( &videoWindow, SIGNAL(sgnlAddSong( int )),
+                      &ktvMainWindow, SLOT( addSongToPlayList( int )) );
+
 
     ktvMainWindow.installEventFilter( &videoWindow );
     songDbWindow.installEventFilter( &videoWindow );

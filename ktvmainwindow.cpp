@@ -45,9 +45,9 @@ void KtvMainWindow::addSongToPlayList( Song const & aSong )
 
 void KtvMainWindow::addSongToPlayList( int aSongId )
 {
-    if ( aSongId < mSongDatabase->getSongCount() )
+    if ( mSongDatabase && aSongId + 1 < mSongDatabase->getSongCount() )
     {
-        addSongToPlayList( mSongDatabase->getSong( aSongId ) );
+        addSongToPlayList( mSongDatabase->getSongById( aSongId ) );
     }
     else
     {

@@ -14,7 +14,8 @@ public:
     SongDatabase( QString aSongFolderPath );
     SongDatabase( std::vector<Song> aSongList );
     int getSongCount() const;
-    Song const & getSong( int aSongId ) const;
+    Song const & getSongById( int aSongId ) const;
+    Song const & getSong( int aNthSong ) const;
     bool isEmpty() const;
     std::vector<Song> getSongNameOrderList() const;
     std::vector<Song> getSongSingerOrderList() const;
