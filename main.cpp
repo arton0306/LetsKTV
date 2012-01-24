@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     VideoWindow videoWindow;
     videoWindow.show();
 
-    KtvMainWindow ktvMainWindow();
+    KtvMainWindow ktvMainWindow;
     ktvMainWindow.show();
 
     SongDbWindow songDbWindow;
