@@ -97,39 +97,79 @@ double SonglistPainter::getColWidth( QPrinter & aPrinter, int aColIndex ) const
     return TABLE_EACH_COL_WIDTH_RATIO[aColIndex % COLUMN_TYPE_COUNT] * ( aPrinter.pageRect().width() - LR_PAGE_PADDING - ( TABLE_COL_COUNT + 1 ) * TABLE_BORDER ) / N_SONG_PER_ROW;
 }
 
-void SonglistPainter::drawSongText( QPainter & aPainter, QRect const & aRect, QString const & aString, ColumnType aColType )
+void SonglistPainter::drawSinger( QPainter & aPainter, QRect const & aRect, QString const & aString ) const
 {
-    QFont textFont( QString( "微軟正黑體" ) );
+    const int gridStyleCount = 4;
+    static int rowCount[gridStyleCount] = { 1, 2, 2, 3 };
+    static int colCount[gridStyleCount] = { 1, 1, 2, 2 };
+    QStringList singers = aString.split("&");
+
+    // determine how to cut the origin grid
+    int style = gridStyleCount - 1; // in case there are too many singer, the forloop below won't set style
+    for ( int i = 0; i < gridStyleCount; ++i )
+    {
+        if ( rowCount[i] * colCount[i] >= singers.count() )
+        {
+            style = i;
+            break;
+        }
+    }
+
+    // put each singers to each small grid
+    double newWidth = double(aRect.width()) / colCount[style]; // use double to avoid minor error
+    double newHeight = double(aRect.height()) / rowCount[style];
+    for ( int r = 0; r < rowCount[style]; ++r )
+    {
+        int newY = aRect.y() + newHeight * r;
+        for ( int c = 0; c < colCount[style]; ++c )
+        {
+            int singerIndex = r * colCount[style] + c;
+            if ( singerIndex >= singers.count() ) return;
+            QRect finalRect( QPoint( aRect.x() + newWidth * c, newY ), QSize( newWidth, newHeight ) );
+            QFont textFont( QString( "微軟正黑體" ) );
+            textFont.setPixelSize( estimatedFontSize( finalRect, singers[singerIndex] ) );
+            aPainter.setFont( textFont );
+            aPainter.drawText( finalRect, Qt::AlignCenter | Qt::TextWordWrap, singers[singerIndex] );
+        }
+    }
+}
+
+double SonglistPainter::estimatedFontSize( QRect const & aRect, QString const & aString ) const
+{
     const double ratio[] = { 0.7, 0.6, 0.5, 0.4, 0.35, 0.3};
-    int wordSizeEstimated = 0;
+    double result = 0;
     for ( int i = 0; i < sizeof( ratio ) / sizeof( ratio[0] ); ++i )
     {
-        wordSizeEstimated = ratio[i] * aRect.height();
-        if ( wordSizeEstimated * WordManager::getWordWidthCount( aString ) < aRect.width() )
+        result = ratio[i] * aRect.height();
+        if ( result * WordManager::getWordWidthCount( aString ) < aRect.width() )
         {
             break;
         }
     }
-    textFont.setPixelSize( wordSizeEstimated );
+    return result;
+}
+
+void SonglistPainter::drawSongText( QPainter & aPainter, QRect const & aRect, QString const & aString, ColumnType aColType )
+{
+    QFont textFont( QString( "微軟正黑體" ) );
+    textFont.setPixelSize( estimatedFontSize( aRect, aString ) );
     aPainter.setFont( textFont );
 
     switch ( aColType )
     {
         case SONGID:
             aPainter.fillRect( aRect, QColor( 128, 128, 255, 255 ) );
-            // no break purposely
+            aPainter.drawText( aRect, Qt::AlignRight | Qt::AlignVCenter, aString );
+            break;
         case SONGTITLE:
-            aPainter.drawText( aRect.adjusted( TABLE_GRID_PADDING, TABLE_GRID_PADDING, -TABLE_GRID_PADDING, -TABLE_GRID_PADDING ), Qt::AlignVCenter, aString );
+            aPainter.drawText( aRect, Qt::AlignVCenter, aString );
             break;
         case SINGER:
-            if ( wordSizeEstimated * WordManager::getWordWidthCount( aString ) < aRect.width() )
-            {
-                aPainter.drawText( aRect.adjusted( TABLE_GRID_PADDING, TABLE_GRID_PADDING, -TABLE_GRID_PADDING, -TABLE_GRID_PADDING ), Qt::AlignVCenter, aString );
-            }
-            else
-            {
-                aPainter.drawText( aRect.adjusted( TABLE_GRID_PADDING, TABLE_GRID_PADDING, -TABLE_GRID_PADDING, -TABLE_GRID_PADDING ), aString );
-            }
+            drawSinger( aPainter, aRect, aString );
+            break;
+        default:
+            qCritical() << "ColType not exsits!";
+            break;
     }
 }
 
