@@ -214,5 +214,5 @@ void VideoWindow::showAddSongSuccess( Song const & aSong )
 
 void VideoWindow::showAddSongFailed()
 {
-    mCenterHint->setText( QString("此歌曲不存在") );
+    mCenterHint->setText( QString("加入歌曲失敗") );
 }

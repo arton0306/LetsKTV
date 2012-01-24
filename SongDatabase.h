@@ -19,6 +19,7 @@ public:
     bool isEmpty() const;
     std::vector<Song> getSongNameOrderList() const;
     std::vector<Song> getSongSingerOrderList() const;
+    bool isIdExist( int aSongId ) const;
 
 private:
     /*---------------------------------------------
@@ -29,6 +30,7 @@ private:
                        Variables
     ---------------------------------------------*/
     std::vector<Song> mSongs; // currently, assume the song id is compact ( no hole );
+                              // and begin from 1
 };
 
 

@@ -35,6 +35,11 @@ bool SongDatabase::isEmpty() const
     return getSongCount() == 0;
 }
 
+bool SongDatabase::isIdExist( int aSongId ) const
+{
+    return ( aSongId != 0 && aSongId <= mSongs.size() );
+}
+
 /**Function****************************************************************
    Synopsis     [ getSong by song id]
    Description  [ Currently, the caller must check the song id is exist.
@@ -42,13 +47,7 @@ bool SongDatabase::isEmpty() const
 **************************************************************************/
 Song const & SongDatabase::getSongById( int aSongId ) const
 {
-    for ( int i = 0; i < mSongs.size(); ++i )
-    {
-        if ( mSongs[i].getId() == aSongId )
-        {
-            return mSongs[i];
-        }
-    }
+    return mSongs[aSongId - 1];
 }
 
 Song const & SongDatabase::getSong( int aNthSong ) const

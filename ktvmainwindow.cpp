@@ -7,6 +7,8 @@
 
 KtvMainWindow::KtvMainWindow( QWidget *parent )
     : QMainWindow( parent )
+    , mSongDatabase( NULL )
+    , mPlayListTableModel( NULL )
 {
     setupUi( this );
     setupConnections();
@@ -45,7 +47,7 @@ void KtvMainWindow::addSongToPlayList( Song const & aSong )
 
 void KtvMainWindow::addSongToPlayList( int aSongId )
 {
-    if ( mSongDatabase && aSongId + 1 < mSongDatabase->getSongCount() )
+    if ( mSongDatabase && mSongDatabase->isIdExist( aSongId ) )
     {
         addSongToPlayList( mSongDatabase->getSongById( aSongId ) );
     }
