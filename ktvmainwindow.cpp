@@ -5,9 +5,8 @@
 #include "Song.h"
 #include "VideoWindow.h"
 
-KtvMainWindow::KtvMainWindow( VideoWindow * aVideoWindow, QWidget *parent )
+KtvMainWindow::KtvMainWindow( QWidget *parent )
     : QMainWindow( parent )
-    , mVideoWindow( aVideoWindow )
 {
     setupUi( this );
     setupConnections();
@@ -35,7 +34,7 @@ void KtvMainWindow::addSongToPlayList( Song const & aSong )
     if ( mPlayListTableModel->isEmpty() )
     {
         mPlayListTableModel->addSong( aSong );
-        mVideoWindow->playSong( mPlayListTableModel->front() );
+        emit sgnlPlaySong( mPlayListTableModel->front() );
     }
     else
     {
@@ -54,7 +53,7 @@ void KtvMainWindow::songEnded()
     }
     if ( !mPlayListTableModel->isEmpty() )
     {
-        mVideoWindow->playSong( mPlayListTableModel->front() );
+        emit sgnlPlaySong( mPlayListTableModel->front() );
     }
 }
 
@@ -65,6 +64,4 @@ void KtvMainWindow::songAlmostEnded()
 
 void KtvMainWindow::setupConnections()
 {
-    connect( mVideoWindow, SIGNAL(sgnlSongAlmostEnded()), this, SLOT(songAlmostEnded()) );
-    connect( mVideoWindow, SIGNAL(sgnlSongEnded()), this, SLOT(songEnded()) );
 }

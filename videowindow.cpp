@@ -18,12 +18,12 @@ VideoWindow::VideoWindow(QWidget *parent)
     , mAudioOutput( NULL )
 {
     setupUi(this);
-    mLabelWtoLeft->setAlignment(Qt::AlignLeft);
-    mLabelWtoLeft->setText( QString() );
-    mLabelWtoCenter->setAlignment(Qt::AlignCenter);
-    mLabelWtoCenter->setText( QString() );
-    mLabelWtoRight->setAlignment(Qt::AlignRight);
-    mLabelWtoRight->setText( QString() );
+    mSongIdInput->setAlignment(Qt::AlignLeft);
+    mSongIdInput->setText( QString() );
+    mCenterHint->setAlignment(Qt::AlignCenter);
+    mCenterHint->setText( QString() );
+    mCornerHint->setAlignment(Qt::AlignRight);
+    mCornerHint->setText( QString() );
 
     mVideoWidget = new Phonon::VideoWidget( this );
     mGridLayout->addWidget( mVideoWidget );
@@ -87,10 +87,10 @@ bool VideoWindow::eventFilter(QObject *target, QEvent *event)
             case Qt::Key_7: /* 0x37 */
             case Qt::Key_8: /* 0x38 */
             case Qt::Key_9: /* 0x39 */
-                mLabelWtoLeft->appendText( getStrFromNumKey( Qt::Key( keyEvent->key() ) ) );
+                mSongIdInput->appendText( getStrFromNumKey( Qt::Key( keyEvent->key() ) ) );
                 break;
             case Qt::Key_Enter:
-                selectSong();
+                requestAddSong();
                 break;
             default:
                 break;
@@ -196,17 +196,17 @@ QString VideoWindow::getStrFromNumKey( Qt::Key aKey )
     }
 }
 
-void VideoWindow::selectSong()
+void VideoWindow::requestAddSong()
 {
-    if ( !mLabelWtoLeft->getText().isEmpty() )
+    if ( !mSongIdInput->getText().isEmpty() )
     {
-        mLabelWtoLeft->setText( QString() );
-        emit sgnlSongSelected( mLabelWtoLeft->getText().toInt() );
-        DEBUG() << "select song id: " << mLabelWtoLeft->getText().toInt();
+        mSongIdInput->setText( QString() );
+        emit sgnlSongSelected( mSongIdInput->getText().toInt() );
+        DEBUG() << "select song id: " << mSongIdInput->getText().toInt();
     }
 }
 
-void VideoWindow::showTextHint( QString aString )
+void VideoWindow::showAddSongHint( QString aString )
 {
-    mLabelWtoCenter->setText( aString );
+    mCenterHint->setText( aString );
 }

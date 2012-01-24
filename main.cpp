@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     VideoWindow videoWindow;
     videoWindow.show();
 
-    KtvMainWindow ktvMainWindow( &videoWindow );
+    KtvMainWindow ktvMainWindow();
     ktvMainWindow.show();
 
     SongDbWindow songDbWindow;
@@ -37,9 +37,15 @@ int main(int argc, char *argv[])
     // test.show();
 
     QObject::connect( &songDbWindow, SIGNAL(sgnlSongDatabaseChanged( SongDatabase * )),
-             &ktvMainWindow, SLOT(setSongDatabase( SongDatabase * )) );
+                      &ktvMainWindow, SLOT(setSongDatabase( SongDatabase * )) );
     QObject::connect( &songDbWindow, SIGNAL(sgnlDoubleClickOneSong( Song const & )),
-             &ktvMainWindow, SLOT(addSongToPlayList( Song const & )) );
+                      &ktvMainWindow, SLOT(addSongToPlayList( Song const & )) );
+    QObject::connect( &videoWindow, SIGNAL(sgnlSongAlmostEnded()),
+                      &ktvMainWindow, SLOT(songAlmostEnded()) );
+    QObject::connect( &videoWindow, SIGNAL(sgnlSongEnded()),
+                      &ktvMainWindow, SLOT(songEnded()) );
+    QObject::connect( &ktvMainWindow, SIGNAL(sgnlPlaySong( Song const & )),
+                      &videoWindow, SLOT( playSong( Song const & )) );
 
     ktvMainWindow.installEventFilter( &videoWindow );
     songDbWindow.installEventFilter( &videoWindow );

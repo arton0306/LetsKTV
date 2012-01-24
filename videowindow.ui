@@ -32,7 +32,7 @@
          <enum>QLayout::SetMinimumSize</enum>
         </property>
         <item>
-         <widget class="LabelWto" name="mLabelWtoLeft" native="true">
+         <widget class="LabelWto" name="mSongIdInput" native="true">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
@@ -42,7 +42,7 @@
          </widget>
         </item>
         <item>
-         <widget class="LabelWto" name="mLabelWtoCenter" native="true">
+         <widget class="LabelWto" name="mCenterHint" native="true">
           <property name="maximumSize">
            <size>
             <width>16777215</width>
@@ -52,7 +52,7 @@
          </widget>
         </item>
         <item>
-         <widget class="LabelWto" name="mLabelWtoRight" native="true">
+         <widget class="LabelWto" name="mCornerHint" native="true">
           <property name="maximumSize">
            <size>
             <width>16777215</width>

@@ -18,7 +18,7 @@ public:
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
-    explicit KtvMainWindow( VideoWindow * aVideoWindow, QWidget *parent = 0 );
+    explicit KtvMainWindow( QWidget *parent = 0 );
     ~KtvMainWindow();
 
 public slots:
@@ -27,12 +27,14 @@ public slots:
     void songEnded();
     void songAlmostEnded();
 
+signals:
+    void sgnlPlaySong( Song const & aSong );
+
 private:
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
     SongDatabase * mSongDatabase;
-    VideoWindow * mVideoWindow;
     PlayListTableModel * mPlayListTableModel;
 
     /*---------------------------------------------
