@@ -35,9 +35,20 @@ bool SongDatabase::isEmpty() const
     return getSongCount() == 0;
 }
 
-Song const & SongDatabase::getSong( int aNthSong ) const
+/**Function****************************************************************
+   Synopsis     [ getSong by song id]
+   Description  [ Currently, the caller must check the song id is exist.
+   SideEffects  [ none ]
+**************************************************************************/
+Song const & SongDatabase::getSong( int aSongId ) const
 {
-    return mSongs[aNthSong];
+    for ( int i = 0; i < mSongs.size(); ++i )
+    {
+        if ( mSongs[i].getId() == aSongId )
+        {
+            return mSongs[i];
+        }
+    }
 }
 
 std::vector<Song> SongDatabase::getSongNameOrderList() const

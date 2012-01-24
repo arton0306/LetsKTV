@@ -200,13 +200,19 @@ void VideoWindow::requestAddSong()
 {
     if ( !mSongIdInput->getText().isEmpty() )
     {
-        mSongIdInput->setText( QString() );
-        emit sgnlSongSelected( mSongIdInput->getText().toInt() );
+        emit sgnlAddSong( mSongIdInput->getText().toInt() );
         DEBUG() << "select song id: " << mSongIdInput->getText().toInt();
+        mSongIdInput->setText( QString() );
     }
 }
 
-void VideoWindow::showAddSongHint( QString aString )
+void VideoWindow::showAddSongSuccess( Song const & aSong )
 {
-    mCenterHint->setText( aString );
+    QString str = QString("加入") + aSong.getSinger() + aSong.getSongName();
+    mCenterHint->setText( str );
+}
+
+void VideoWindow::showAddSongFailed()
+{
+    mCenterHint->setText( QString("此歌曲不存在") );
 }

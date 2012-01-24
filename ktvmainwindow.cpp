@@ -40,6 +40,19 @@ void KtvMainWindow::addSongToPlayList( Song const & aSong )
     {
         mPlayListTableModel->addSong( aSong );
     }
+    emit sgnlAddSongSuccess( aSong );
+}
+
+void KtvMainWindow::addSongToPlayList( int aSongId )
+{
+    if ( aSongId < mSongDatabase->getSongCount() )
+    {
+        addSongToPlayList( mSongDatabase->getSong( aSongId ) );
+    }
+    else
+    {
+        emit sgnlAddSongFailed();
+    }
 }
 
 void KtvMainWindow::songEnded()

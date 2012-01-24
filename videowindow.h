@@ -23,12 +23,13 @@ public slots:
     void cutPlay();
     void playSong( Song const & aSong );
     void playSong( QString aSongFilePath );
-    void showAddSongHint( QString aString );
+    void showAddSongSuccess( Song const & aSong );
+    void showAddSongFailed();
 
 signals:
     void sgnlSongEnded();
     void sgnlSongAlmostEnded();
-    void sgnlSongSelected( int aSongId );
+    void sgnlAddSong( int aSongId );
 
 private:
     /*---------------------------------------------

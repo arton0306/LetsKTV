@@ -24,11 +24,14 @@ public:
 public slots:
     void setSongDatabase( SongDatabase * aSongDatabase );
     void addSongToPlayList( Song const & aSong );
+    void addSongToPlayList( int aSongId );
     void songEnded();
     void songAlmostEnded();
 
 signals:
     void sgnlPlaySong( Song const & aSong );
+    void sgnlAddSongFailed();
+    void sgnlAddSongSuccess( Song const & aSong );
 
 private:
     /*---------------------------------------------

@@ -75,6 +75,7 @@ void SongDbWindow::setupConnections()
 
 void SongDbWindow::toSong( const QModelIndex & aQModelIndexInSongTable )
 {
+    // TODO: should use song id instead of row number
     DEBUG() << "double clicked on table model at row: " << aQModelIndexInSongTable.row();
     emit sgnlDoubleClickOneSong( mSongDatabase->getSong( aQModelIndexInSongTable.row() ) );
 }
