@@ -136,7 +136,7 @@ void SonglistPainter::drawSinger( QPainter & aPainter, QRect const & aRect, QStr
 
 double SonglistPainter::estimatedFontSize( QRect const & aRect, QString const & aString ) const
 {
-    const double ratio[] = { 0.7, 0.6, 0.5, 0.4, 0.35, 0.3};
+    const double ratio[] = { 0.7, 0.6, 0.5, 0.4, 0.35, 0.3 };
     double result = 0;
     for ( int i = 0; i < sizeof( ratio ) / sizeof( ratio[0] ); ++i )
     {
@@ -159,13 +159,13 @@ void SonglistPainter::drawSongText( QPainter & aPainter, QRect const & aRect, QS
     {
         case SONGID:
             aPainter.fillRect( aRect, QColor( 128, 128, 255, 255 ) );
-            aPainter.drawText( aRect, Qt::AlignRight | Qt::AlignVCenter, aString );
+            aPainter.drawText( aRect, Qt::AlignCenter, aString );
             break;
         case SONGTITLE:
-            aPainter.drawText( aRect, Qt::AlignVCenter, aString );
+            aPainter.drawText( aRect.adjusted( TABLE_GRID_PADDING, TABLE_GRID_PADDING, -TABLE_GRID_PADDING, -TABLE_GRID_PADDING ), Qt::AlignVCenter | Qt::TextWordWrap, aString );
             break;
         case SINGER:
-            drawSinger( aPainter, aRect, aString );
+            drawSinger( aPainter, aRect.adjusted( TABLE_GRID_PADDING, TABLE_GRID_PADDING, -TABLE_GRID_PADDING, -TABLE_GRID_PADDING ), aString );
             break;
         default:
             qCritical() << "ColType not exsits!";
