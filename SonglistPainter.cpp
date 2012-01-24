@@ -97,7 +97,7 @@ double SonglistPainter::getColWidth( QPrinter & aPrinter, int aColIndex ) const
 
 void SonglistPainter::drawSongText( QPainter & aPainter, QRect const & aRect, QString const & aString, ColumnType aColType )
 {
-    QFont textFont( QString( "·L³n¥¿¶ÂÅé" ) );
+    QFont textFont( QString( "å¾®è»Ÿæ­£é»‘é«”" ) );
     // textFont.setPixelSize( 20 );
     aPainter.setFont( textFont );
     aPainter.drawText( aRect.adjusted( TABLE_GRID_PADDING, TABLE_GRID_PADDING, -TABLE_GRID_PADDING, -TABLE_GRID_PADDING ), aString );

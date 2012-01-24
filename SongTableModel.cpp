@@ -65,14 +65,14 @@ QString const & SongTableModel::getTableHeaderText( int aSection )
     if ( !isInit )
     {
         // the order must be the same with SongTableTitleType ( can be refactor to map )
-        tableHeaders.push_back( "ºq¦±½s¸¹" );
-        tableHeaders.push_back( "ºq¤â" );
-        tableHeaders.push_back( "ºq¦W" );
-        tableHeaders.push_back( "©Ê§O" );
-        tableHeaders.push_back( "»y¨¥" );
-        tableHeaders.push_back( "®É¶¡" );
-        tableHeaders.push_back( "ÀÉ®×¸ô®|" );
-        tableHeaders.push_back( "³Æµù" );
+        tableHeaders.push_back( "æ­Œæ›²ç·¨è™Ÿ" );
+        tableHeaders.push_back( "æ­Œæ‰‹" );
+        tableHeaders.push_back( "æ­Œå" );
+        tableHeaders.push_back( "æ€§åˆ¥" );
+        tableHeaders.push_back( "èªè¨€" );
+        tableHeaders.push_back( "æ™‚é–“" );
+        tableHeaders.push_back( "æª”æ¡ˆè·¯å¾‘" );
+        tableHeaders.push_back( "å‚™è¨»" );
         isInit = true;
     }
     return tableHeaders.at( aSection );

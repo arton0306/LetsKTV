@@ -18,11 +18,11 @@ int main(int argc, char *argv[])
     #endif
 
     // set text codec
-    QTextCodec *textc = QTextCodec::codecForName("cp950");
+    QTextCodec *textc = QTextCodec::codecForName("utf-8");
     QTextCodec::setCodecForCStrings( textc );
     QTextCodec::setCodecForTr( textc );
     QTextCodec::setCodecForLocale( textc );
-    DEBUG() << "´ú¸Õcodec µ{¦¡¶}©l¡K";
+    DEBUG() << "æ¸¬è©¦codec ç¨‹å¼é–‹å§‹â€¦";
 
     VideoWindow videoWindow;
     videoWindow.show();

@@ -89,7 +89,7 @@ QString Song::getTimeLengthText() const
 {
     if ( TIME_UNKNOWN == mTimeLength )
     {
-        return QString( "¥¼ª¾" );
+        return QString( "æœªçŸ¥" );
     }
     else
     {
