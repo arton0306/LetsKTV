@@ -25,6 +25,8 @@ public:
     static int compare( CompareOrderType aOrder, QString const & aX, QString const & aY );
     static int getWordLength( QString const & aStr );
     static bool isInit();
+    static bool isHeadEnglishLetter( QString const & aString );
+    static bool isEnglishLetter( QChar const & aChar );
 
 private:
     /*---------------------------------------------

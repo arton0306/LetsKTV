@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qt Creator 2.3.1, 2012-01-24T20:58:17. -->
+<!-- Written by Qt Creator 2.3.1, 2012-01-24T23:01:03. -->
 <qtcreator>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -34,8 +34,8 @@
     </valuemap>
    </valuemap>
    <value type="int" key="EditorConfiguration.CodeStyle.Count">1</value>
-   <value type="QByteArray" key="EditorConfiguration.Codec">System</value>
-   <value type="QString" key="EditorConfiguration.CurrentFallback">Global</value>
+   <value type="QByteArray" key="EditorConfiguration.Codec">UTF-8</value>
+   <value type="QString" key="EditorConfiguration.CurrentFallback">Project</value>
    <value type="int" key="EditorConfiguration.IndentSize">4</value>
    <value type="bool" key="EditorConfiguration.MouseNavigation">true</value>
    <value type="int" key="EditorConfiguration.PaddingMode">1</value>
@@ -72,8 +72,8 @@
    </valuemap>
    <value type="int" key="EditorConfiguration.Tab.Count">2</value>
    <value type="int" key="EditorConfiguration.TabKeyBehavior">0</value>
-   <value type="int" key="EditorConfiguration.TabSize">8</value>
-   <value type="bool" key="EditorConfiguration.UseGlobal">true</value>
+   <value type="int" key="EditorConfiguration.TabSize">4</value>
+   <value type="bool" key="EditorConfiguration.UseGlobal">false</value>
    <value type="int" key="EditorConfiguration.Utf8BomBehavior">1</value>
    <value type="bool" key="EditorConfiguration.addFinalNewLine">true</value>
    <value type="bool" key="EditorConfiguration.cleanIndentation">true</value>

@@ -74,7 +74,7 @@ WordManager::WordManager()
     bool isInNumber = false;
     for ( int i = 0; i < aStr.count(); ++i )
     {
-        if ( aStr[i].isLower() || aStr[i].isUpper() ) // a Unicode Word "isLetter", don't use it
+        if ( isEnglishLetter( aStr[i] ) )
         {
             isInLetterLanguege = true;
         }
@@ -101,6 +101,17 @@ WordManager::WordManager()
         ++result;
     }
     return result;
+}
+
+/* static */ bool WordManager::isHeadEnglishLetter( QString const & aString )
+{
+    return ( !aString.isEmpty() && isEnglishLetter( aString[0] ) );
+}
+
+/* static */ bool WordManager::isEnglishLetter( QChar const & aChar )
+{
+    // a Unicode Char "isLetter", don't use it
+    return aChar.isLower() || aChar.isUpper();
 }
 
 /* static */ void WordManager::checkInit()

@@ -6,6 +6,8 @@
 #include "debug.h"
 #include <QDate>
 #include <QString>
+#include "WordManager.h"
+
 // page padding
 const int PAGE_PADDING = 18; // pixel count ( 4 border )
 const int LR_PAGE_PADDING = PAGE_PADDING * 2; // sum of left and right page padding
@@ -26,7 +28,7 @@ const double SINGERNAME_RATIO = 2.5 / 10.0;
 const double TABLE_EACH_COL_WIDTH_RATIO[] = { SONGID_RATIO, SONGTITLE_RATIO, SINGERNAME_RATIO };
 
 // table border, row, column
-const double TABLE_BORDER = 2;  // pixel count
+const double TABLE_BORDER = 1;  // pixel count
 const int TABLE_ROW_COUNT = 18;
 const int N_SONG_PER_ROW = 2;
 const int TABLE_COL_COUNT = COLUMN_TYPE_COUNT * N_SONG_PER_ROW;
@@ -98,9 +100,22 @@ double SonglistPainter::getColWidth( QPrinter & aPrinter, int aColIndex ) const
 void SonglistPainter::drawSongText( QPainter & aPainter, QRect const & aRect, QString const & aString, ColumnType aColType )
 {
     QFont textFont( QString( "微軟正黑體" ) );
-    // textFont.setPixelSize( 20 );
+    const double ratio[] = { 0.7, 0.6, 0.5, 0.4, 0.3};
+    int wordSizeEstimated = 0;
+    for ( int i = 0; i < sizeof( ratio ) / sizeof( ratio[0] ); ++i )
+    {
+        wordSizeEstimated = ratio[i] * aRect.height();
+        if ( wordSizeEstimated * WordManager::getWordLength( aString ) < aRect.width() )
+        {
+            break;
+        }
+    }
+    // int wordSizeEstimated = aRect.width() / WordManager::getWordLength( aString ) ;
+    // wordSizeEstimated = ( wordSizeEstimated > aRect.height() ? aRect.height() : wordSizeEstimated );
+    // wordSizeEstimated = ( wordSizeEstimated < aRect.height() / 2 ? aRect.height() / 2 : wordSizeEstimated );
+    textFont.setPixelSize( wordSizeEstimated );
     aPainter.setFont( textFont );
-    aPainter.drawText( aRect.adjusted( TABLE_GRID_PADDING, TABLE_GRID_PADDING, -TABLE_GRID_PADDING, -TABLE_GRID_PADDING ), aString );
+    aPainter.drawText( aRect.adjusted( TABLE_GRID_PADDING, TABLE_GRID_PADDING, -TABLE_GRID_PADDING, -TABLE_GRID_PADDING ), Qt::AlignVCenter, aString );
 }
 
 void SonglistPainter::drawOnePage( QPrinter & aPrinter, QPainter & aPainter, int aSongBeginIndex )
