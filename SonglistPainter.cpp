@@ -99,23 +99,28 @@ double SonglistPainter::getColWidth( QPrinter & aPrinter, int aColIndex ) const
 
 void SonglistPainter::drawSongText( QPainter & aPainter, QRect const & aRect, QString const & aString, ColumnType aColType )
 {
-    QFont textFont( QString( "微軟正黑體" ) );
-    const double ratio[] = { 0.7, 0.6, 0.5, 0.4, 0.3};
-    int wordSizeEstimated = 0;
-    for ( int i = 0; i < sizeof( ratio ) / sizeof( ratio[0] ); ++i )
+    switch ( aColType )
     {
-        wordSizeEstimated = ratio[i] * aRect.height();
-        if ( wordSizeEstimated * WordManager::getWordLength( aString ) < aRect.width() )
-        {
-            break;
-        }
+        case SONGID:
+        case SONGTITLE:
+        case SINGER:
+        default:
+            QFont textFont( QString( "微軟正黑體" ) );
+            const double ratio[] = { 0.7, 0.6, 0.5, 0.4, 0.35, 0.3};
+            int wordSizeEstimated = 0;
+            DEBUG() << aString << WordManager::getWordWidthCount( aString );
+            for ( int i = 0; i < sizeof( ratio ) / sizeof( ratio[0] ); ++i )
+            {
+                wordSizeEstimated = ratio[i] * aRect.height();
+                if ( wordSizeEstimated * WordManager::getWordWidthCount( aString ) < aRect.width() )
+                {
+                    break;
+                }
+            }
+            textFont.setPixelSize( wordSizeEstimated );
+            aPainter.setFont( textFont );
+            aPainter.drawText( aRect.adjusted( TABLE_GRID_PADDING, TABLE_GRID_PADDING, -TABLE_GRID_PADDING, -TABLE_GRID_PADDING ), Qt::AlignVCenter, aString );
     }
-    // int wordSizeEstimated = aRect.width() / WordManager::getWordLength( aString ) ;
-    // wordSizeEstimated = ( wordSizeEstimated > aRect.height() ? aRect.height() : wordSizeEstimated );
-    // wordSizeEstimated = ( wordSizeEstimated < aRect.height() / 2 ? aRect.height() / 2 : wordSizeEstimated );
-    textFont.setPixelSize( wordSizeEstimated );
-    aPainter.setFont( textFont );
-    aPainter.drawText( aRect.adjusted( TABLE_GRID_PADDING, TABLE_GRID_PADDING, -TABLE_GRID_PADDING, -TABLE_GRID_PADDING ), Qt::AlignVCenter, aString );
 }
 
 void SonglistPainter::drawOnePage( QPrinter & aPrinter, QPainter & aPainter, int aSongBeginIndex )

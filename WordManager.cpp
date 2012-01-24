@@ -114,6 +114,28 @@ WordManager::WordManager()
     return aChar.isLower() || aChar.isUpper();
 }
 
+/* static */ bool WordManager::isHalfWidthLetter( QChar const & aChar )
+{
+    return ( isEnglishLetter( aChar ) || aChar.isSpace() || aChar.isPunct() || aChar.isNumber() );
+}
+
+/**Function****************************************************************
+   Synopsis     [ getWordWidthCount ]
+   Description  [ A half-width word will be counted as 0.75
+                  A full-width word will be counted as 1
+                  return the sum ]
+   SideEffects  [ none ]
+**************************************************************************/
+/* static */ double WordManager::getWordWidthCount( QString const & aString )
+{
+    double result = 0;
+    for ( int i = 0; i < aString.count(); ++i )
+    {
+        result += ( isHalfWidthLetter( aString[i] ) ? 0.75 : 1 );
+    }
+    return result;
+}
+
 /* static */ void WordManager::checkInit()
 {
     if ( wordManager == NULL )
