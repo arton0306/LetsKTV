@@ -9,11 +9,11 @@ KtvMainWindow::KtvMainWindow( QWidget *parent )
     : QMainWindow( parent )
     , mSongDatabase( NULL )
     , mPlayListTableModel( NULL )
+    , mCurPlayingSong( NULL )
 {
     setupUi( this );
     setupConnections();
 
-    // TODO: haven't handle the deletion of the PlayListTableModel
     mPlayListTableModel = new PlayListTableModel();
     mPlayListView->setModel( mPlayListTableModel );
     mPlayListView->setSelectionBehavior( QAbstractItemView::SelectRows );
@@ -23,6 +23,7 @@ KtvMainWindow::KtvMainWindow( QWidget *parent )
 
 KtvMainWindow::~KtvMainWindow()
 {
+    delete mPlayListTableModel;
 }
 
 void KtvMainWindow::setSongDatabase( SongDatabase * aSongDatabase )
@@ -33,14 +34,10 @@ void KtvMainWindow::setSongDatabase( SongDatabase * aSongDatabase )
 
 void KtvMainWindow::addSongToPlayList( Song const & aSong )
 {
-    if ( mPlayListTableModel->isEmpty() )
+    mPlayListTableModel->addSong( aSong );
+    if ( mCurPlayingSong == NULL )
     {
-        mPlayListTableModel->addSong( aSong );
-        emit sgnlPlaySong( mPlayListTableModel->front() );
-    }
-    else
-    {
-        mPlayListTableModel->addSong( aSong );
+        playFirstSongInPlayList();
     }
     emit sgnlAddSongSuccess( aSong );
 }
@@ -60,15 +57,10 @@ void KtvMainWindow::addSongToPlayList( int aSongId )
 void KtvMainWindow::songEnded()
 {
     DEBUG() << "song ended()";
-
-    // in case that user cut song when playlist is empty
+    mCurPlayingSong = NULL;
     if ( !mPlayListTableModel->isEmpty() )
     {
-        mPlayListTableModel->removeFrontSong();
-    }
-    if ( !mPlayListTableModel->isEmpty() )
-    {
-        emit sgnlPlaySong( mPlayListTableModel->front() );
+        playFirstSongInPlayList();
     }
 }
 
@@ -79,4 +71,11 @@ void KtvMainWindow::songAlmostEnded()
 
 void KtvMainWindow::setupConnections()
 {
+}
+
+void KtvMainWindow::playFirstSongInPlayList()
+{
+    mCurPlayingSong = &mPlayListTableModel->front();
+    mPlayListTableModel->removeFrontSong();
+    emit sgnlPlaySong( *mCurPlayingSong );
 }

@@ -39,10 +39,12 @@ private:
     ---------------------------------------------*/
     SongDatabase * mSongDatabase;
     PlayListTableModel * mPlayListTableModel;
+    Song const * mCurPlayingSong;
 
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
+    void playFirstSongInPlayList();
     void setupConnections();
 };
 
