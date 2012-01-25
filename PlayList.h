@@ -1,3 +1,8 @@
+/*
+This class is not used, but just prepare for replacing the mPlayList in PlayListTableModel
+, if more functions must be added in PlayList.
+*/
+
 #ifndef PLAYLIST_H
 #define PLAYLIST_H
 

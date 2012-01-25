@@ -35,11 +35,11 @@ void KtvMainWindow::setSongDatabase( SongDatabase * aSongDatabase )
 void KtvMainWindow::addSongToPlayList( Song const & aSong )
 {
     mPlayListTableModel->addSong( aSong );
+    emit sgnlAddSongSuccess( aSong );
     if ( mCurPlayingSong == NULL )
     {
         playFirstSongInPlayList();
     }
-    emit sgnlAddSongSuccess( aSong );
 }
 
 void KtvMainWindow::addSongToPlayList( int aSongId )
@@ -81,6 +81,13 @@ void KtvMainWindow::shufflePlayList()
     emit sgnlShufflePlayList();
 }
 
+/**Function****************************************************************
+   Synopsis     [ play first song in the playlist ]
+   Description  [ Reading song video file will cost some time ( about 1 
+                  seconds ). If the slot of sgnlPlaySong is in the same
+                  thread, it will cause the feeling of delay.
+   SideEffects  [ remove first song in the playlist ]
+**************************************************************************/
 void KtvMainWindow::playFirstSongInPlayList()
 {
     mCurPlayingSong = &mPlayListTableModel->front();
