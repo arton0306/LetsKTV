@@ -27,11 +27,14 @@ public slots:
     void addSongToPlayList( int aSongId );
     void songEnded();
     void songAlmostEnded();
+    void shufflePlayList();
 
 signals:
     void sgnlPlaySong( Song const & aSong );
     void sgnlAddSongFailed();
     void sgnlAddSongSuccess( Song const & aSong );
+    void sgnlCutPlay();
+    void sgnlShufflePlayList();
 
 private:
     /*---------------------------------------------

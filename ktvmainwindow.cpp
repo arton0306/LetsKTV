@@ -71,6 +71,14 @@ void KtvMainWindow::songAlmostEnded()
 
 void KtvMainWindow::setupConnections()
 {
+    connect( mShufflePlayListBtn, SIGNAL(pressed()), this, SLOT(shufflePlayList()) );
+    connect( mCutPlayBtn, SIGNAL(pressed()), this, SIGNAL(sgnlCutPlay()) );
+}
+
+void KtvMainWindow::shufflePlayList()
+{
+    mPlayListTableModel->shufflePlayList();
+    emit sgnlShufflePlayList();
 }
 
 void KtvMainWindow::playFirstSongInPlayList()

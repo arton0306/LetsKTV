@@ -33,6 +33,7 @@ public:
     void addSong( Song const & aSong );
     void removeFrontSong();
     Song const & front() const;
+    void shufflePlayList();
 
 signals:
 

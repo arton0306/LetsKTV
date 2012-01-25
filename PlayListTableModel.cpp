@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "PlayListTableModel.h"
 #include "debug.h"
 
@@ -84,4 +85,11 @@ Song const & PlayListTableModel::front() const
 {
     DEBUG() << "Now PlayList size: " << mPlayList.size() << " get front";
     return *mPlayList[0];
+}
+
+void PlayListTableModel::shufflePlayList()
+{
+    beginResetModel();
+    random_shuffle( mPlayList.begin(), mPlayList.end() );
+    endResetModel();
 }
