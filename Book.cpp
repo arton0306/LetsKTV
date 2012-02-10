@@ -3,10 +3,12 @@
 #include "Song.h"
 #include "Book.h"
 #include "debug.h"
+#include "PageLayoutInfo.hpp"
 
 using namespace std;
 using namespace SongBook;
 
+const int SONG_COUNT_PER_PAGE = TABLE_ROW_COUNT * N_SONG_PER_ROW;
 Book::Book( SongDatabase const * aSongDatabase )
 {
     vector<Song> totalSong = aSongDatabase->getSongSingerOrderList();
@@ -28,11 +30,11 @@ Book::Book( SongDatabase const * aSongDatabase )
             vector<Song> & sc = songCategory[langType][genderType]; // sc is "s"ong"C"ategory
             if ( !sc.empty() )
             {
-                for ( int pageIndex = 0; pageIndex * 36 < sc.size(); ++pageIndex )
+                for ( int pageIndex = 0; pageIndex * SONG_COUNT_PER_PAGE < sc.size(); ++pageIndex )
                 {
                     Page aPage;
                     aPage.setTitle( getTitleTextToPrint( (Song::LanguageType)langType, (Song::GenderType)genderType ) );
-                    for ( int songIndex = pageIndex * 36; songIndex < ( pageIndex + 1 ) * 36 && songIndex < sc.size(); ++songIndex )
+                    for ( int songIndex = pageIndex * SONG_COUNT_PER_PAGE; songIndex < ( pageIndex + 1 ) * SONG_COUNT_PER_PAGE && songIndex < sc.size(); ++songIndex )
                     {
                         aPage.addSong( sc[songIndex] );
                     }
@@ -43,11 +45,11 @@ Book::Book( SongDatabase const * aSongDatabase )
     }
     if ( !mergeCategory.empty() )
     {
-        for ( int pageIndex = 0; pageIndex * 36 < mergeCategory.size(); ++pageIndex )
+        for ( int pageIndex = 0; pageIndex * SONG_COUNT_PER_PAGE < mergeCategory.size(); ++pageIndex )
         {
             Page aPage;
             aPage.setTitle( QString("其它") );
-            for ( int songIndex = pageIndex * 36; songIndex < ( pageIndex + 1 ) * 36 && songIndex < mergeCategory.size(); ++songIndex )
+            for ( int songIndex = pageIndex * SONG_COUNT_PER_PAGE; songIndex < ( pageIndex + 1 ) * SONG_COUNT_PER_PAGE && songIndex < mergeCategory.size(); ++songIndex )
             {
                 aPage.addSong( mergeCategory[songIndex] );
             }

@@ -7,12 +7,6 @@ Page::Page()
 {
 }
 
-Page::Page( QString aTitle, QString aSubTitle )
-    : mTitle( aTitle )
-    , mSubTitle( aSubTitle )
-{
-}
-
 void Page::addSong( Song const & aSong )
 {
     mSonglist.push_back( aSong );

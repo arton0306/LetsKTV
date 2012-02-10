@@ -12,8 +12,10 @@ namespace SongBook
     class Page
     {
     public:
+        /*---------------------------------------------
+                            Function
+        ---------------------------------------------*/
         Page();
-        Page( QString aTitle, QString aSubTitle );
         void addSong( Song const & aSong );
         Song const & getSong( int aIndex ) const;
         int getSongCount() const;

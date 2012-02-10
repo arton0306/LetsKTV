@@ -4,6 +4,7 @@
 #include "debug.h"
 #include <QDate>
 #include "WordManager.h"
+#include "PageLayoutInfo.hpp"
 
 using namespace SongBook;
 
@@ -28,8 +29,6 @@ const double TABLE_EACH_COL_WIDTH_RATIO[] = { SONGID_RATIO, SONGTITLE_RATIO, SIN
 
 // table border, row, column
 const double TABLE_BORDER = 1;  // pixel count
-const int TABLE_ROW_COUNT = 18;
-const int N_SONG_PER_ROW = 2;
 const int TABLE_COL_COUNT = COLUMN_TYPE_COUNT * N_SONG_PER_ROW;
 const int TABLE_GRID_PADDING = 3;
 const int SONG_COUNT_PER_PAGE = N_SONG_PER_ROW * TABLE_ROW_COUNT;
@@ -187,7 +186,10 @@ void PagePrinter::print( QPrinter & aPrinter, QPainter & aPainter ) const
                 getColWidth( aPrinter, colIndex ),
                 getRowHeight( aPrinter )
                 );
-            const int songIndex = rowIndex * N_SONG_PER_ROW + colIndex / COLUMN_TYPE_COUNT;
+            // row style
+            // const int songIndex = rowIndex * N_SONG_PER_ROW + colIndex / COLUMN_TYPE_COUNT;
+            // col style
+            const int songIndex = colIndex / COLUMN_TYPE_COUNT * TABLE_ROW_COUNT + rowIndex;
             if ( songIndex < mPage.getSongCount() )
             {
                 drawSongText

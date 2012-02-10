@@ -42,7 +42,8 @@ HEADERS  += \
     LabelWto.h \
     Page.h \
     PagePrinter.h \
-    Book.h
+    Book.h \
+    PageLayoutInfo.hpp
 
 FORMS    += \
     KtvMainWindow.ui \
