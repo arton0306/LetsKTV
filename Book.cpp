@@ -1,12 +1,13 @@
 #include <QPrinter>
 #include <QString>
 #include "Song.h"
-#include "SonglistPainter.h"
+#include "Book.h"
 #include "debug.h"
 
 using namespace std;
+using namespace SongBook;
 
-SonglistPainter::SonglistPainter( SongDatabase const * aSongDatabase )
+Book::Book( SongDatabase const * aSongDatabase )
 {
     vector<Song> totalSong = aSongDatabase->getSongSingerOrderList();
     vector<Song> songCategory[Song::LANGUAGE_COUNT][Song::GENDER_COUNT];
@@ -29,13 +30,13 @@ SonglistPainter::SonglistPainter( SongDatabase const * aSongDatabase )
             {
                 for ( int pageIndex = 0; pageIndex * 36 < sc.size(); ++pageIndex )
                 {
-                    SonglistPage aPage;
+                    Page aPage;
                     aPage.setTitle( getTitleTextToPrint( (Song::LanguageType)langType, (Song::GenderType)genderType ) );
                     for ( int songIndex = pageIndex * 36; songIndex < ( pageIndex + 1 ) * 36 && songIndex < sc.size(); ++songIndex )
                     {
                         aPage.addSong( sc[songIndex] );
                     }
-                    mSonglistPage.push_back( aPage );
+                    mSongbookPage.push_back( aPage );
                 }
             }
         }
@@ -44,18 +45,18 @@ SonglistPainter::SonglistPainter( SongDatabase const * aSongDatabase )
     {
         for ( int pageIndex = 0; pageIndex * 36 < mergeCategory.size(); ++pageIndex )
         {
-            SonglistPage aPage;
+            Page aPage;
             aPage.setTitle( QString("其它") );
             for ( int songIndex = pageIndex * 36; songIndex < ( pageIndex + 1 ) * 36 && songIndex < mergeCategory.size(); ++songIndex )
             {
                 aPage.addSong( mergeCategory[songIndex] );
             }
-            mSonglistPage.push_back( aPage );
+            mSongbookPage.push_back( aPage );
         }
     }
 }
 
-QString SonglistPainter::getTitleTextToPrint( Song::LanguageType aLanguageType, Song::GenderType aGenderType ) const
+QString Book::getTitleTextToPrint( Song::LanguageType aLanguageType, Song::GenderType aGenderType ) const
 {
     QString genderText, languageText;
     switch ( aGenderType )
@@ -75,7 +76,7 @@ QString SonglistPainter::getTitleTextToPrint( Song::LanguageType aLanguageType, 
     return languageText + QString(" - ") + genderText;
 }
 
-void SonglistPainter::makePdf( QString aFileName )
+void Book::makePdf( QString aFileName )
 {
     QPrinter printer;
     printer.setOutputFormat(QPrinter::PdfFormat);
@@ -86,10 +87,10 @@ void SonglistPainter::makePdf( QString aFileName )
     painter.setRenderHint( QPainter::TextAntialiasing, true );
     painter.setRenderHint( QPainter::HighQualityAntialiasing, true );
 
-    for ( int pageIndex = 0; pageIndex < mSonglistPage.size(); ++pageIndex )
+    for ( int pageIndex = 0; pageIndex < mSongbookPage.size(); ++pageIndex )
     {
-        mSonglistPage[pageIndex].print( printer, painter );
-        if ( pageIndex != mSonglistPage.size() - 1 )
+        mSongbookPage[pageIndex].print( printer, painter );
+        if ( pageIndex != mSongbookPage.size() - 1 )
         {
             // qt automacially produce a new page first, so do not need to put this before drawOnePage
             printer.newPage();

@@ -3,7 +3,7 @@
 #include "debug.h"
 #include "SongDbWindow.h"
 #include "SongTableModel.h"
-#include "SonglistPainter.h"
+#include "Book.h"
 
 SongDbWindow::SongDbWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -95,7 +95,7 @@ void SongDbWindow::writePdfFile()
         if ( !fileName.isEmpty() )
         {
             DEBUG() << "ready to write " << fileName;
-            SonglistPainter( mSongDatabase ).makePdf( fileName );
+            SongBook::Book( mSongDatabase ).makePdf( fileName );
             mPreference.setValue( "WritePdfDefaultFolder", QFileInfo( fileName ).canonicalPath() );
         }
         else
