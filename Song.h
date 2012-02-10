@@ -36,7 +36,9 @@ public:
         GENDER_FEMALE,
         GENDER_GROUP,
         GENDER_CHORUS,
-        GENDER_OTHERS
+        GENDER_OTHERS,
+
+        GENDER_COUNT
     };
 
     enum LanguageType
@@ -46,7 +48,9 @@ public:
         LANGUAGE_MINNAN,
         LANGUAGE_ENGLISH,
         LANGUAGE_JAPANESE,
-        LANGUAGE_OTHERS
+        LANGUAGE_OTHERS,
+
+        LANGUAGE_COUNT
     };
     /*---------------------------------------------
                        Functions
@@ -70,7 +74,9 @@ public:
     QString getSongName() const;
     QString getSinger() const;
     QString getGender() const;
+    GenderType getGenderType() const;
     QString getLanguage() const;
+    LanguageType getLanguageType() const;
     int getTimeLength() const;
     QString getTimeLengthText() const;
     QString getFilePath() const;
@@ -80,13 +86,17 @@ public:
     bool compareSinger( Song const & aSong ) const;
 
 private:
+    GenderType lookupGenderType( QString aGenderText ) const;
+    LanguageType lookupLanguageType( QString aLanguageText ) const;
     // static QMap<QString, GenderType> sGenderOrder;
     // static QMap<QString, LanguageType> sLanguageOrder;
     int mId;
     QString mSinger;
     QString mSongName;
     QString mGender;
+    GenderType mGenderType;
     QString mLanguage;
+    LanguageType mLanguageType;
     int mTimeLength; // in seconds
     QString mFilePath;
     QString mNotes;

@@ -16,11 +16,13 @@ Song::Song
     QString aLanguage,
     QString aFilePath
     )
-    : mSinger ( aSinger )
-    , mSongName ( aSongName )
-    , mGender ( aGender )
-    , mLanguage ( aLanguage )
-    , mFilePath ( aFilePath )
+    : mSinger( aSinger )
+    , mSongName( aSongName )
+    , mGender( aGender )
+    , mGenderType( lookupGenderType( aGender ) )
+    , mLanguage( aLanguage )
+    , mLanguageType( lookupLanguageType( aLanguage ) )
+    , mFilePath( aFilePath )
 {
     mTimeLength = TIME_UNKNOWN;
 }
@@ -29,10 +31,40 @@ Song::Song( QString aFileName )
 {
     QStringList fileNameCols = aFileName.split( QChar( '-' ) );
     mSinger = fileNameCols[ SINGER ];
-    mSongName= fileNameCols[ SONGNAME ];
+    mSongName = fileNameCols[ SONGNAME ];
     mGender = fileNameCols[ GENDER ];
+    mGenderType = lookupGenderType( mGender );
     mLanguage = fileNameCols[ LANGUAGE ];
+    mLanguageType = lookupLanguageType( mLanguage );
     mTimeLength = TIME_UNKNOWN;
+}
+
+Song::GenderType Song::lookupGenderType( QString aGenderText ) const
+{
+    if ( aGenderText == QString("男") ) return GENDER_MALE;
+    if ( aGenderText == QString("女") ) return GENDER_FEMALE;
+    if ( aGenderText == QString("合") ) return GENDER_CHORUS;
+    if ( aGenderText == QString("團") ) return GENDER_GROUP;
+    else return GENDER_OTHERS;
+}
+
+Song::GenderType Song::getGenderType() const
+{
+    return mGenderType;
+}
+
+Song::LanguageType Song::lookupLanguageType( QString aLanguageText ) const
+{
+    if ( aLanguageText == QString("國") ) return LANGUAGE_MANDARIN;
+    if ( aLanguageText == QString("台") ) return LANGUAGE_MINNAN;
+    if ( aLanguageText == QString("英") ) return LANGUAGE_ENGLISH;
+    if ( aLanguageText == QString("日") ) return LANGUAGE_JAPANESE;
+    else return LANGUAGE_OTHERS;
+}
+
+Song::LanguageType Song::getLanguageType() const
+{
+    return mLanguageType;
 }
 
 void Song::setId( int aId )

@@ -2,7 +2,10 @@
 #define SONGLISTPAINTER_H
 
 #include <QPixmap>
+#include "Song.h"
 #include "SongDatabase.h"
+#include "SonglistPage.h"
+#include <vector>
 
 class SonglistPainter
 {
@@ -15,33 +18,15 @@ public:
 
 private:
     /*---------------------------------------------
-                         Types
-    ---------------------------------------------*/
-    enum ColumnType
-    {
-        SONGID,
-        SONGTITLE,
-        SINGER,
-    };
-
-    /*---------------------------------------------
                         Functions
     ---------------------------------------------*/
-    int getTableTitleBeginY( QRect const & aPrinter ) const;
-    int getTableSubTitleBeginY( QRect const & aPrinter ) const;
-    int getTableBeginY( QRect const & aPrinter ) const;
+    QString getTitleTextToPrint( Song::LanguageType aLanguageType, Song::GenderType aGenderType ) const;
 
-    double getHlineBeginY( QPrinter & aPrinter, int aRowIndex ) const;
-    double getRowHeight( QPrinter & aPrinter ) const;
-    double getColWidth( QPrinter & aPrinter, int aColIndex ) const;
-    void drawSongText( QPainter & aPainter, QRect const & aRect, QString const & aString, ColumnType aColType );
-    void drawOnePage( QPrinter & aPrinter, QPainter & aPainter, int aSongBeginIndex );
-    double estimatedFontSize( QRect const & aRect, QString const & aString ) const;
-    void drawSinger( QPainter & aPainter, QRect const & aRect, QString const & aString ) const;
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
-    SongDatabase const * mSongDatabase;
+    std::vector<Song> mSongList;
+    std::vector<SonglistPage> mSonglistPage;
 };
 
 #endif // SONGLISTPAINTER_H
