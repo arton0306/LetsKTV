@@ -40,7 +40,7 @@ int WordManager::compare( CompareOrderType aOrder, QString const & aX, QString c
         case ZUIN_ORDER:
             for ( int i = 0; i < std::min( getWordLength( aX ), getWordLength( aY ) ); ++i )
             {
-                QMap<QString, int> const & orderTable =
+                QMap<QChar, int> const & orderTable =
                     ( aOrder == STROKE_ORDER ? mStrokeTable : mZuinOrderTable );
                 if ( orderTable.contains( aX[i] ) && orderTable.contains( aY[i] ) )
                 {
@@ -63,11 +63,11 @@ int WordManager::compare( CompareOrderType aOrder, QString const & aX, QString c
 
 /**Function****************************************************************
    Synopsis     [ getWordLength returns the meaningful word length ]
-   Description  [ The calculation of word length is according to 
+   Description  [ The calculation of word length is according to
                   different languages. In English, several letters compose
-                  a word. In Chinese, there does not exist the concept of 
-                  letter. Ex: "One Night In 北京" will be counted as 5. 
-                  "100種生活" will be counted as 4. "戀上(另)一個人" will 
+                  a word. In Chinese, there does not exist the concept of
+                  letter. Ex: "One Night In 北京" will be counted as 5.
+                  "100種生活" will be counted as 4. "戀上(另)一個人" will
                   be counted as 6.
    SideEffects  [ none ]
 **************************************************************************/
@@ -142,7 +142,7 @@ double WordManager::getWordWidthCount( QString const & aString )
 
 QString WordManager::getZuinToken( QChar const & aChar )
 {
-    return mZuinTokenTable[QString( aChar )];
+    return mZuinTokenTable[ aChar ];
 }
 
 void WordManager::readStrokeOrderFile()
@@ -159,7 +159,7 @@ void WordManager::readStrokeOrderFile()
         QStringList line = in.readLine().split(" ");
 
         // in the file, col 0 is the word, col 1 is #stroke
-        mStrokeTable[line.at(0)] = line.at(1).toInt();
+        mStrokeTable[line.at(0)[0]] = line.at(1).toInt();
     }
     file.close();
 }
@@ -182,8 +182,8 @@ void WordManager::readZuinOrderFile()
         // each line begin from a ZuinToken then its Chinese Word
         for ( int i = 0; i < line.count(); ++i )
         {
-            mZuinOrderTable[QString(line[i])] = order;
-            mZuinTokenTable[QString(line[i])] = line[0]; // just save the header token for the time being
+            mZuinOrderTable[line[i]] = order;
+            mZuinTokenTable[line[i]] = line[0]; // just save the header token for the time being
             ++order;
         }
     }
