@@ -172,14 +172,13 @@ void PagePrinter::drawSubTitle( QPrinter & aPrinter, QPainter & aPainter ) const
 {
     const int SUBTITLE_BEGIN_Y = getSubTitleBeginY( aPrinter.pageRect() );
     const int TABLE_BEGIN_Y = getTableBeginY( aPrinter.pageRect() );
-    QStaticText staticText( QString("<font color=#ff0000>t</font><font color=#0000ff>est</font>") );
 
     QRect subtitleRect( 0, SUBTITLE_BEGIN_Y, aPrinter.pageRect().width(), TABLE_BEGIN_Y - SUBTITLE_BEGIN_Y );
     QFont textFont( QString( "微軟正黑體" ) );
     textFont.setPixelSize( estimatedFontSize( subtitleRect, mPage.getSubTitle() ) );
     aPainter.setFont( textFont );
 
-    aPainter.drawStaticText( QPointF( 50, SUBTITLE_BEGIN_Y ), staticText );
+    aPainter.drawStaticText( QPointF( 50, SUBTITLE_BEGIN_Y ), mPage.getSubTitle() );
     aPainter.drawRect( subtitleRect );
 }
 

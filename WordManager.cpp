@@ -146,6 +146,11 @@ WordManager::WordManager()
     }
 }
 
+/* static */ QString WordManager::getZuinToken( QChar const & aChar )
+{
+    return wordManager->mZuinTokenTable[QString( aChar )];
+}
+
 void WordManager::readStrokeOrderFile()
 {
     QFile file("stroke_order.txt");

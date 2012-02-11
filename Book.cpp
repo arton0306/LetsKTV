@@ -5,6 +5,7 @@
 #include "Book.h"
 #include "debug.h"
 #include "PageLayoutInfo.hpp"
+#include "WordManager.h"
 
 using namespace std;
 using namespace SongBook;
@@ -107,6 +108,7 @@ void Book::produceEachPage()
                     {
                         aPage.addSong( sc[songIndex] );
                     }
+                    aPage.produceSubtitle();
                     mSongbookPage.push_back( aPage );
                 }
             }
@@ -142,6 +144,8 @@ QString Book::getTitleTextToPrint( Song::LanguageType aLanguageType, Song::Gende
     {
         case Song::LANGUAGE_MANDARIN: languageText = QString("國語歌曲"); break;
         case Song::LANGUAGE_MINNAN:   languageText = QString("台語歌曲"); break;
+        case Song::LANGUAGE_ENGLISH:  languageText = QString("英語歌曲"); break;
+        case Song::LANGUAGE_JAPANESE: languageText = QString("日語歌曲"); break;
         default:                      languageText = QString("其它語言"); break;
     }
     return languageText + QString(" - ") + genderText;

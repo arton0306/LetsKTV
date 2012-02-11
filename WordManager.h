@@ -28,6 +28,7 @@ public:
     static bool isHeadEnglishLetter( QString const & aString );
     static bool isEnglishLetter( QChar const & aChar );
     static bool isHalfWidthLetter( QChar const & aChar );
+    static QString getZuinToken( QChar const & aChar );
     static double getWordWidthCount( QString const & aString );
 
 private:

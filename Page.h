@@ -21,11 +21,16 @@ namespace SongBook
         int getSongCount() const;
         void setTitle( QString aTitle );
         QString getTitle() const;
-        void setSubTitle( QString aSubTitle );
+        void produceSubtitle();
         QString getSubTitle() const;
         void print( QPrinter & aPrinter, QPainter & aPainter ) const;
 
     private:
+        /*---------------------------------------------
+                            Function
+        ---------------------------------------------*/
+        bool isZuinHintNeeded() const;
+
         /*---------------------------------------------
                             Variable
         ---------------------------------------------*/

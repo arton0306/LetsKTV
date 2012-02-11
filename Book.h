@@ -27,6 +27,7 @@ namespace SongBook
         void produceMergeCategory();
         void produceEachPage();
         QString getTitleTextToPrint( Song::LanguageType aLanguageType, Song::GenderType aGenderType ) const;
+        QString getSubTitleRichTextToPrint( Page const & aPage, Song::LanguageType aLanguageType, Song::GenderType aGenderType ) const;
 
         /*---------------------------------------------
                            Variables

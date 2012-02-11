@@ -1,3 +1,5 @@
+#include <QSet>
+#include "WordManager.h"
 #include "Page.h"
 #include "PagePrinter.h"
 
@@ -32,9 +34,55 @@ QString Page::getTitle() const
     return mTitle;
 }
 
-void Page::setSubTitle( QString aSubTitle )
+void Page::produceSubtitle()
 {
-    mSubTitle = aSubTitle;
+    mSubTitle = "";
+    if ( isZuinHintNeeded() )
+    {
+        QSet<QString> headZuin;
+        for ( int songIndex = 0; songIndex < mSonglist.size(); ++songIndex )
+        {
+            headZuin += WordManager::getZuinToken( mSonglist[songIndex].getSinger()[0] ); // find the zuin of first word
+        }
+        static QString zuin("ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ");
+        for ( int zuinIndex = 0; zuinIndex < zuin.size(); ++zuinIndex )
+        {
+            if ( headZuin.contains( QString( zuin[zuinIndex] ) ) )
+            {
+                mSubTitle += QString( "<font color=#ff0000>" ) + zuin[zuinIndex] + QString( "</font>" );
+            }
+            else
+            {
+                mSubTitle += zuin[zuinIndex];
+            }
+        }
+    }
+}
+
+bool Page::isZuinHintNeeded() const
+{
+    bool result = true;
+    for ( int songIndex = 0; songIndex < mSonglist.size(); ++songIndex )
+    {
+        Song::LanguageType const langType = mSonglist[songIndex].getLanguageType();
+        Song::GenderType const genderType = mSonglist[songIndex].getGenderType();
+        if ( langType != Song::LANGUAGE_MANDARIN && langType != Song::LANGUAGE_MINNAN )
+        {
+            result = false;
+            break;
+        }
+        else
+        {
+            if ( genderType == Song::GENDER_CHORUS ||
+                 genderType == Song::GENDER_OTHERS )
+            {
+                result = false;
+                break;
+            }
+        }
+    }
+
+    return result;
 }
 
 QString Page::getSubTitle() const
