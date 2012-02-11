@@ -5,17 +5,19 @@
 #include <QDate>
 #include "WordManager.h"
 #include "PageLayoutInfo.hpp"
+#include <QStaticText>
 
 using namespace SongBook;
 
 // page padding
 const int PAGE_PADDING = 18; // pixel count ( 4 border )
 const int LR_PAGE_PADDING = PAGE_PADDING * 2; // sum of left and right page padding
+const int TB_PAGE_PADDING = PAGE_PADDING * 2; // sum of top and bottom page padding
 
 // the ratio of title, subtile, and table
-const double TABLE_TITLE_RATIO_TO_HEIGHT    =  3.5 / 20.0;
-const double TABLE_SUBTITLE_RATIO_TO_HEIGHT =  1.9 / 20.0;
-const double TABLE_RATIO_TO_HEIGHT          = 14.6 / 20.0;
+const double PAGE_TITLE_RATIO_TO_HEIGHT    =  1.5 / 20.0;
+const double PAGE_SUBTITLE_RATIO_TO_HEIGHT =  0.6 / 20.0;
+const double TABLE_RATIO_TO_HEIGHT          = 17.9 / 20.0;
 
 // column type
 const int COLUMN_TYPE_COUNT = 3;
@@ -38,19 +40,19 @@ PagePrinter::PagePrinter( Page const & aPage )
 {
 }
 
-int PagePrinter::getTableTitleBeginY( QRect const & aRect ) const
+int PagePrinter::getTitleBeginY() const
 {
     return PAGE_PADDING;
 }
 
-int PagePrinter::getTableSubTitleBeginY( QRect const & aRect ) const
+int PagePrinter::getSubTitleBeginY( QRect const & aRect ) const
 {
-    return PAGE_PADDING + ( aRect.height() - LR_PAGE_PADDING ) * TABLE_TITLE_RATIO_TO_HEIGHT;
+    return PAGE_PADDING + ( aRect.height() - TB_PAGE_PADDING ) * PAGE_TITLE_RATIO_TO_HEIGHT;
 }
 
 int PagePrinter::getTableBeginY( QRect const & aRect ) const
 {
-    return getTableTitleBeginY( aRect ) + ( aRect.height() - LR_PAGE_PADDING ) * TABLE_SUBTITLE_RATIO_TO_HEIGHT;
+    return getSubTitleBeginY( aRect ) + ( aRect.height() - TB_PAGE_PADDING ) * PAGE_SUBTITLE_RATIO_TO_HEIGHT;
 }
 
 
@@ -147,13 +149,47 @@ void PagePrinter::drawSongText( QPainter & aPainter, QRect const & aRect, QStrin
     }
 }
 
+void PagePrinter::drawTitle( QPrinter & aPrinter, QPainter & aPainter ) const
+{
+    const int TITLE_BEGIN_Y = getTitleBeginY();
+    const int SUBTITLE_BEGIN_Y = getSubTitleBeginY( aPrinter.pageRect() );
+    QRect titleRect
+        (
+        0,
+        TITLE_BEGIN_Y,
+        aPrinter.pageRect().width(),
+        SUBTITLE_BEGIN_Y - TITLE_BEGIN_Y
+        );
+
+    QFont textFont( QString( "微軟正黑體" ) );
+    textFont.setPixelSize( estimatedFontSize( titleRect, mPage.getTitle() ) );
+    aPainter.setFont( textFont );
+    aPainter.drawText( titleRect, Qt::AlignVCenter | Qt::AlignCenter, mPage.getTitle() );
+    aPainter.drawRect( titleRect );
+}
+
+void PagePrinter::drawSubTitle( QPrinter & aPrinter, QPainter & aPainter ) const
+{
+    const int SUBTITLE_BEGIN_Y = getSubTitleBeginY( aPrinter.pageRect() );
+    const int TABLE_BEGIN_Y = getTableBeginY( aPrinter.pageRect() );
+    QStaticText staticText( QString("<font color=#ff0000>t</font><font color=#0000ff>est</font>") );
+
+    QRect subtitleRect( 0, SUBTITLE_BEGIN_Y, aPrinter.pageRect().width(), TABLE_BEGIN_Y - SUBTITLE_BEGIN_Y );
+    QFont textFont( QString( "微軟正黑體" ) );
+    textFont.setPixelSize( estimatedFontSize( subtitleRect, mPage.getSubTitle() ) );
+    aPainter.setFont( textFont );
+
+    aPainter.drawStaticText( QPointF( 50, SUBTITLE_BEGIN_Y ), staticText );
+    aPainter.drawRect( subtitleRect );
+}
+
 void PagePrinter::print( QPrinter & aPrinter, QPainter & aPainter ) const
 {
     // draw title
-    const int TABLE_TITLE_BEGIN_Y = getTableTitleBeginY( aPrinter.pageRect() );
+    drawTitle( aPrinter, aPainter );
 
     // draw subtitle
-    const int TABLE_SUBTITLE_BEGIN_Y = getTableSubTitleBeginY( aPrinter.pageRect() );
+    drawSubTitle( aPrinter, aPainter );
 
     // draw table
     QPen pen( Qt::black, TABLE_BORDER );

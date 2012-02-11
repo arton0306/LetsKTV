@@ -84,6 +84,8 @@ void Book::makePdf( QString aFileName )
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setOutputFileName( aFileName );
 
+    // remember that we must create painter here.
+    // It can not be created in the PagePrinter, or the result will be wrong - just produce the last page.
     QPainter painter( &printer );
     painter.setRenderHint( QPainter::Antialiasing, true );
     painter.setRenderHint( QPainter::TextAntialiasing, true );

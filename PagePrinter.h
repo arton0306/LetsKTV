@@ -30,8 +30,8 @@ namespace SongBook
         /*---------------------------------------------
                             Functions
         ---------------------------------------------*/
-        int getTableTitleBeginY( QRect const & aPrinter ) const;
-        int getTableSubTitleBeginY( QRect const & aPrinter ) const;
+        int getTitleBeginY() const;
+        int getSubTitleBeginY( QRect const & aRect ) const;
         int getTableBeginY( QRect const & aPrinter ) const;
 
         double getHlineBeginY( QPrinter & aPrinter, int aRowIndex ) const;
@@ -40,6 +40,8 @@ namespace SongBook
         void drawSongText( QPainter & aPainter, QRect const & aRect, QString const & aString, ColumnType aColType ) const;
         double estimatedFontSize( QRect const & aRect, QString const & aString ) const;
         void drawSinger( QPainter & aPainter, QRect const & aRect, QString const & aString ) const;
+        void drawTitle( QPrinter & aPrinter, QPainter & aPainter ) const;
+        void drawSubTitle( QPrinter & aPrinter, QPainter & aPainter ) const;
 
         /*---------------------------------------------
                             Variable

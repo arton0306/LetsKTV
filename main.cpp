@@ -5,8 +5,10 @@
 #include "VideoWindow.h"
 #include "SongDbWindow.h"
 #include "PaintWidget.h"
-#include "SonglistPainter.h"
 #include "LabelWto.h"
+
+#include "SongDatabase.h"
+#include "Book.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,6 +19,7 @@ int main(int argc, char *argv[])
         qInstallMsgHandler( debug::debugWinMsgHandler );
     #endif
 
+
     // set text codec
     QTextCodec *textc = QTextCodec::codecForName("utf-8");
     QTextCodec::setCodecForCStrings( textc );
@@ -24,6 +27,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale( textc );
     DEBUG() << "測試codec 程式開始…";
 
+    /*
     VideoWindow videoWindow;
     videoWindow.show();
 
@@ -56,6 +60,11 @@ int main(int argc, char *argv[])
 
     ktvMainWindow.installEventFilter( &videoWindow );
     songDbWindow.installEventFilter( &videoWindow );
+
+    */
+
+    SongDatabase * songDatabase = new SongDatabase( "C:/Users/Arton/Dropbox/Test" );
+    SongBook::Book( songDatabase ).makePdf( "C:/Users/Arton/Desktop/songbook.pdf" );
 
     return letsKtv.exec();
 }
