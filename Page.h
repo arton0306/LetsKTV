@@ -34,8 +34,8 @@ namespace SongBook
         /*---------------------------------------------
                             Variable
         ---------------------------------------------*/
-        QString mTitle;
-        QString mSubTitle;
+        QString mTitle;              // plain text
+        QString mSubTitle;           // rich text
         std::vector<Song> mSonglist; // the songs which will be printed on a page
     };
 }

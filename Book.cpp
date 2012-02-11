@@ -12,6 +12,7 @@ using namespace SongBook;
 
 const int SONG_COUNT_PER_PAGE = TABLE_ROW_COUNT * N_SONG_PER_ROW;
 const int SMALL_CATEGORY_UPPER_BOUND = SONG_COUNT_PER_PAGE / 2;
+
 Book::Book( SongDatabase const * aSongDatabase )
 {
     classifyAllSongs( aSongDatabase );

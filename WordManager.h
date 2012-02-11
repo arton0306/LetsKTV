@@ -22,28 +22,27 @@ public:
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
-    static int compare( CompareOrderType aOrder, QString const & aX, QString const & aY );
-    static int getWordLength( QString const & aStr );
-    static bool isInit();
-    static bool isHeadEnglishLetter( QString const & aString );
-    static bool isEnglishLetter( QChar const & aChar );
-    static bool isHalfWidthLetter( QChar const & aChar );
-    static QString getZuinToken( QChar const & aChar );
-    static double getWordWidthCount( QString const & aString );
+    static WordManager * getInstance();
+    int compare( CompareOrderType aOrder, QString const & aX, QString const & aY );
+    int getWordLength( QString const & aStr );
+    bool isHeadEnglishLetter( QString const & aString );
+    bool isEnglishLetter( QChar const & aChar );
+    bool isHalfWidthLetter( QChar const & aChar );
+    QString getZuinToken( QChar const & aChar );
+    double getWordWidthCount( QString const & aString );
 
 private:
     /*---------------------------------------------
                        Functions
     ---------------------------------------------*/
     WordManager();
-    static void checkInit();
     void readStrokeOrderFile();
     void readZuinOrderFile();
 
     /*---------------------------------------------
                        Variables
     ---------------------------------------------*/
-    static WordManager * wordManager;
+    static WordManager * sWordManager;
     QMap<QString, int> mStrokeTable;
     QMap<QString, int> mZuinOrderTable;
     QMap<QString, QString> mZuinTokenTable; // just save the header token for the time being

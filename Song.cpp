@@ -158,15 +158,15 @@ QString Song::getInfo( SongInfoType aInfoType ) const
 
 bool Song::compareSongName( Song const & aSong ) const
 {
-    int lengthCompare = WordManager::compare( WordManager::MEANING_LENGTH_ORDER, mSongName, aSong.mSongName );
+    int lengthCompare = WordManager::getInstance()->compare( WordManager::MEANING_LENGTH_ORDER, mSongName, aSong.mSongName );
     if ( lengthCompare < 0 ) return true;
     if ( lengthCompare > 0 ) return false;
-    return WordManager::compare( WordManager::STROKE_ORDER, mSongName, aSong.mSongName ) <= 0;
+    return WordManager::getInstance()->compare( WordManager::STROKE_ORDER, mSongName, aSong.mSongName ) <= 0;
 }
 
 bool Song::compareSinger( Song const & aSong ) const
 {
-    return WordManager::compare( WordManager::ZUIN_ORDER, mSinger, aSong.mSinger ) <= 0;
+    return WordManager::getInstance()->compare( WordManager::ZUIN_ORDER, mSinger, aSong.mSinger ) <= 0;
 }
 
 /*

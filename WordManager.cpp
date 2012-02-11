@@ -6,15 +6,21 @@
 #include "WordManager.h"
 #include "debug.h"
 
-WordManager * WordManager::wordManager = NULL;
+WordManager * WordManager::sWordManager = NULL;
 
 WordManager::WordManager()
 {
 }
 
-/* static */ bool WordManager::isInit()
+/* static */ WordManager * WordManager::getInstance()
 {
-    return ( NULL != wordManager );
+    if ( sWordManager == NULL )
+    {
+        sWordManager = new WordManager;
+        sWordManager->readStrokeOrderFile();
+        sWordManager->readZuinOrderFile();
+    }
+    return sWordManager;
 }
 
 /**Function****************************************************************
@@ -22,9 +28,8 @@ WordManager::WordManager()
    Description  [ aX > aY return 1, aX == aY return 0, aX < aY return -1]
    SideEffects  [ none ]
 **************************************************************************/
-/* static */ int WordManager::compare( CompareOrderType aOrder, QString const & aX, QString const & aY )
+int WordManager::compare( CompareOrderType aOrder, QString const & aX, QString const & aY )
 {
-    checkInit();
     switch ( aOrder )
     {
         case MEANING_LENGTH_ORDER:
@@ -35,8 +40,8 @@ WordManager::WordManager()
         case ZUIN_ORDER:
             for ( int i = 0; i < std::min( getWordLength( aX ), getWordLength( aY ) ); ++i )
             {
-                QMap<QString, int> const & orderTable = 
-                    ( aOrder == STROKE_ORDER ? wordManager->mStrokeTable : wordManager->mZuinOrderTable );
+                QMap<QString, int> const & orderTable =
+                    ( aOrder == STROKE_ORDER ? mStrokeTable : mZuinOrderTable );
                 if ( orderTable.contains( aX[i] ) && orderTable.contains( aY[i] ) )
                 {
                     if ( orderTable[aX[i]] < orderTable[aY[i]] ) return -1;
@@ -66,9 +71,8 @@ WordManager::WordManager()
                   be counted as 6.
    SideEffects  [ none ]
 **************************************************************************/
-/* static */ int WordManager::getWordLength( QString const & aStr )
+int WordManager::getWordLength( QString const & aStr )
 {
-    assert( WordManager::isInit() );
     int result = 0;
     bool isInLetterLanguege = false;
     bool isInNumber = false;
@@ -103,18 +107,18 @@ WordManager::WordManager()
     return result;
 }
 
-/* static */ bool WordManager::isHeadEnglishLetter( QString const & aString )
+bool WordManager::isHeadEnglishLetter( QString const & aString )
 {
     return ( !aString.isEmpty() && isEnglishLetter( aString[0] ) );
 }
 
-/* static */ bool WordManager::isEnglishLetter( QChar const & aChar )
+bool WordManager::isEnglishLetter( QChar const & aChar )
 {
     // a Unicode Char "isLetter", don't use it
     return aChar.isLower() || aChar.isUpper();
 }
 
-/* static */ bool WordManager::isHalfWidthLetter( QChar const & aChar )
+bool WordManager::isHalfWidthLetter( QChar const & aChar )
 {
     return ( isEnglishLetter( aChar ) || aChar.isSpace() || aChar.isPunct() || aChar.isNumber() );
 }
@@ -126,7 +130,7 @@ WordManager::WordManager()
                   return the sum ]
    SideEffects  [ none ]
 **************************************************************************/
-/* static */ double WordManager::getWordWidthCount( QString const & aString )
+double WordManager::getWordWidthCount( QString const & aString )
 {
     double result = 0;
     for ( int i = 0; i < aString.count(); ++i )
@@ -136,19 +140,9 @@ WordManager::WordManager()
     return result;
 }
 
-/* static */ void WordManager::checkInit()
+QString WordManager::getZuinToken( QChar const & aChar )
 {
-    if ( wordManager == NULL )
-    {
-        wordManager = new WordManager;
-        wordManager->readStrokeOrderFile();
-        wordManager->readZuinOrderFile();
-    }
-}
-
-/* static */ QString WordManager::getZuinToken( QChar const & aChar )
-{
-    return wordManager->mZuinTokenTable[QString( aChar )];
+    return mZuinTokenTable[QString( aChar )];
 }
 
 void WordManager::readStrokeOrderFile()

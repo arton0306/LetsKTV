@@ -42,7 +42,7 @@ void Page::produceSubtitle()
         QSet<QString> headZuin;
         for ( int songIndex = 0; songIndex < mSonglist.size(); ++songIndex )
         {
-            headZuin += WordManager::getZuinToken( mSonglist[songIndex].getSinger()[0] ); // find the zuin of first word
+            headZuin += WordManager::getInstance()->getZuinToken( mSonglist[songIndex].getSinger()[0] ); // find the zuin of first word
         }
         static QString zuin("ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ");
         for ( int zuinIndex = 0; zuinIndex < zuin.size(); ++zuinIndex )

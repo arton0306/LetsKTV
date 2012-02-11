@@ -6,6 +6,7 @@
 #include "WordManager.h"
 #include "PageLayoutInfo.hpp"
 #include <QStaticText>
+#include <QTextOption>
 
 using namespace SongBook;
 
@@ -116,7 +117,7 @@ double PagePrinter::estimatedFontSize( QRect const & aRect, QString const & aStr
     for ( int i = 0; i < sizeof( ratio ) / sizeof( ratio[0] ); ++i )
     {
         result = ratio[i] * aRect.height();
-        if ( result * WordManager::getWordWidthCount( aString ) < aRect.width() )
+        if ( result * WordManager::getInstance()->getWordWidthCount( aString ) < aRect.width() )
         {
             break;
         }
@@ -178,7 +179,11 @@ void PagePrinter::drawSubTitle( QPrinter & aPrinter, QPainter & aPainter ) const
     textFont.setPixelSize( estimatedFontSize( subtitleRect, mPage.getSubTitle() ) );
     aPainter.setFont( textFont );
 
-    aPainter.drawStaticText( QPointF( 50, SUBTITLE_BEGIN_Y ), mPage.getSubTitle() );
+    QStaticText staticText = mPage.getSubTitle();
+    QTextOption textOption;
+    textOption.setWrapMode( QTextOption::NoWrap );
+    staticText.setTextOption( textOption );
+    aPainter.drawStaticText( QPointF( 50, SUBTITLE_BEGIN_Y ), staticText );
     aPainter.drawRect( subtitleRect );
 }
 
