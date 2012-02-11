@@ -112,7 +112,7 @@ void PagePrinter::drawSinger( QPainter & aPainter, QRect const & aRect, QString 
 
 double PagePrinter::estimatedFontSize( QRect const & aRect, QString const & aString ) const
 {
-    const double ratio[] = { 0.7, 0.6, 0.5, 0.4, 0.35, 0.3 };
+    const double ratio[] = { 0.6, 0.5, 0.4, 0.35, 0.3 };
     double result = 0;
     for ( int i = 0; i < sizeof( ratio ) / sizeof( ratio[0] ); ++i )
     {
@@ -179,12 +179,15 @@ void PagePrinter::drawSubTitle( QPrinter & aPrinter, QPainter & aPainter ) const
     textFont.setPixelSize( estimatedFontSize( subtitleRect, WordManager::getInstance()->getZuinTable() ) );
     aPainter.setFont( textFont );
 
+    QRect subtitleBoundingRect( aPainter.boundingRect( subtitleRect, Qt::AlignVCenter | Qt::AlignCenter, WordManager::getInstance()->getZuinTable() ) );
+    // aPainter.drawRect( subtitleBoundingRect );
+
     QStaticText staticText = mPage.getSubTitle();
     QTextOption textOption;
     textOption.setWrapMode( QTextOption::NoWrap );
     staticText.setTextOption( textOption );
-    aPainter.drawStaticText( QPointF( 50, SUBTITLE_BEGIN_Y ), staticText );
-    aPainter.drawRect( subtitleRect );
+    aPainter.drawStaticText( QPointF( subtitleBoundingRect.topLeft() ), staticText );
+    // aPainter.drawRect( subtitleRect );
 }
 
 void PagePrinter::print( QPrinter & aPrinter, QPainter & aPainter ) const
