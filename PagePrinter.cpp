@@ -176,7 +176,7 @@ void PagePrinter::drawSubTitle( QPrinter & aPrinter, QPainter & aPainter ) const
 
     QRect subtitleRect( 0, SUBTITLE_BEGIN_Y, aPrinter.pageRect().width(), TABLE_BEGIN_Y - SUBTITLE_BEGIN_Y );
     QFont textFont( QString( "微軟正黑體" ) );
-    textFont.setPixelSize( estimatedFontSize( subtitleRect, mPage.getSubTitle() ) );
+    textFont.setPixelSize( estimatedFontSize( subtitleRect, WordManager::getInstance()->getZuinTable() ) );
     aPainter.setFont( textFont );
 
     QStaticText staticText = mPage.getSubTitle();

@@ -23,13 +23,14 @@ public:
                        Functions
     ---------------------------------------------*/
     static WordManager * getInstance();
-    int compare( CompareOrderType aOrder, QString const & aX, QString const & aY );
-    int getWordLength( QString const & aStr );
-    bool isHeadEnglishLetter( QString const & aString );
-    bool isEnglishLetter( QChar const & aChar );
-    bool isHalfWidthLetter( QChar const & aChar );
-    QString getZuinToken( QChar const & aChar );
-    double getWordWidthCount( QString const & aString );
+    int compare( CompareOrderType aOrder, QString const & aX, QString const & aY ) const;
+    int getWordLength( QString const & aStr ) const;
+    bool isHeadEnglishLetter( QString const & aString ) const;
+    bool isEnglishLetter( QChar const & aChar ) const;
+    bool isHalfWidthLetter( QChar const & aChar ) const;
+    QString getZuinToken( QChar const & aChar ) const;
+    double getWordWidthCount( QString const & aString ) const;
+    QString getZuinTable() const;
 
 private:
     /*---------------------------------------------

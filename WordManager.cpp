@@ -28,7 +28,7 @@ WordManager::WordManager()
    Description  [ aX > aY return 1, aX == aY return 0, aX < aY return -1]
    SideEffects  [ none ]
 **************************************************************************/
-int WordManager::compare( CompareOrderType aOrder, QString const & aX, QString const & aY )
+int WordManager::compare( CompareOrderType aOrder, QString const & aX, QString const & aY ) const
 {
     switch ( aOrder )
     {
@@ -71,7 +71,7 @@ int WordManager::compare( CompareOrderType aOrder, QString const & aX, QString c
                   be counted as 6.
    SideEffects  [ none ]
 **************************************************************************/
-int WordManager::getWordLength( QString const & aStr )
+int WordManager::getWordLength( QString const & aStr ) const
 {
     int result = 0;
     bool isInLetterLanguege = false;
@@ -107,18 +107,18 @@ int WordManager::getWordLength( QString const & aStr )
     return result;
 }
 
-bool WordManager::isHeadEnglishLetter( QString const & aString )
+bool WordManager::isHeadEnglishLetter( QString const & aString ) const
 {
     return ( !aString.isEmpty() && isEnglishLetter( aString[0] ) );
 }
 
-bool WordManager::isEnglishLetter( QChar const & aChar )
+bool WordManager::isEnglishLetter( QChar const & aChar ) const
 {
     // a Unicode Char "isLetter", don't use it
     return aChar.isLower() || aChar.isUpper();
 }
 
-bool WordManager::isHalfWidthLetter( QChar const & aChar )
+bool WordManager::isHalfWidthLetter( QChar const & aChar ) const
 {
     return ( isEnglishLetter( aChar ) || aChar.isSpace() || aChar.isPunct() || aChar.isNumber() );
 }
@@ -130,7 +130,7 @@ bool WordManager::isHalfWidthLetter( QChar const & aChar )
                   return the sum ]
    SideEffects  [ none ]
 **************************************************************************/
-double WordManager::getWordWidthCount( QString const & aString )
+double WordManager::getWordWidthCount( QString const & aString ) const
 {
     double result = 0;
     for ( int i = 0; i < aString.count(); ++i )
@@ -140,7 +140,7 @@ double WordManager::getWordWidthCount( QString const & aString )
     return result;
 }
 
-QString WordManager::getZuinToken( QChar const & aChar )
+QString WordManager::getZuinToken( QChar const & aChar ) const
 {
     return mChineseToZuinTable[ aChar ];
 }
@@ -188,4 +188,10 @@ void WordManager::readZuinOrderFile()
         }
     }
     file.close();
+}
+
+QString WordManager::getZuinTable() const
+{
+    static QString zuin("ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ");
+    return zuin;
 }

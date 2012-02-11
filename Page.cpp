@@ -44,7 +44,7 @@ void Page::produceSubtitle()
         {
             headZuin += WordManager::getInstance()->getZuinToken( mSonglist[songIndex].getSinger()[0] ); // find the zuin of first word
         }
-        static QString zuin("ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ");
+        static QString zuin = WordManager::getInstance()->getZuinTable();
         for ( int zuinIndex = 0; zuinIndex < zuin.size(); ++zuinIndex )
         {
             if ( headZuin.contains( QString( zuin[zuinIndex] ) ) )
