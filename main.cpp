@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 
     */
 
-    SongDatabase * songDatabase = new SongDatabase( "C:/Users/Arton/Dropbox/Test" );
+    SongDatabase * songDatabase = new SongDatabase( "G:/KTV/整理好的歌" );
     SongBook::Book( songDatabase ).makePdf( "C:/Users/Arton/Desktop/songbook.pdf" );
 
     return letsKtv.exec();

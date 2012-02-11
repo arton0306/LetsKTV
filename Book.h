@@ -22,12 +22,17 @@ namespace SongBook
         /*---------------------------------------------
                             Functions
         ---------------------------------------------*/
+        void classifyAllSongs( SongDatabase const * aSongDatabase );
+        void sortSongsInCategory();
+        void produceMergeCategory();
+        void produceEachPage();
         QString getTitleTextToPrint( Song::LanguageType aLanguageType, Song::GenderType aGenderType ) const;
 
         /*---------------------------------------------
                            Variables
         ---------------------------------------------*/
-        std::vector<Song> mSongList;
+        std::vector<Song> mSongCategory[Song::LANGUAGE_COUNT][Song::GENDER_COUNT];
+        std::vector<Song> mMergeCategory; // some normal category has few songs, so merge them into one category
         std::vector<Page> mSongbookPage;
     };
 }

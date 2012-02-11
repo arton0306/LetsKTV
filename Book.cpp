@@ -1,5 +1,6 @@
 #include <QPrinter>
 #include <QString>
+#include <algorithm>
 #include "Song.h"
 #include "Book.h"
 #include "debug.h"
@@ -9,25 +10,93 @@ using namespace std;
 using namespace SongBook;
 
 const int SONG_COUNT_PER_PAGE = TABLE_ROW_COUNT * N_SONG_PER_ROW;
+const int SMALL_CATEGORY_UPPER_BOUND = SONG_COUNT_PER_PAGE / 2;
 Book::Book( SongDatabase const * aSongDatabase )
 {
-    vector<Song> totalSong = aSongDatabase->getSongSingerOrderList();
-    vector<Song> songCategory[Song::LANGUAGE_COUNT][Song::GENDER_COUNT];
-    vector<Song> mergeCategory; // some normal category has few songs, so merge them into one category
-    for ( vector<Song>::iterator iter = totalSong.begin(); iter != totalSong.end(); ++iter )
-    {
-        songCategory[iter->getLanguageType()][iter->getGenderType()].push_back( *iter );
-        if ( iter->getLanguageType() > Song::LANGUAGE_MINNAN )
-        {
-            mergeCategory.push_back( *iter );
-        }
-    }
+    classifyAllSongs( aSongDatabase );
+    sortSongsInCategory();
+    produceMergeCategory();
+    produceEachPage();
+}
 
-    for ( int langType = 0; langType <= Song::LANGUAGE_MINNAN; ++langType )
+/**Function****************************************************************
+   Synopsis     [ classify all the song in database into mSongCategory ]
+   Description  [ input: song database
+                  output: none ]
+   SideEffects  [ mSongCategory ]
+**************************************************************************/
+void Book::classifyAllSongs( SongDatabase const * aSongDatabase )
+{
+    for ( int songIndex = 0; songIndex < aSongDatabase->getSongCount(); ++songIndex )
+    {
+        Song const & song = aSongDatabase->getSong( songIndex );
+        mSongCategory[song.getLanguageType()][song.getGenderType()].push_back( song );
+    }
+}
+
+/**Function****************************************************************
+   Synopsis     [ sort the songs in each category
+                  solo singer or group with singer order ( group only has one name )
+                  multi singer with songname order ]
+   Description  [ ]
+   SideEffects  [ mSongCategory ]
+**************************************************************************/
+void Book::sortSongsInCategory()
+{
+    for ( int langType = 0; langType < Song::LANGUAGE_COUNT; ++langType )
     {
         for ( int genderType = 0; genderType < Song::GENDER_COUNT; ++genderType )
         {
-            vector<Song> & sc = songCategory[langType][genderType]; // sc is "s"ong"C"ategory
+            vector<Song> & sc = mSongCategory[langType][genderType]; // sc is "s"ong"C"ategory
+            switch ( genderType )
+            {
+                case Song::GENDER_MALE:   // empty purposely
+                case Song::GENDER_FEMALE: // empty purposely
+                case Song::GENDER_GROUP:  std::sort( sc.begin(), sc.end(), compareSinger ); break;
+                case Song::GENDER_CHORUS: std::sort( sc.begin(), sc.end(), compareSongName ); break;
+                case Song::GENDER_OTHERS: break;
+            }
+        }
+    }
+}
+
+/**Function****************************************************************
+   Synopsis     [ for each category: if a category has few songs, move
+                  these songs into mMergeCategory ]
+   Description  [ ]
+   SideEffects  [ mSongCategory, mMergeCategory ]
+**************************************************************************/
+void Book::produceMergeCategory()
+{
+    for ( int langType = 0; langType < Song::LANGUAGE_COUNT; ++langType )
+    {
+        for ( int genderType = 0; genderType < Song::GENDER_COUNT; ++genderType )
+        {
+            vector<Song> & sc = mSongCategory[langType][genderType]; // sc is "s"ong"C"ategory
+            if ( sc.size() < SMALL_CATEGORY_UPPER_BOUND )
+            {
+                for ( int songIndex = 0; songIndex < sc.size(); ++songIndex )
+                {
+                    mMergeCategory.push_back( sc[songIndex] );
+                }
+                sc.clear();
+            }
+        }
+    }
+}
+
+/**Function****************************************************************
+   Synopsis     [ produce each page by mSongCategory and mMergeCategory ]
+   Description  [ ]
+   SideEffects  [ mSongbookPage ]
+**************************************************************************/
+void Book::produceEachPage()
+{
+    for ( int langType = 0; langType < Song::LANGUAGE_COUNT; ++langType )
+    {
+        for ( int genderType = 0; genderType < Song::GENDER_COUNT; ++genderType )
+        {
+            vector<Song> & sc = mSongCategory[langType][genderType]; // sc is "s"ong"C"ategory
             if ( !sc.empty() )
             {
                 for ( int pageIndex = 0; pageIndex * SONG_COUNT_PER_PAGE < sc.size(); ++pageIndex )
@@ -43,15 +112,15 @@ Book::Book( SongDatabase const * aSongDatabase )
             }
         }
     }
-    if ( !mergeCategory.empty() )
+    if ( !mMergeCategory.empty() )
     {
-        for ( int pageIndex = 0; pageIndex * SONG_COUNT_PER_PAGE < mergeCategory.size(); ++pageIndex )
+        for ( int pageIndex = 0; pageIndex * SONG_COUNT_PER_PAGE < mMergeCategory.size(); ++pageIndex )
         {
             Page aPage;
             aPage.setTitle( QString("其它") );
-            for ( int songIndex = pageIndex * SONG_COUNT_PER_PAGE; songIndex < ( pageIndex + 1 ) * SONG_COUNT_PER_PAGE && songIndex < mergeCategory.size(); ++songIndex )
+            for ( int songIndex = pageIndex * SONG_COUNT_PER_PAGE; songIndex < ( pageIndex + 1 ) * SONG_COUNT_PER_PAGE && songIndex < mMergeCategory.size(); ++songIndex )
             {
-                aPage.addSong( mergeCategory[songIndex] );
+                aPage.addSong( mMergeCategory[songIndex] );
             }
             mSongbookPage.push_back( aPage );
         }
