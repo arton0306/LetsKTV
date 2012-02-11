@@ -43,9 +43,9 @@ private:
                        Variables
     ---------------------------------------------*/
     static WordManager * sWordManager;
-    QMap<QChar, int> mStrokeTable;
-    QMap<QChar, int> mZuinOrderTable;
-    QMap<QChar, QString> mZuinTokenTable; // just save the header token for the time being
+    QMap<QChar, int> mChineseToStrokeCountTable;
+    QMap<QChar, int> mChineseToZuinOrderTable;
+    QMap<QChar, QString> mChineseToZuinTable; // just save the header token for the time being
 };
 
 #endif // WORDMANAGER_H

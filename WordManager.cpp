@@ -41,7 +41,7 @@ int WordManager::compare( CompareOrderType aOrder, QString const & aX, QString c
             for ( int i = 0; i < std::min( getWordLength( aX ), getWordLength( aY ) ); ++i )
             {
                 QMap<QChar, int> const & orderTable =
-                    ( aOrder == STROKE_ORDER ? mStrokeTable : mZuinOrderTable );
+                    ( aOrder == STROKE_ORDER ? mChineseToStrokeCountTable : mChineseToZuinOrderTable );
                 if ( orderTable.contains( aX[i] ) && orderTable.contains( aY[i] ) )
                 {
                     if ( orderTable[aX[i]] < orderTable[aY[i]] ) return -1;
@@ -142,7 +142,7 @@ double WordManager::getWordWidthCount( QString const & aString )
 
 QString WordManager::getZuinToken( QChar const & aChar )
 {
-    return mZuinTokenTable[ aChar ];
+    return mChineseToZuinTable[ aChar ];
 }
 
 void WordManager::readStrokeOrderFile()
@@ -159,7 +159,7 @@ void WordManager::readStrokeOrderFile()
         QStringList line = in.readLine().split(" ");
 
         // in the file, col 0 is the word, col 1 is #stroke
-        mStrokeTable[line.at(0)[0]] = line.at(1).toInt();
+        mChineseToStrokeCountTable[line.at(0)[0]] = line.at(1).toInt();
     }
     file.close();
 }
@@ -182,8 +182,8 @@ void WordManager::readZuinOrderFile()
         // each line begin from a ZuinToken then its Chinese Word
         for ( int i = 0; i < line.count(); ++i )
         {
-            mZuinOrderTable[line[i]] = order;
-            mZuinTokenTable[line[i]] = line[0]; // just save the header token for the time being
+            mChineseToZuinOrderTable[line[i]] = order;
+            mChineseToZuinTable[line[i]] = line[0]; // just save the header token for the time being
             ++order;
         }
     }
