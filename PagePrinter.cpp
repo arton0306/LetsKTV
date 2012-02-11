@@ -163,10 +163,10 @@ void PagePrinter::drawTitle( QPrinter & aPrinter, QPainter & aPainter ) const
         );
 
     QFont textFont( QString( "微軟正黑體" ) );
-    textFont.setPixelSize( estimatedFontSize( titleRect, mPage.getTitle() ) );
+    textFont.setPixelSize( estimatedFontSize( titleRect, mPage.getTitle() ) * 1.3 ); // * 1.3 for laziness instead of dynamic ratio array in estimatedFontSize
     aPainter.setFont( textFont );
     aPainter.drawText( titleRect, Qt::AlignVCenter | Qt::AlignCenter, mPage.getTitle() );
-    aPainter.drawRect( titleRect );
+    // aPainter.drawRect( titleRect );
 }
 
 void PagePrinter::drawSubTitle( QPrinter & aPrinter, QPainter & aPainter ) const

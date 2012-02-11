@@ -49,11 +49,11 @@ void Page::produceSubtitle()
         {
             if ( headZuin.contains( QString( zuin[zuinIndex] ) ) )
             {
-                mSubTitle += QString( "<font color=#ff0000>" ) + zuin[zuinIndex] + QString( "</font>" );
+                mSubTitle += QString( "<font color=#000000>" ) + zuin[zuinIndex] + QString( "</font>" );
             }
             else
             {
-                mSubTitle += zuin[zuinIndex];
+                mSubTitle += QString( "<font color=#bbbbbb>" ) + zuin[zuinIndex] + QString( "</font>" );
             }
         }
     }
