@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale( textc );
     DEBUG() << "測試codec 程式開始…";
 
-    /*
     VideoWindow videoWindow;
     videoWindow.show();
 
@@ -61,10 +60,8 @@ int main(int argc, char *argv[])
     ktvMainWindow.installEventFilter( &videoWindow );
     songDbWindow.installEventFilter( &videoWindow );
 
-    */
-
-    SongDatabase * songDatabase = new SongDatabase( "G:/KTV/整理好的歌" );
-    SongBook::Book( songDatabase ).makePdf( "C:/Users/Arton/Desktop/songbook.pdf" );
+    // SongDatabase * songDatabase = new SongDatabase( "G:/KTV/整理好的歌" );
+    // SongBook::Book( songDatabase ).makePdf( "C:/Users/Arton/Desktop/songbook.pdf" );
 
     return letsKtv.exec();
 }
