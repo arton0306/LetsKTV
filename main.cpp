@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr( textc );
     QTextCodec::setCodecForLocale( textc );
     DEBUG() << "測試codec 程式開始…";
+    DEBUG() << sizeof(void*);
 
     VideoWindow videoWindow;
     videoWindow.show();
